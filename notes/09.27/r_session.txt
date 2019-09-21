@@ -1,0 +1,58 @@
+> 5
+[1] 5
+> 4 + 6
+[1] 10
+> 4 - 6
+[1] -2
+> 4 * 6
+[1] 24
+> 4 / 6
+[1] 0.6666667
+> 4 ^ 6 
+[1] 4096
+> myvariable1 = 5
+> myvariable1
+[1] 5
+> myvariable1 + 6
+[1] 11
+> c(4, 5, 6)
+[1] 4 5 6
+> c(4, 5)
+[1] 4 5
+> c(4, 5) + c(6, 7)
+[1] 10 12
+> c
+function (...)  .Primitive("c")
+> mean(c(4, 5, 6))
+[1] 5
+> ?c
+> setwd("~/university/teach/sta141a/notes")
+> dogs = readRDS("dogs_full.rds")
+> head(dogs)
+                   breed    group datadog popularity_all popularity lifetime_cost
+1          Border Collie  herding    3.64             45         39         20143
+2         Border Terrier  terrier    3.61             80         61         22638
+3               Brittany sporting    3.54             30         30         22589
+4          Cairn Terrier  terrier    3.53             59         48         21992
+5 Welsh Springer Spaniel sporting    3.34            130         81         20224
+6 English Cocker Spaniel sporting    3.33             63         51         18993
+  intelligence_rank longevity ailments price food_cost grooming   kids
+1                 1     12.52        2   623       324   weekly    low
+2                30     14.00        0   833       324   weekly   high
+3                19     12.92        0   618       466   weekly medium
+4                35     13.84        2   435       324   weekly   high
+5                31     12.49        1   750       324   weekly   high
+6                18     11.66        0   800       324   weekly   high
+  megarank_kids megarank   size weight height
+1             1       29 medium     NA     20
+2             2        1  small   13.5     NA
+3             3       11 medium   35.0     19
+4             4        2  small   14.0     10
+5             5        4 medium     NA     18
+6             6        5 medium   30.0     16
+> library(ggplot2)
+> ggplot(dogs, aes(x = datadog, y = popularity, color = group)) + geom_scatter()
+Error in geom_scatter() : could not find function "geom_scatter"
+> ggplot(dogs, aes(x = datadog, y = popularity, color = group)) + geom_point()
+Warning: Removed 85 rows containing missing values (geom_point).
+> 

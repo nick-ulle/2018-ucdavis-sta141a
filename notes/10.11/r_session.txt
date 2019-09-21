@@ -1,0 +1,696 @@
+
+R version 3.5.1 (2018-07-02) -- "Feather Spray"
+Copyright (C) 2018 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+R version 3.5.1 (2018-07-02) -- Feather Spray
+Type 'citation()', 'contributors()', or 'license()' for more information
+
+Libraries:
+* /home/nick/.config/R/library
+* /usr/lib/R/library
+
+> dogs = readRDS("data/dogs/dogs_full.rds")
+> str(dogs)
+Classes 'tbl_df', 'tbl' and 'data.frame':	172 obs. of  18 variables:
+ $ breed            : chr  "Border Collie" "Border Terrier" "Brittany" "Cairn Terrier" ...
+ $ group            : Factor w/ 7 levels "herding","hound",..: 1 5 4 5 4 4 4 6 1 1 ...
+ $ datadog          : num  3.64 3.61 3.54 3.53 3.34 3.33 3.3 3.26 3.25 3.22 ...
+ $ popularity_all   : int  45 80 30 59 130 63 27 38 60 20 ...
+ $ popularity       : int  39 61 30 48 81 51 27 33 49 20 ...
+ $ lifetime_cost    : num  20143 22638 22589 21992 20224 ...
+ $ intelligence_rank: int  1 30 19 35 31 18 20 8 10 6 ...
+ $ longevity        : num  12.5 14 12.9 13.8 12.5 ...
+ $ ailments         : int  2 0 0 2 1 0 2 5 1 5 ...
+ $ price            : num  623 833 618 435 750 800 465 740 530 465 ...
+ $ food_cost        : num  324 324 466 324 324 324 674 324 466 405 ...
+ $ grooming         : Factor w/ 3 levels "daily","weekly",..: 2 2 2 2 2 2 2 2 2 1 ...
+ $ kids             : Factor w/ 3 levels "high","medium",..: 3 1 2 1 1 1 1 2 3 1 ...
+ $ megarank_kids    : int  1 2 3 4 5 6 7 8 9 11 ...
+ $ megarank         : int  29 1 11 2 4 5 6 22 52 8 ...
+ $ size             : Factor w/ 3 levels "large","medium",..: 2 3 2 3 2 2 3 3 2 3 ...
+ $ weight           : num  NA 13.5 35 14 NA 30 25 NA NA 22 ...
+ $ height           : num  20 NA 19 10 18 16 14.5 9.5 18.5 14.5 ...
+> levels(dogs$size)
+[1] "large"  "medium" "small" 
+> levels(dogs$size) = c("HUGE", "medium", "small")
+> levels(dogs$size)
+[1] "HUGE"   "medium" "small" 
+> head(dogs$size)
+[1] medium small  medium small  medium medium
+Levels: HUGE medium small
+> tail(dogs$size)
+[1] medium HUGE   small  small  medium medium
+Levels: HUGE medium small
+> levels(dogs$size)[1] = "large"
+> levels(dogs)
+NULL
+> levels(dogs$size)
+[1] "large"  "medium" "small" 
+> # Right way to reorder levels:
+> size_fix = factor(dogs$size, c("small", "medium", "large"))
+> levels(dogs$size)
+[1] "large"  "medium" "small" 
+> levels(size_fix)
+[1] "small"  "medium" "large" 
+> table(dogs$size)
+
+ large medium  small 
+    54     60     58 
+> table(size_fix)
+size_fix
+ small medium  large 
+    58     60     54 
+> ggplot(dogs, aes(height, weight, color = size)) + geom_point()
+Error in ggplot(dogs, aes(height, weight, color = size)) : 
+  could not find function "ggplot"
+> library(ggplot2)
+> ggplot(dogs, aes(height, weight, color = size)) + geom_point()
+Warning: Removed 98 rows containing missing values (geom_point).
+> ggplot(dogs, aes(height, weight, color = size_fix)) + geom_point()
+Warning: Removed 98 rows containing missing values (geom_point).
+> # Missing Data
+> #
+> # How can you explore something that's missing?
+> table(dogs$size)
+
+ large medium  small 
+    54     60     58 
+> nrow(dogs)
+[1] 172
+> sum(dogs$size)
+Error in Summary.factor(c(2L, 3L, 2L, 3L, 2L, 2L, 3L, 3L, 2L, 3L, 2L,  : 
+  'sum' not meaningful for factors
+> sum(table(dogs$size))
+[1] 172
+> summary(dogs)
+    breed                    group       datadog      popularity_all  
+ Length:172         herding     :25   Min.   :0.990   Min.   :  1.00  
+ Class :character   hound       :26   1st Qu.:2.185   1st Qu.: 43.75  
+ Mode  :character   non-sporting:19   Median :2.710   Median : 87.50  
+                    sporting    :28   Mean   :2.604   Mean   : 87.12  
+                    terrier     :28   3rd Qu.:3.035   3rd Qu.:130.25  
+                    toy         :19   Max.   :3.640   Max.   :173.00  
+                    working     :27   NA's   :85                      
+   popularity   lifetime_cost   intelligence_rank   longevity        ailments    
+ Min.   : 1.0   Min.   :12653   Min.   : 1.00     Min.   : 6.29   Min.   :0.000  
+ 1st Qu.:22.5   1st Qu.:17816   1st Qu.:27.00     1st Qu.: 9.70   1st Qu.:0.000  
+ Median :44.0   Median :20087   Median :42.00     Median :11.29   Median :1.000  
+ Mean   :44.0   Mean   :19820   Mean   :40.92     Mean   :10.96   Mean   :1.216  
+ 3rd Qu.:65.5   3rd Qu.:21798   3rd Qu.:54.25     3rd Qu.:12.37   3rd Qu.:2.000  
+ Max.   :87.0   Max.   :26686   Max.   :80.00     Max.   :16.50   Max.   :9.000  
+ NA's   :85     NA's   :81      NA's   :40        NA's   :37      NA's   :24     
+     price          food_cost         grooming      kids    megarank_kids  
+ Min.   : 283.0   Min.   : 270.0   daily  :23   high  :67   Min.   : 1.00  
+ 1st Qu.: 587.2   1st Qu.: 324.0   weekly :88   medium:35   1st Qu.:22.50  
+ Median : 795.0   Median : 466.0   monthly: 1   low   :10   Median :44.00  
+ Mean   : 876.8   Mean   : 489.6   NA's   :60   NA's  :60   Mean   :43.95  
+ 3rd Qu.:1042.2   3rd Qu.: 466.0                            3rd Qu.:65.50  
+ Max.   :3460.0   Max.   :1349.0                            Max.   :87.00  
+ NA's   :26       NA's   :85                                NA's   :85     
+    megarank         size        weight           height     
+ Min.   : 1.00   large :54   Min.   :  5.00   Min.   : 5.00  
+ 1st Qu.:22.50   medium:60   1st Qu.: 17.50   1st Qu.:14.00  
+ Median :44.00   small :58   Median : 35.00   Median :19.00  
+ Mean   :43.94               Mean   : 44.97   Mean   :19.09  
+ 3rd Qu.:65.50               3rd Qu.: 62.50   3rd Qu.:24.12  
+ Max.   :87.00               Max.   :175.00   Max.   :32.00  
+ NA's   :85                  NA's   :86       NA's   :13     
+> table(dogs$kids)
+
+  high medium    low 
+    67     35     10 
+> sum(table(dogs$kids))
+[1] 112
+> nrow(dogs)
+[1] 172
+> ?table
+> table(dogs$kids, useNA = "always")
+
+  high medium    low   <NA> 
+    67     35     10     60 
+> is.na(dogs$kids)
+  [1] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+ [13] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+ [25] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+ [37] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+ [49] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+ [61] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+ [73] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+ [85] FALSE FALSE FALSE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE FALSE FALSE  TRUE
+ [97] FALSE  TRUE  TRUE  TRUE  TRUE  TRUE FALSE  TRUE  TRUE FALSE  TRUE  TRUE
+[109]  TRUE FALSE  TRUE  TRUE FALSE FALSE FALSE  TRUE  TRUE  TRUE  TRUE  TRUE
+[121]  TRUE  TRUE FALSE  TRUE  TRUE FALSE FALSE  TRUE  TRUE  TRUE  TRUE FALSE
+[133] FALSE  TRUE  TRUE  TRUE  TRUE FALSE  TRUE  TRUE  TRUE FALSE FALSE FALSE
+[145] FALSE  TRUE  TRUE FALSE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+[157]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE FALSE FALSE FALSE  TRUE  TRUE FALSE
+[169] FALSE  TRUE  TRUE  TRUE
+> shadow = is.na(dogs)
+> shadow
+       breed group datadog popularity_all popularity lifetime_cost
+  [1,] FALSE FALSE   FALSE          FALSE      FALSE         FALSE
+  [2,] FALSE FALSE   FALSE          FALSE      FALSE         FALSE
+  [3,] FALSE FALSE   FALSE          FALSE      FALSE         FALSE
+  [4,] FALSE FALSE   FALSE          FALSE      FALSE         FALSE
+  [5,] FALSE FALSE   FALSE          FALSE      FALSE         FALSE
+  [6,] FALSE FALSE   FALSE          FALSE      FALSE         FALSE
+  [7,] FALSE FALSE   FALSE          FALSE      FALSE         FALSE
+  [8,] FALSE FALSE   FALSE          FALSE      FALSE         FALSE
+  [9,] FALSE FALSE   FALSE          FALSE      FALSE         FALSE
+ [10,] FALSE FALSE   FALSE          FALSE      FALSE         FALSE
+ [11,] FALSE FALSE   FALSE          FALSE      FALSE         FALSE
+ [12,] FALSE FALSE   FALSE          FALSE      FALSE         FALSE
+ [13,] FALSE FALSE   FALSE          FALSE      FALSE         FALSE
+ [14,] FALSE FALSE   FALSE          FALSE      FALSE         FALSE
+ [15,] FALSE FALSE   FALSE          FALSE      FALSE         FALSE
+ [16,] FALSE FALSE   FALSE          FALSE      FALSE         FALSE
+ [17,] FALSE FALSE   FALSE          FALSE      FALSE         FALSE
+ [18,] FALSE FALSE   FALSE          FALSE      FALSE         FALSE
+ [19,] FALSE FALSE   FALSE          FALSE      FALSE         FALSE
+ [20,] FALSE FALSE   FALSE          FALSE      FALSE         FALSE
+ [21,] FALSE FALSE   FALSE          FALSE      FALSE         FALSE
+ [22,] FALSE FALSE   FALSE          FALSE      FALSE         FALSE
+ [23,] FALSE FALSE   FALSE          FALSE      FALSE         FALSE
+ [24,] FALSE FALSE   FALSE          FALSE      FALSE         FALSE
+ [25,] FALSE FALSE   FALSE          FALSE      FALSE         FALSE
+ [26,] FALSE FALSE   FALSE          FALSE      FALSE         FALSE
+ [27,] FALSE FALSE   FALSE          FALSE      FALSE         FALSE
+ [28,] FALSE FALSE   FALSE          FALSE      FALSE         FALSE
+ [29,] FALSE FALSE   FALSE          FALSE      FALSE         FALSE
+ [30,] FALSE FALSE   FALSE          FALSE      FALSE         FALSE
+ [31,] FALSE FALSE   FALSE          FALSE      FALSE         FALSE
+ [32,] FALSE FALSE   FALSE          FALSE      FALSE         FALSE
+ [33,] FALSE FALSE   FALSE          FALSE      FALSE         FALSE
+ [34,] FALSE FALSE   FALSE          FALSE      FALSE         FALSE
+ [35,] FALSE FALSE   FALSE          FALSE      FALSE         FALSE
+ [36,] FALSE FALSE   FALSE          FALSE      FALSE         FALSE
+ [37,] FALSE FALSE   FALSE          FALSE      FALSE         FALSE
+ [38,] FALSE FALSE   FALSE          FALSE      FALSE         FALSE
+ [39,] FALSE FALSE   FALSE          FALSE      FALSE         FALSE
+ [40,] FALSE FALSE   FALSE          FALSE      FALSE         FALSE
+ [41,] FALSE FALSE   FALSE          FALSE      FALSE         FALSE
+ [42,] FALSE FALSE   FALSE          FALSE      FALSE         FALSE
+ [43,] FALSE FALSE   FALSE          FALSE      FALSE         FALSE
+ [44,] FALSE FALSE   FALSE          FALSE      FALSE         FALSE
+ [45,] FALSE FALSE   FALSE          FALSE      FALSE         FALSE
+ [46,] FALSE FALSE   FALSE          FALSE      FALSE         FALSE
+ [47,] FALSE FALSE   FALSE          FALSE      FALSE         FALSE
+ [48,] FALSE FALSE   FALSE          FALSE      FALSE         FALSE
+ [49,] FALSE FALSE   FALSE          FALSE      FALSE         FALSE
+ [50,] FALSE FALSE   FALSE          FALSE      FALSE         FALSE
+ [51,] FALSE FALSE   FALSE          FALSE      FALSE         FALSE
+ [52,] FALSE FALSE   FALSE          FALSE      FALSE         FALSE
+ [53,] FALSE FALSE   FALSE          FALSE      FALSE         FALSE
+ [54,] FALSE FALSE   FALSE          FALSE      FALSE         FALSE
+ [55,] FALSE FALSE   FALSE          FALSE      FALSE         FALSE
+       intelligence_rank longevity ailments price food_cost grooming  kids
+  [1,]             FALSE     FALSE    FALSE FALSE     FALSE    FALSE FALSE
+  [2,]             FALSE     FALSE    FALSE FALSE     FALSE    FALSE FALSE
+  [3,]             FALSE     FALSE    FALSE FALSE     FALSE    FALSE FALSE
+  [4,]             FALSE     FALSE    FALSE FALSE     FALSE    FALSE FALSE
+  [5,]             FALSE     FALSE    FALSE FALSE     FALSE    FALSE FALSE
+  [6,]             FALSE     FALSE    FALSE FALSE     FALSE    FALSE FALSE
+  [7,]             FALSE     FALSE    FALSE FALSE     FALSE    FALSE FALSE
+  [8,]             FALSE     FALSE    FALSE FALSE     FALSE    FALSE FALSE
+  [9,]             FALSE     FALSE    FALSE FALSE     FALSE    FALSE FALSE
+ [10,]             FALSE     FALSE    FALSE FALSE     FALSE    FALSE FALSE
+ [11,]             FALSE     FALSE    FALSE FALSE     FALSE    FALSE FALSE
+ [12,]             FALSE     FALSE    FALSE FALSE     FALSE    FALSE FALSE
+ [13,]             FALSE     FALSE    FALSE FALSE     FALSE    FALSE FALSE
+ [14,]             FALSE     FALSE    FALSE FALSE     FALSE    FALSE FALSE
+ [15,]             FALSE     FALSE    FALSE FALSE     FALSE    FALSE FALSE
+ [16,]             FALSE     FALSE    FALSE FALSE     FALSE    FALSE FALSE
+ [17,]             FALSE     FALSE    FALSE FALSE     FALSE    FALSE FALSE
+ [18,]             FALSE     FALSE    FALSE FALSE     FALSE    FALSE FALSE
+ [19,]             FALSE     FALSE    FALSE FALSE     FALSE    FALSE FALSE
+ [20,]             FALSE     FALSE    FALSE FALSE     FALSE    FALSE FALSE
+ [21,]             FALSE     FALSE    FALSE FALSE     FALSE    FALSE FALSE
+ [22,]             FALSE     FALSE    FALSE FALSE     FALSE    FALSE FALSE
+ [23,]             FALSE     FALSE    FALSE FALSE     FALSE    FALSE FALSE
+ [24,]             FALSE     FALSE    FALSE FALSE     FALSE    FALSE FALSE
+ [25,]             FALSE     FALSE    FALSE FALSE     FALSE    FALSE FALSE
+ [26,]             FALSE     FALSE    FALSE FALSE     FALSE    FALSE FALSE
+ [27,]             FALSE     FALSE    FALSE FALSE     FALSE    FALSE FALSE
+ [28,]             FALSE     FALSE    FALSE FALSE     FALSE    FALSE FALSE
+ [29,]             FALSE     FALSE    FALSE FALSE     FALSE    FALSE FALSE
+ [30,]             FALSE     FALSE    FALSE FALSE     FALSE    FALSE FALSE
+ [31,]             FALSE     FALSE    FALSE FALSE     FALSE    FALSE FALSE
+ [32,]             FALSE     FALSE    FALSE FALSE     FALSE    FALSE FALSE
+ [33,]             FALSE     FALSE    FALSE FALSE     FALSE    FALSE FALSE
+ [34,]             FALSE     FALSE    FALSE FALSE     FALSE    FALSE FALSE
+ [35,]             FALSE     FALSE    FALSE FALSE     FALSE    FALSE FALSE
+ [36,]             FALSE     FALSE    FALSE FALSE     FALSE    FALSE FALSE
+ [37,]             FALSE     FALSE    FALSE FALSE     FALSE    FALSE FALSE
+ [38,]             FALSE     FALSE    FALSE FALSE     FALSE    FALSE FALSE
+ [39,]             FALSE     FALSE    FALSE FALSE     FALSE    FALSE FALSE
+ [40,]             FALSE     FALSE    FALSE FALSE     FALSE    FALSE FALSE
+ [41,]             FALSE     FALSE    FALSE FALSE     FALSE    FALSE FALSE
+ [42,]             FALSE     FALSE    FALSE FALSE     FALSE    FALSE FALSE
+ [43,]             FALSE     FALSE    FALSE FALSE     FALSE    FALSE FALSE
+ [44,]             FALSE     FALSE    FALSE FALSE     FALSE    FALSE FALSE
+ [45,]             FALSE     FALSE    FALSE FALSE     FALSE    FALSE FALSE
+ [46,]             FALSE     FALSE    FALSE FALSE     FALSE    FALSE FALSE
+ [47,]             FALSE     FALSE    FALSE FALSE     FALSE    FALSE FALSE
+ [48,]             FALSE     FALSE    FALSE FALSE     FALSE    FALSE FALSE
+ [49,]             FALSE     FALSE    FALSE FALSE     FALSE    FALSE FALSE
+ [50,]             FALSE     FALSE    FALSE FALSE     FALSE    FALSE FALSE
+ [51,]             FALSE     FALSE    FALSE FALSE     FALSE    FALSE FALSE
+ [52,]             FALSE     FALSE    FALSE FALSE     FALSE    FALSE FALSE
+ [53,]             FALSE     FALSE    FALSE FALSE     FALSE    FALSE FALSE
+ [54,]             FALSE     FALSE    FALSE FALSE     FALSE    FALSE FALSE
+ [55,]             FALSE     FALSE    FALSE FALSE     FALSE    FALSE FALSE
+       megarank_kids megarank  size weight height
+  [1,]         FALSE    FALSE FALSE   TRUE  FALSE
+  [2,]         FALSE    FALSE FALSE  FALSE   TRUE
+  [3,]         FALSE    FALSE FALSE  FALSE  FALSE
+  [4,]         FALSE    FALSE FALSE  FALSE  FALSE
+  [5,]         FALSE    FALSE FALSE   TRUE  FALSE
+  [6,]         FALSE    FALSE FALSE  FALSE  FALSE
+  [7,]         FALSE    FALSE FALSE  FALSE  FALSE
+  [8,]         FALSE    FALSE FALSE   TRUE  FALSE
+  [9,]         FALSE    FALSE FALSE   TRUE  FALSE
+ [10,]         FALSE    FALSE FALSE  FALSE  FALSE
+ [11,]         FALSE    FALSE FALSE  FALSE  FALSE
+ [12,]         FALSE    FALSE FALSE  FALSE  FALSE
+ [13,]         FALSE    FALSE FALSE   TRUE  FALSE
+ [14,]         FALSE    FALSE FALSE  FALSE   TRUE
+ [15,]         FALSE    FALSE FALSE  FALSE  FALSE
+ [16,]         FALSE    FALSE FALSE  FALSE  FALSE
+ [17,]         FALSE    FALSE FALSE   TRUE  FALSE
+ [18,]         FALSE    FALSE FALSE   TRUE  FALSE
+ [19,]         FALSE    FALSE FALSE  FALSE  FALSE
+ [20,]         FALSE    FALSE FALSE   TRUE  FALSE
+ [21,]         FALSE    FALSE FALSE  FALSE   TRUE
+ [22,]         FALSE    FALSE FALSE   TRUE  FALSE
+ [23,]         FALSE    FALSE FALSE   TRUE  FALSE
+ [24,]         FALSE    FALSE FALSE  FALSE  FALSE
+ [25,]         FALSE    FALSE FALSE  FALSE  FALSE
+ [26,]         FALSE    FALSE FALSE  FALSE  FALSE
+ [27,]         FALSE    FALSE FALSE  FALSE  FALSE
+ [28,]         FALSE    FALSE FALSE  FALSE  FALSE
+ [29,]         FALSE    FALSE FALSE  FALSE   TRUE
+ [30,]         FALSE    FALSE FALSE  FALSE  FALSE
+ [31,]         FALSE    FALSE FALSE   TRUE  FALSE
+ [32,]         FALSE    FALSE FALSE  FALSE   TRUE
+ [33,]         FALSE    FALSE FALSE  FALSE  FALSE
+ [34,]         FALSE    FALSE FALSE   TRUE  FALSE
+ [35,]         FALSE    FALSE FALSE  FALSE   TRUE
+ [36,]         FALSE    FALSE FALSE  FALSE  FALSE
+ [37,]         FALSE    FALSE FALSE   TRUE  FALSE
+ [38,]         FALSE    FALSE FALSE   TRUE  FALSE
+ [39,]         FALSE    FALSE FALSE  FALSE  FALSE
+ [40,]         FALSE    FALSE FALSE  FALSE  FALSE
+ [41,]         FALSE    FALSE FALSE  FALSE  FALSE
+ [42,]         FALSE    FALSE FALSE   TRUE  FALSE
+ [43,]         FALSE    FALSE FALSE  FALSE  FALSE
+ [44,]         FALSE    FALSE FALSE   TRUE  FALSE
+ [45,]         FALSE    FALSE FALSE  FALSE  FALSE
+ [46,]         FALSE    FALSE FALSE   TRUE  FALSE
+ [47,]         FALSE    FALSE FALSE   TRUE   TRUE
+ [48,]         FALSE    FALSE FALSE   TRUE  FALSE
+ [49,]         FALSE    FALSE FALSE  FALSE  FALSE
+ [50,]         FALSE    FALSE FALSE   TRUE  FALSE
+ [51,]         FALSE    FALSE FALSE  FALSE  FALSE
+ [52,]         FALSE    FALSE FALSE   TRUE  FALSE
+ [53,]         FALSE    FALSE FALSE   TRUE  FALSE
+ [54,]         FALSE    FALSE FALSE  FALSE  FALSE
+ [55,]         FALSE    FALSE FALSE   TRUE  FALSE
+ [ reached getOption("max.print") -- omitted 117 rows ]
+> class(shadow)
+[1] "matrix"
+> class(dogs)
+[1] "tbl_df"     "tbl"        "data.frame"
+> shadow = as.data.frame(shadow)
+> # Continuous Features --------------------
+> head(dogs)
+# A tibble: 6 x 18
+  breed    group datadog popularity_all popularity lifetime_cost intelligence_ra…
+  <chr>    <fct>   <dbl>          <int>      <int>         <dbl>            <int>
+1 Border … herd…    3.64             45         39         20143                1
+2 Border … terr…    3.61             80         61         22638               30
+3 Brittany spor…    3.54             30         30         22589               19
+4 Cairn T… terr…    3.53             59         48         21992               35
+5 Welsh S… spor…    3.34            130         81         20224               31
+6 English… spor…    3.33             63         51         18993               18
+# ... with 11 more variables: longevity <dbl>, ailments <int>, price <dbl>,
+#   food_cost <dbl>, grooming <fct>, kids <fct>, megarank_kids <int>,
+#   megarank <int>, size <fct>, weight <dbl>, height <dbl>
+> fivenum(dogs$datadog)
+[1] 0.990 2.185 2.710 3.035 3.640
+> ?fivenum
+> summary(dogs$datadog)
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+  0.990   2.185   2.710   2.604   3.035   3.640      85 
+> library(ggplot2)
+> ggplot(dogs) + geom_boxplot()
+Error: stat_boxplot requires the following missing aesthetics: y
+> ggplot(dogs, aes(y = datadog)) + geom_boxplot()
+Warning: Removed 85 rows containing non-finite values (stat_boxplot).
+> ggplot(dogs) + geom_histogram()
+`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+Error: stat_bin requires the following missing aesthetics: x
+> ggplot(dogs, aes(x = datadog)) + geom_histogram()
+`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+Warning: Removed 85 rows containing non-finite values (stat_bin).
+> ggplot(dogs, aes(x = datadog)) + geom_histogram(bins = 1)
+Warning: Removed 85 rows containing non-finite values (stat_bin).
+> ggplot(dogs, aes(x = datadog)) + geom_histogram(bins = 2)
+Warning: Removed 85 rows containing non-finite values (stat_bin).
+> ggplot(dogs, aes(x = datadog)) + geom_histogram(bins = 3)
+Warning: Removed 85 rows containing non-finite values (stat_bin).
+> ggplot(dogs, aes(x = datadog)) + geom_histogram()
+`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+Warning: Removed 85 rows containing non-finite values (stat_bin).
+> ggplot(dogs) + geom_density()
+Error: stat_density requires the following missing aesthetics: x
+> ggplot(dogs, aes(x = datadog)) + geom_density()
+Warning: Removed 85 rows containing non-finite values (stat_density).
+> ggplot(dogs, aes(x = datadog)) + geom_histogram()
+`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+Warning: Removed 85 rows containing non-finite values (stat_bin).
+> ggplot(dogs, aes(x = datadog)) + geom_histogram()
+`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+Warning: Removed 85 rows containing non-finite values (stat_bin).
+> ggplot(dogs, aes(x = datadog)) + geom_density()
+Warning: Removed 85 rows containing non-finite values (stat_density).
+> ggplot(dogs, aes(x = datadog)) + geom_histogram()
+`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+Warning: Removed 85 rows containing non-finite values (stat_bin).
+> ggplot(dogs, aes(x = datadog)) + geom_density()
+Warning: Removed 85 rows containing non-finite values (stat_density).
+> ?geom_density
+> ggplot(dogs, aes(x = datadog)) + geom_density(bw = 1)
+Warning: Removed 85 rows containing non-finite values (stat_density).
+> ggplot(dogs, aes(x = datadog)) + geom_density()
+Warning: Removed 85 rows containing non-finite values (stat_density).
+> ggplot(dogs, aes(x = datadog)) + geom_density(bw = 1)
+Warning: Removed 85 rows containing non-finite values (stat_density).
+> ggplot(dogs, aes(x = datadog)) + geom_density(bw = 10)
+Warning: Removed 85 rows containing non-finite values (stat_density).
+> ggplot(dogs, aes(x = datadog)) + geom_density(bw = 0.01)
+Warning: Removed 85 rows containing non-finite values (stat_density).
+> ggplot(dogs, aes(x = datadog)) + geom_density()
+Warning: Removed 85 rows containing non-finite values (stat_density).
+> fivenum(dogs$datadog)
+[1] 0.990 2.185 2.710 3.035 3.640
+> # What does variance / standard deviation tell us?
+> # - scaling factor
+> # - how far observations are from the average, on average
+> sd(dogs$datadog)
+[1] NA
+> # What does variance / standard deviation tell us?
+> # - scaling factor
+> # - how far observations are from the average, on average
+> sd(dogs$datadog, na.rm = TRUE)
+[1] 0.5702878
+> mean(dogs$datadog, na.rm = TRUE)
+[1] 2.603678
+> min(dogs$datadog, na.rm = TRUE)
+[1] 0.99
+> max(dogs$datadog, na.rm = TRUE)
+[1] 3.64
+> median(dogs$datadog, na.rm = TRUE)
+[1] 2.71
+> ggplot(dogs, aes(x = datadog)) + geom_density() + geom_vline()
+Warning: Removed 85 rows containing non-finite values (stat_density).
+Error: geom_vline requires the following missing aesthetics: xintercept
+> m = median(dogs$datadog, na.rm = TRUE)
+> ggplot(dogs, aes(x = datadog)) + geom_density() +
+.   geom_vline(aex(xintercept = m))
+Error in aex(xintercept = m) : could not find function "aex"
+> ggplot(dogs, aes(x = datadog)) + geom_density() +
+.   geom_vline(aes(xintercept = m))
+Warning: Removed 85 rows containing non-finite values (stat_density).
+> mu = mean(dogs$datadog, na.rm = TRUE)
+> ggplot(dogs, aes(x = datadog)) + geom_density() +
+.   geom_vline(aes(xintercept = m)) +
+.   geom_vline(aes(xintercept = mu), color = "red")
+Warning: Removed 85 rows containing non-finite values (stat_density).
+> ggplot(dogs, aes(x = datadog)) + geom_density()
+Warning: Removed 85 rows containing non-finite values (stat_density).
+> ggplot(dogs, aes(x = datadog)) + geom_density(bw = 0.01)
+Warning: Removed 85 rows containing non-finite values (stat_density).
+> head(dogs)
+# A tibble: 6 x 18
+  breed    group datadog popularity_all popularity lifetime_cost intelligence_ra…
+  <chr>    <fct>   <dbl>          <int>      <int>         <dbl>            <int>
+1 Border … herd…    3.64             45         39         20143                1
+2 Border … terr…    3.61             80         61         22638               30
+3 Brittany spor…    3.54             30         30         22589               19
+4 Cairn T… terr…    3.53             59         48         21992               35
+5 Welsh S… spor…    3.34            130         81         20224               31
+6 English… spor…    3.33             63         51         18993               18
+# ... with 11 more variables: longevity <dbl>, ailments <int>, price <dbl>,
+#   food_cost <dbl>, grooming <fct>, kids <fct>, megarank_kids <int>,
+#   megarank <int>, size <fct>, weight <dbl>, height <dbl>
+> dogs$ailments
+  [1]  2  0  0  2  1  0  2  5  1  5  0  1  0  2  2  1  0  0  4  3  2  2  0  1  1
+ [26]  0  3  1  1  1  2  4  2  0  0  4  1  1  1  0  1  2  1  1  0  0  1  4  0  2
+ [51]  2  2  2  3  0  1  1  9  0  0  0  1  1  1  3  1  0  2  8  1  1  1  2  0  0
+ [76]  4  2  4  2  2  2  3  2  2  4  3  5  1 NA  0 NA  1  0 NA  0 NA  0  4  0  0
+[101]  0 NA  0 NA  0 NA NA  4  2  0  0 NA  0 NA  0 NA  1 NA  1  1  0  0  0 NA NA
+[126]  0  1  0  1  1  1  0 NA  0  0  0  0  1 NA  1 NA  0  1  1  0  0  0 NA  0  0
+[151] NA  0  4  2  1  1  0  0  0  0 NA  1  0 NA NA NA  0  1  0  0  0 NA
+> table(dogs$ailments)
+
+ 0  1  2  3  4  5  8  9 
+61 42 24  6 10  3  1  1 
+> ggplot(dogs, aes(x = ailments)) + geom_bar()
+Warning: Removed 24 rows containing non-finite values (stat_count).
+> mean(dogs$ailments, na.rm = TRUE)
+[1] 1.216216
+> # Two categorical variables -> frequencies
+> table(dogs$size, dogs$group)
+        
+         herding hound non-sporting sporting terrier toy working
+  large        8    14            0       11       0   0      21
+  medium      13     8           10       15       7   1       6
+  small        4     4            9        2      21  18       0
+> ?table
+> addmargins(table(dogs$size, dogs$group))
+        
+         herding hound non-sporting sporting terrier toy working Sum
+  large        8    14            0       11       0   0      21  54
+  medium      13     8           10       15       7   1       6  60
+  small        4     4            9        2      21  18       0  58
+  Sum         25    26           19       28      28  19      27 172
+> # Two categorical variables -> frequencies
+> tbl = table(dogs$size, dogs$group)
+> tbl
+        
+         herding hound non-sporting sporting terrier toy working
+  large        8    14            0       11       0   0      21
+  medium      13     8           10       15       7   1       6
+  small        4     4            9        2      21  18       0
+> addmargins(tbl)
+        
+         herding hound non-sporting sporting terrier toy working Sum
+  large        8    14            0       11       0   0      21  54
+  medium      13     8           10       15       7   1       6  60
+  small        4     4            9        2      21  18       0  58
+  Sum         25    26           19       28      28  19      27 172
+> prop.table(tbl)
+        
+             herding       hound non-sporting    sporting     terrier         toy
+  large  0.046511628 0.081395349  0.000000000 0.063953488 0.000000000 0.000000000
+  medium 0.075581395 0.046511628  0.058139535 0.087209302 0.040697674 0.005813953
+  small  0.023255814 0.023255814  0.052325581 0.011627907 0.122093023 0.104651163
+        
+             working
+  large  0.122093023
+  medium 0.034883721
+  small  0.000000000
+> ?prop.table
+> prop.table(tbl, margin = 1)
+        
+            herding      hound non-sporting   sporting    terrier        toy
+  large  0.14814815 0.25925926   0.00000000 0.20370370 0.00000000 0.00000000
+  medium 0.21666667 0.13333333   0.16666667 0.25000000 0.11666667 0.01666667
+  small  0.06896552 0.06896552   0.15517241 0.03448276 0.36206897 0.31034483
+        
+            working
+  large  0.38888889
+  medium 0.10000000
+  small  0.00000000
+> prop.table(tbl, margin = 2) # proportions column-wise
+        
+            herding      hound non-sporting   sporting    terrier        toy
+  large  0.32000000 0.53846154   0.00000000 0.39285714 0.00000000 0.00000000
+  medium 0.52000000 0.30769231   0.52631579 0.53571429 0.25000000 0.05263158
+  small  0.16000000 0.15384615   0.47368421 0.07142857 0.75000000 0.94736842
+        
+            working
+  large  0.77777778
+  medium 0.22222222
+  small  0.00000000
+> ggplot(dogs, aes(size)) + geom_bar()
+> ggplot(dogs, aes(size, fill = group)) + geom_bar()
+> ggplot(dogs, aes(size, fill = group)) +
+.   geom_bar(position = "dodge")
+> props = prop.table(tbl)
+> props
+        
+             herding       hound non-sporting    sporting     terrier         toy
+  large  0.046511628 0.081395349  0.000000000 0.063953488 0.000000000 0.000000000
+  medium 0.075581395 0.046511628  0.058139535 0.087209302 0.040697674 0.005813953
+  small  0.023255814 0.023255814  0.052325581 0.011627907 0.122093023 0.104651163
+        
+             working
+  large  0.122093023
+  medium 0.034883721
+  small  0.000000000
+> as.data.frame(props)
+     Var1         Var2        Freq
+1   large      herding 0.046511628
+2  medium      herding 0.075581395
+3   small      herding 0.023255814
+4   large        hound 0.081395349
+5  medium        hound 0.046511628
+6   small        hound 0.023255814
+7   large non-sporting 0.000000000
+8  medium non-sporting 0.058139535
+9   small non-sporting 0.052325581
+10  large     sporting 0.063953488
+11 medium     sporting 0.087209302
+12  small     sporting 0.011627907
+13  large      terrier 0.000000000
+14 medium      terrier 0.040697674
+15  small      terrier 0.122093023
+16  large          toy 0.000000000
+17 medium          toy 0.005813953
+18  small          toy 0.104651163
+19  large      working 0.122093023
+20 medium      working 0.034883721
+21  small      working 0.000000000
+> # Two categorical variables -> frequencies
+> tbl = table(size = dogs$size, group = dogs$group)
+> tbl
+        group
+size     herding hound non-sporting sporting terrier toy working
+  large        8    14            0       11       0   0      21
+  medium      13     8           10       15       7   1       6
+  small        4     4            9        2      21  18       0
+> props = prop.table(tbl)
+> props
+        group
+size         herding       hound non-sporting    sporting     terrier         toy
+  large  0.046511628 0.081395349  0.000000000 0.063953488 0.000000000 0.000000000
+  medium 0.075581395 0.046511628  0.058139535 0.087209302 0.040697674 0.005813953
+  small  0.023255814 0.023255814  0.052325581 0.011627907 0.122093023 0.104651163
+        group
+size         working
+  large  0.122093023
+  medium 0.034883721
+  small  0.000000000
+> as.data.frame(props)
+     size        group        Freq
+1   large      herding 0.046511628
+2  medium      herding 0.075581395
+3   small      herding 0.023255814
+4   large        hound 0.081395349
+5  medium        hound 0.046511628
+6   small        hound 0.023255814
+7   large non-sporting 0.000000000
+8  medium non-sporting 0.058139535
+9   small non-sporting 0.052325581
+10  large     sporting 0.063953488
+11 medium     sporting 0.087209302
+12  small     sporting 0.011627907
+13  large      terrier 0.000000000
+14 medium      terrier 0.040697674
+15  small      terrier 0.122093023
+16  large          toy 0.000000000
+17 medium          toy 0.005813953
+18  small          toy 0.104651163
+19  large      working 0.122093023
+20 medium      working 0.034883721
+21  small      working 0.000000000
+> props = as.data.frame(props)
+> ggplot(props, aes(size, fill = group, y = Freq)) +
+.   geom_bar(stat = "identity")
+> ggplot(props, aes(size, fill = group, y = Freq)) +
+.   geom_bar(stat = "identity") + scale_fill_viridis_d()
+> # Numerical, numerical -> 
+> ggplot(dogs, aes(height, weight)) + geom_point()
+Warning: Removed 98 rows containing missing values (geom_point).
+> ggplot(dogs, aes(height, weight)) + geom_density2d()
+Warning: Removed 98 rows containing non-finite values (stat_density2d).
+> ggplot(dogs, aes(height, weight)) + geom_density2d() + geom_point()
+Warning: Removed 98 rows containing non-finite values (stat_density2d).
+Warning: Removed 98 rows containing missing values (geom_point).
+> # Numerical, Categorical -> 
+> ggplot(dogs, aes(height)) + geom_boxplot()
+Warning: Continuous x aesthetic -- did you forget aes(group=...)?
+Warning: Removed 13 rows containing missing values (stat_boxplot).
+Error: stat_boxplot requires the following missing aesthetics: y
+> # Numerical, Categorical -> 
+> ggplot(dogs, aes(y = height)) + geom_boxplot()
+Warning: Removed 13 rows containing non-finite values (stat_boxplot).
+> # Numerical, Categorical -> 
+> ggplot(dogs, aes(x = size, y = height)) + geom_boxplot()
+Warning: Removed 13 rows containing non-finite values (stat_boxplot).
+> ggplot(dogs, aes(height)) + geom_density()
+Warning: Removed 13 rows containing non-finite values (stat_density).
+> ggplot(dogs, aes(height, color = size)) + geom_density()
+Warning: Removed 13 rows containing non-finite values (stat_density).
+> aggegate(height ~ size, dogs, mean)
+Error in aggegate(height ~ size, dogs, mean) : 
+  could not find function "aggegate"
+> aggregate(height ~ size, dogs, mean)
+    size   height
+1  large 25.72596
+2 medium 19.46491
+3  small 11.76000
+> aggregate(height ~ size, dogs, mean, na.rm = TRUE)
+    size   height
+1  large 25.72596
+2 medium 19.46491
+3  small 11.76000
+> aggregate(dogs$height, list(dogs$size, dogs$grooming), mean)
+  Group.1 Group.2        x
+1   large   daily 25.75000
+2  medium   daily 20.28125
+3   small   daily       NA
+4   large  weekly       NA
+5  medium  weekly       NA
+6   small  weekly       NA
+7  medium monthly 21.75000
+> dogs[c("size", "grooming")]
+# A tibble: 172 x 2
+   size   grooming
+   <fct>  <fct>   
+ 1 medium weekly  
+ 2 small  weekly  
+ 3 medium weekly  
+ 4 small  weekly  
+ 5 medium weekly  
+ 6 medium weekly  
+ 7 small  weekly  
+ 8 small  weekly  
+ 9 medium weekly  
+10 small  daily   
+# ... with 162 more rows
+> aggregate(dogs$height, dogs[c("size", "grooming")], mean)
+    size grooming        x
+1  large    daily 25.75000
+2 medium    daily 20.28125
+3  small    daily       NA
+4  large   weekly       NA
+5 medium   weekly       NA
+6  small   weekly       NA
+7 medium  monthly 21.75000
+> 

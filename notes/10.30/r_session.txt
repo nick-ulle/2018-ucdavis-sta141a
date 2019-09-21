@@ -1,0 +1,813 @@
+
+R version 3.5.1 (2018-07-02) -- "Feather Spray"
+Copyright (C) 2018 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+R version 3.5.1 (2018-07-02) -- Feather Spray
+Type 'citation()', 'contributors()', or 'license()' for more information
+
+Libraries:
+* /home/nick/.config/R/library
+* /usr/lib/R/library
+
+> air = read.csv("data/airline/2018.01_air_delays.csv")
+> air$ontime = (air$ARR_DELAY <= 0)
+> library(ggplot2)
+> # For bar plots, if you use the `fill` aesthetic and `stat(prop)`, set `group`
+> # to the same feature as `fill`.
+> #
+> ggplot(air, aes(OP_UNIQUE_CARRIER, y = stat(prop), fill = ontime,
+.     group = ontime)) +
+.   geom_bar(position = "dodge")
+> # For bar plots, if you use the `fill` aesthetic and `stat(prop)`, set `group`
+> # to the same feature as `fill`.
+> #
+> ggplot(air, aes(OP_UNIQUE_CARRIER, y = stat(prop), fill = ontime)) +
+.   geom_bar(position = "dodge")
+> # For bar plots, if you use the `fill` aesthetic and `stat(prop)`, set `group`
+> # to the same feature as `fill`.
+> #
+> ggplot(air, aes(OP_UNIQUE_CARRIER, y = stat(prop), fill = ontime,
+.                 group = ontime)) +
+.   geom_bar(position = "dodge")
+> colnames(air)
+ [1] "YEAR"                  "MONTH"                 "DAY_OF_MONTH"         
+ [4] "DAY_OF_WEEK"           "OP_UNIQUE_CARRIER"     "OP_CARRIER_AIRLINE_ID"
+ [7] "TAIL_NUM"              "OP_CARRIER_FL_NUM"     "ORIGIN_AIRPORT_ID"    
+[10] "ORIGIN_CITY_MARKET_ID" "ORIGIN"                "ORIGIN_CITY_NAME"     
+[13] "ORIGIN_STATE_NM"       "DEST_AIRPORT_ID"       "DEST_CITY_MARKET_ID"  
+[16] "DEST"                  "DEST_CITY_NAME"        "DEST_STATE_NM"        
+[19] "CRS_DEP_TIME"          "DEP_TIME"              "DEP_DELAY"            
+[22] "TAXI_OUT"              "WHEELS_OFF"            "WHEELS_ON"            
+[25] "TAXI_IN"               "CRS_ARR_TIME"          "ARR_TIME"             
+[28] "ARR_DELAY"             "CANCELLED"             "DIVERTED"             
+[31] "CRS_ELAPSED_TIME"      "ACTUAL_ELAPSED_TIME"   "AIR_TIME"             
+[34] "DISTANCE"              "CARRIER_DELAY"         "WEATHER_DELAY"        
+[37] "NAS_DELAY"             "SECURITY_DELAY"        "LATE_AIRCRAFT_DELAY"  
+[40] "X"                     "ontime"               
+> head(air$ORIGIN)
+[1] FLL SEA DCA LAX JAX IAH
+334 Levels: ABE ABI ABQ ABR ABY ACT ACV ACY ADK ADQ AEX AGS ALB ALO AMA ANC ... YUM
+> table(air$ontime, air$OP_UNIQUE_CARRIER)
+       
+           9E    AA    AS    B6    DL    EV    F9    G4    HA    MQ    NK    OH
+  FALSE  4858 22758  3806 10374 17202  6402  3596  2461  2353  8770  3808  9367
+  TRUE  12029 49256 11318 12956 52398 12710  5911  4269  4252 12811  9991 11234
+       
+           OO    UA    VX    WN    YV    YX
+  FALSE 22167 11332  1809 35173  5212  7988
+  TRUE  38174 33073  3906 71850 10120 15804
+> table(air$ontime, air$OP_UNIQUE_CARRIER, useNA = 'always')
+       
+           9E    AA    AS    B6    DL    EV    F9    G4    HA    MQ    NK    OH
+  FALSE  4858 22758  3806 10374 17202  6402  3596  2461  2353  8770  3808  9367
+  TRUE  12029 49256 11318 12956 52398 12710  5911  4269  4252 12811  9991 11234
+  <NA>   1347  1584   188  1541  1654  1054   200    84    22   921   381  1609
+       
+           OO    UA    VX    WN    YV    YX  <NA>
+  FALSE 22167 11332  1809 35173  5212  7988     0
+  TRUE  38174 33073  3906 71850 10120 15804     0
+  <NA>   1853   979   109  2653  1021  1420     0
+> tbl = table(air$ontime, air$OP_UNIQUE_CARRIER, useNA = 'always')
+> prop.table(tbl)
+       
+                  9E           AA           AS           B6           DL
+  FALSE 0.0085210430 0.0399180521 0.0066758110 0.0181962331 0.0301727011
+  TRUE  0.0210991409 0.0863961496 0.0198520306 0.0227251201 0.0919072894
+  <NA>  0.0023626688 0.0027783722 0.0003297563 0.0027029492 0.0029011538
+       
+                  EV           F9           G4           HA           MQ
+  FALSE 0.0112292543 0.0063074662 0.0043166502 0.0041272158 0.0153827804
+  TRUE  0.0222936304 0.0103680291 0.0074879236 0.0074581052 0.0224707867
+  <NA>  0.0018487401 0.0003508046 0.0001473379 0.0000385885 0.0016154550
+       
+                  NK           OH           OO           UA           VX
+  FALSE 0.0066793190 0.0164299320 0.0388814245 0.0198765870 0.0031730273
+  TRUE  0.0175244423 0.0197046927 0.0669580683 0.0580107978 0.0068512133
+  <NA>  0.0006682827 0.0028222228 0.0032502043 0.0017171884 0.0001911885
+       
+                  WN           YV           YX         <NA>
+  FALSE 0.0616942458 0.0091419671 0.0140111345 0.0000000000
+  TRUE  0.1260265419 0.0177507113 0.0277205771 0.0000000000
+  <NA>  0.0046534226 0.0017908573 0.0024907124 0.0000000000
+> prop.table(tbl, 1)
+       
+                 9E          AA          AS          B6          DL          EV
+  FALSE 0.027073720 0.126830736 0.021210905 0.057814485 0.095867050 0.035678459
+  TRUE  0.032330633 0.132386538 0.030419661 0.034822153 0.140831367 0.034160973
+  <NA>  0.072341568 0.085069817 0.010096670 0.082760473 0.088829216 0.056605800
+       
+                 F9          G4          HA          MQ          NK          OH
+  FALSE 0.020040572 0.013715197 0.013113311 0.048875365 0.021222051 0.052202457
+  TRUE  0.015887137 0.011473894 0.011428203 0.034432433 0.026853051 0.030193892
+  <NA>  0.010741139 0.004511278 0.001181525 0.049462943 0.020461869 0.086412460
+       
+                 OO          UA          VX          WN          YV          YX
+  FALSE 0.123537083 0.063153436 0.010081589 0.196019751 0.029046568 0.044517265
+  TRUE  0.102601179 0.088891099 0.010498250 0.193112976 0.027199768 0.042476792
+  <NA>  0.099516649 0.052577873 0.005853921 0.142481203 0.054833512 0.076262084
+       
+               <NA>
+  FALSE 0.000000000
+  TRUE  0.000000000
+  <NA>  0.000000000
+> prop.table(tbl, 2)
+       
+                 9E          AA          AS          B6          DL          EV
+  FALSE 0.266425359 0.309220359 0.248563218 0.417112299 0.241418026 0.317465040
+  TRUE  0.659701656 0.669257317 0.739158830 0.520927988 0.735369242 0.630268769
+  <NA>  0.073872985 0.021522324 0.012277952 0.061959712 0.023212732 0.052266191
+       
+                 F9          G4          HA          MQ          NK          OH
+  FALSE 0.370454311 0.361168183 0.355062623 0.389743134 0.268547250 0.421746961
+  TRUE  0.608942001 0.626504256 0.641617625 0.569327171 0.704583921 0.505808195
+  <NA>  0.020603688 0.012327561 0.003319753 0.040929695 0.026868829 0.072444845
+       
+                 OO          UA          VX          WN          YV          YX
+  FALSE 0.356417018 0.249691521 0.310611264 0.320699150 0.318718278 0.316833254
+  TRUE  0.613789111 0.728737000 0.670673077 0.655111419 0.618846695 0.626844360
+  <NA>  0.029793871 0.021571479 0.018715659 0.024189431 0.062435027 0.056322386
+       
+        <NA>
+  FALSE     
+  TRUE      
+  <NA>      
+> prop.table(tbl, 1)
+       
+                 9E          AA          AS          B6          DL          EV
+  FALSE 0.027073720 0.126830736 0.021210905 0.057814485 0.095867050 0.035678459
+  TRUE  0.032330633 0.132386538 0.030419661 0.034822153 0.140831367 0.034160973
+  <NA>  0.072341568 0.085069817 0.010096670 0.082760473 0.088829216 0.056605800
+       
+                 F9          G4          HA          MQ          NK          OH
+  FALSE 0.020040572 0.013715197 0.013113311 0.048875365 0.021222051 0.052202457
+  TRUE  0.015887137 0.011473894 0.011428203 0.034432433 0.026853051 0.030193892
+  <NA>  0.010741139 0.004511278 0.001181525 0.049462943 0.020461869 0.086412460
+       
+                 OO          UA          VX          WN          YV          YX
+  FALSE 0.123537083 0.063153436 0.010081589 0.196019751 0.029046568 0.044517265
+  TRUE  0.102601179 0.088891099 0.010498250 0.193112976 0.027199768 0.042476792
+  <NA>  0.099516649 0.052577873 0.005853921 0.142481203 0.054833512 0.076262084
+       
+               <NA>
+  FALSE 0.000000000
+  TRUE  0.000000000
+  <NA>  0.000000000
+> ap = read.csv("data/airline/airports.dat", header = FALSE)
+> head(ap)
+  V1                                          V2           V3               V4  V5
+1  1                              Goroka Airport       Goroka Papua New Guinea GKA
+2  2                              Madang Airport       Madang Papua New Guinea MAG
+3  3                Mount Hagen Kagamuga Airport  Mount Hagen Papua New Guinea HGU
+4  4                              Nadzab Airport       Nadzab Papua New Guinea LAE
+5  5 Port Moresby Jacksons International Airport Port Moresby Papua New Guinea POM
+6  6                 Wewak International Airport        Wewak Papua New Guinea WWK
+    V6        V7      V8   V9 V10 V11                  V12     V13         V14
+1 AYGA -6.081690 145.392 5282  10   U Pacific/Port_Moresby airport OurAirports
+2 AYMD -5.207080 145.789   20  10   U Pacific/Port_Moresby airport OurAirports
+3 AYMH -5.826790 144.296 5388  10   U Pacific/Port_Moresby airport OurAirports
+4 AYNZ -6.569803 146.726  239  10   U Pacific/Port_Moresby airport OurAirports
+5 AYPY -9.443380 147.220  146  10   U Pacific/Port_Moresby airport OurAirports
+6 AYWK -3.583830 143.669   19  10   U Pacific/Port_Moresby airport OurAirports
+> # From the website:
+> names = c("ID", "Name", "City", "Country", "IATA", "ICAO",
+.   "Latitude", "Longitude", "Altitude", "Timezone", "DST",
+.   "Tz", "Type", "Source")
+> names(ap) = names
+> head(ap)
+  ID                                        Name         City          Country IATA
+1  1                              Goroka Airport       Goroka Papua New Guinea  GKA
+2  2                              Madang Airport       Madang Papua New Guinea  MAG
+3  3                Mount Hagen Kagamuga Airport  Mount Hagen Papua New Guinea  HGU
+4  4                              Nadzab Airport       Nadzab Papua New Guinea  LAE
+5  5 Port Moresby Jacksons International Airport Port Moresby Papua New Guinea  POM
+6  6                 Wewak International Airport        Wewak Papua New Guinea  WWK
+  ICAO  Latitude Longitude Altitude Timezone DST                   Tz    Type
+1 AYGA -6.081690   145.392     5282       10   U Pacific/Port_Moresby airport
+2 AYMD -5.207080   145.789       20       10   U Pacific/Port_Moresby airport
+3 AYMH -5.826790   144.296     5388       10   U Pacific/Port_Moresby airport
+4 AYNZ -6.569803   146.726      239       10   U Pacific/Port_Moresby airport
+5 AYPY -9.443380   147.220      146       10   U Pacific/Port_Moresby airport
+6 AYWK -3.583830   143.669       19       10   U Pacific/Port_Moresby airport
+       Source
+1 OurAirports
+2 OurAirports
+3 OurAirports
+4 OurAirports
+5 OurAirports
+6 OurAirports
+> head(ap)
+  ID                                        Name         City          Country IATA
+1  1                              Goroka Airport       Goroka Papua New Guinea  GKA
+2  2                              Madang Airport       Madang Papua New Guinea  MAG
+3  3                Mount Hagen Kagamuga Airport  Mount Hagen Papua New Guinea  HGU
+4  4                              Nadzab Airport       Nadzab Papua New Guinea  LAE
+5  5 Port Moresby Jacksons International Airport Port Moresby Papua New Guinea  POM
+6  6                 Wewak International Airport        Wewak Papua New Guinea  WWK
+  ICAO  Latitude Longitude Altitude Timezone DST                   Tz    Type
+1 AYGA -6.081690   145.392     5282       10   U Pacific/Port_Moresby airport
+2 AYMD -5.207080   145.789       20       10   U Pacific/Port_Moresby airport
+3 AYMH -5.826790   144.296     5388       10   U Pacific/Port_Moresby airport
+4 AYNZ -6.569803   146.726      239       10   U Pacific/Port_Moresby airport
+5 AYPY -9.443380   147.220      146       10   U Pacific/Port_Moresby airport
+6 AYWK -3.583830   143.669       19       10   U Pacific/Port_Moresby airport
+       Source
+1 OurAirports
+2 OurAirports
+3 OurAirports
+4 OurAirports
+5 OurAirports
+6 OurAirports
+> sapply(ap, class)
+       ID      Name      City   Country      IATA      ICAO  Latitude Longitude 
+"integer"  "factor"  "factor"  "factor"  "factor"  "factor" "numeric" "numeric" 
+ Altitude  Timezone       DST        Tz      Type    Source 
+"integer"  "factor"  "factor"  "factor"  "factor"  "factor" 
+> str(ap)
+'data.frame':	7184 obs. of  14 variables:
+ $ ID       : int  1 2 3 4 5 6 7 8 9 10 ...
+ $ Name     : Factor w/ 7142 levels "[Duplicate] Giebelstadt Army Air Field",..: 2276 3761 4264 4338 5034 6891 4401 2254 2997 6361 ...
+ $ City     : Factor w/ 6511 levels "","108 Mile Ranch",..: 2018 3372 3832 3911 4570 6266 3971 1994 5404 5776 ...
+ $ Country  : Factor w/ 237 levels "Afghanistan",..: 167 167 167 167 167 167 84 84 84 84 ...
+ $ IATA     : Factor w/ 5655 levels "","\\N","0V4",..: 1622 2815 1821 2517 3744 5144 4799 1661 4190 4586 ...
+ $ ICAO     : Factor w/ 7184 levels "03N","07FA","07MT",..: 42 51 52 57 58 64 68 72 81 83 ...
+ $ Latitude : num  -6.08 -5.21 -5.83 -6.57 -9.44 ...
+ $ Longitude: num  145 146 144 147 147 ...
+ $ Altitude : int  5282 20 5388 239 146 19 112 283 165 251 ...
+ $ Timezone : Factor w/ 39 levels "-1","-10","-11",..: 17 17 17 17 17 17 5 5 5 7 ...
+ $ DST      : Factor w/ 8 levels "\\N","A","E",..: 7 7 7 7 7 7 3 3 3 3 ...
+ $ Tz       : Factor w/ 308 levels "\\N","Africa/Abidjan",..: 301 301 301 301 301 301 90 90 90 133 ...
+ $ Type     : Factor w/ 1 level "airport": 1 1 1 1 1 1 1 1 1 1 ...
+ $ Source   : Factor w/ 1 level "OurAirports": 1 1 1 1 1 1 1 1 1 1 ...
+> # Save the data set as an RDS file for future use.
+> saveRDS(ap, "data/airline/airports.rds")
+> library(ggmap)
+Google Maps API Terms of Service: https://cloud.google.com/maps-platform/terms/.
+Please cite ggmap if you use it: see citation("ggmap") for details.
+> citation("ggmap")
+
+To cite ggmap in publications, please use:
+
+  D. Kahle and H. Wickham. ggmap: Spatial Visualization with ggplot2. The
+  R Journal, 5(1), 144-161. URL
+  http://journal.r-project.org/archive/2013-1/kahle-wickham.pdf
+
+A BibTeX entry for LaTeX users is
+
+  @Article{,
+    author = {David Kahle and Hadley Wickham},
+    title = {ggmap: Spatial Visualization with ggplot2},
+    journal = {The R Journal},
+    year = {2013},
+    volume = {5},
+    number = {1},
+    pages = {144--161},
+    url = {http://journal.r-project.org/archive/2013-1/kahle-wickham.pdf},
+  }
+
+> citation("ggplot2")
+
+To cite ggplot2 in publications, please use:
+
+  H. Wickham. ggplot2: Elegant Graphics for Data Analysis. Springer-Verlag
+  New York, 2016.
+
+A BibTeX entry for LaTeX users is
+
+  @Book{,
+    author = {Hadley Wickham},
+    title = {ggplot2: Elegant Graphics for Data Analysis},
+    publisher = {Springer-Verlag New York},
+    year = {2016},
+    isbn = {978-3-319-24277-4},
+    url = {http://ggplot2.org},
+  }
+
+> # Stamen Maps
+> m = get_stamenmap()
+Source : http://tile.stamen.com/terrain/10/239/422.png
+Source : http://tile.stamen.com/terrain/10/240/422.png
+Source : http://tile.stamen.com/terrain/10/241/422.png
+Source : http://tile.stamen.com/terrain/10/239/423.png
+Source : http://tile.stamen.com/terrain/10/240/423.png
+Source : http://tile.stamen.com/terrain/10/241/423.png
+Source : http://tile.stamen.com/terrain/10/239/424.png
+Source : http://tile.stamen.com/terrain/10/240/424.png
+Source : http://tile.stamen.com/terrain/10/241/424.png
+> # Create a map layer
+> ggmap(m)
+> ?get_stamenmap
+> bbox = c(
+. -121.790225, 38.518210, # bottom left
+. -121.695120, 38.571458 # top right
+. )
+> bbox
+[1] -121.79023   38.51821 -121.69512   38.57146
+> m = get_stamenmap(bbox)
+Source : http://tile.stamen.com/terrain/10/165/392.png
+Source : http://tile.stamen.com/terrain/10/165/393.png
+> ggmap(m)
+> ?get_stamenmap
+> m = get_stamenmap(bbox, zoom = 5) # default zoom = 10
+Source : http://tile.stamen.com/terrain/5/5/12.png
+> ggmap(m)
+> m = get_stamenmap(bbox, zoom = 15) # default zoom = 10
+70 tiles needed, this may take a while (try a smaller zoom).
+Source : http://tile.stamen.com/terrain/15/5298/12573.png
+Source : http://tile.stamen.com/terrain/15/5299/12573.png
+Source : http://tile.stamen.com/terrain/15/5300/12573.png
+Source : http://tile.stamen.com/terrain/15/5301/12573.png
+Source : http://tile.stamen.com/terrain/15/5302/12573.png
+Source : http://tile.stamen.com/terrain/15/5303/12573.png
+Source : http://tile.stamen.com/terrain/15/5304/12573.png
+Source : http://tile.stamen.com/terrain/15/5305/12573.png
+Source : http://tile.stamen.com/terrain/15/5306/12573.png
+Source : http://tile.stamen.com/terrain/15/5307/12573.png
+Source : http://tile.stamen.com/terrain/15/5298/12574.png
+Source : http://tile.stamen.com/terrain/15/5299/12574.png
+Source : http://tile.stamen.com/terrain/15/5300/12574.png
+Source : http://tile.stamen.com/terrain/15/5301/12574.png
+Source : http://tile.stamen.com/terrain/15/5302/12574.png
+Source : http://tile.stamen.com/terrain/15/5303/12574.png
+Source : http://tile.stamen.com/terrain/15/5304/12574.png
+Source : http://tile.stamen.com/terrain/15/5305/12574.png
+Source : http://tile.stamen.com/terrain/15/5306/12574.png
+Source : http://tile.stamen.com/terrain/15/5307/12574.png
+Source : http://tile.stamen.com/terrain/15/5298/12575.png
+Source : http://tile.stamen.com/terrain/15/5299/12575.png
+Source : http://tile.stamen.com/terrain/15/5300/12575.png
+Source : http://tile.stamen.com/terrain/15/5301/12575.png
+Source : http://tile.stamen.com/terrain/15/5302/12575.png
+Source : http://tile.stamen.com/terrain/15/5303/12575.png
+Source : http://tile.stamen.com/terrain/15/5304/12575.png
+Source : http://tile.stamen.com/terrain/15/5305/12575.png
+Source : http://tile.stamen.com/terrain/15/5306/12575.png
+Source : http://tile.stamen.com/terrain/15/5307/12575.png
+Source : http://tile.stamen.com/terrain/15/5298/12576.png
+Source : http://tile.stamen.com/terrain/15/5299/12576.png
+Source : http://tile.stamen.com/terrain/15/5300/12576.png
+Source : http://tile.stamen.com/terrain/15/5301/12576.png
+Source : http://tile.stamen.com/terrain/15/5302/12576.png
+Source : http://tile.stamen.com/terrain/15/5303/12576.png
+Source : http://tile.stamen.com/terrain/15/5304/12576.png
+Source : http://tile.stamen.com/terrain/15/5305/12576.png
+Source : http://tile.stamen.com/terrain/15/5306/12576.png
+Source : http://tile.stamen.com/terrain/15/5307/12576.png
+Source : http://tile.stamen.com/terrain/15/5298/12577.png
+Source : http://tile.stamen.com/terrain/15/5299/12577.png
+Source : http://tile.stamen.com/terrain/15/5300/12577.png
+Source : http://tile.stamen.com/terrain/15/5301/12577.png
+Source : http://tile.stamen.com/terrain/15/5302/12577.png
+Source : http://tile.stamen.com/terrain/15/5303/12577.png
+Source : http://tile.stamen.com/terrain/15/5304/12577.png
+Source : http://tile.stamen.com/terrain/15/5305/12577.png
+Source : http://tile.stamen.com/terrain/15/5306/12577.png
+Source : http://tile.stamen.com/terrain/15/5307/12577.png
+Source : http://tile.stamen.com/terrain/15/5298/12578.png
+Source : http://tile.stamen.com/terrain/15/5299/12578.png
+Source : http://tile.stamen.com/terrain/15/5300/12578.png
+Source : http://tile.stamen.com/terrain/15/5301/12578.png
+Source : http://tile.stamen.com/terrain/15/5302/12578.png
+Source : http://tile.stamen.com/terrain/15/5303/12578.png
+Source : http://tile.stamen.com/terrain/15/5304/12578.png
+Source : http://tile.stamen.com/terrain/15/5305/12578.png
+Source : http://tile.stamen.com/terrain/15/5306/12578.png
+Source : http://tile.stamen.com/terrain/15/5307/12578.png
+Source : http://tile.stamen.com/terrain/15/5298/12579.png
+Source : http://tile.stamen.com/terrain/15/5299/12579.png
+Source : http://tile.stamen.com/terrain/15/5300/12579.png
+Source : http://tile.stamen.com/terrain/15/5301/12579.png
+Source : http://tile.stamen.com/terrain/15/5302/12579.png
+Source : http://tile.stamen.com/terrain/15/5303/12579.png
+Source : http://tile.stamen.com/terrain/15/5304/12579.png
+Source : http://tile.stamen.com/terrain/15/5305/12579.png
+Source : http://tile.stamen.com/terrain/15/5306/12579.png
+Source : http://tile.stamen.com/terrain/15/5307/12579.png
+> ggmap(m)
+> ?get_map
+> bbox = c(-122.538504,37.69837,-122.346243,37.815088)
+> m = get_stamenmap(bbox)
+Source : http://tile.stamen.com/terrain/10/163/395.png
+Source : http://tile.stamen.com/terrain/10/163/396.png
+> ggmap(m)
+> m = get_stamenmap(bbox, zoom = 12)
+Source : http://tile.stamen.com/terrain/12/653/1582.png
+Source : http://tile.stamen.com/terrain/12/654/1582.png
+Source : http://tile.stamen.com/terrain/12/655/1582.png
+Source : http://tile.stamen.com/terrain/12/653/1583.png
+Source : http://tile.stamen.com/terrain/12/654/1583.png
+Source : http://tile.stamen.com/terrain/12/655/1583.png
+Source : http://tile.stamen.com/terrain/12/653/1584.png
+Source : http://tile.stamen.com/terrain/12/654/1584.png
+Source : http://tile.stamen.com/terrain/12/655/1584.png
+> ggmap(m)
+> ?get_stamenmap
+> m = get_stamenmap(bbox, zoom = 12, maptype = "toner-lite")
+Source : http://tile.stamen.com/toner-lite/12/653/1582.png
+Source : http://tile.stamen.com/toner-lite/12/654/1582.png
+Source : http://tile.stamen.com/toner-lite/12/655/1582.png
+Source : http://tile.stamen.com/toner-lite/12/653/1583.png
+Source : http://tile.stamen.com/toner-lite/12/654/1583.png
+Source : http://tile.stamen.com/toner-lite/12/655/1583.png
+Source : http://tile.stamen.com/toner-lite/12/653/1584.png
+Source : http://tile.stamen.com/toner-lite/12/654/1584.png
+Source : http://tile.stamen.com/toner-lite/12/655/1584.png
+> ggmap(m)
+> bbox = c(-130.31,24.41,-63.25,49.7)
+> m = get_stamenmap(bbox, zoom = 3, maptype = "toner-lite")
+Source : http://tile.stamen.com/toner-lite/3/1/2.png
+Source : http://tile.stamen.com/toner-lite/3/2/2.png
+Source : http://tile.stamen.com/toner-lite/3/1/3.png
+Source : http://tile.stamen.com/toner-lite/3/2/3.png
+> ggmap(m)
+> head(ap)
+  ID                                        Name         City
+1  1                              Goroka Airport       Goroka
+2  2                              Madang Airport       Madang
+3  3                Mount Hagen Kagamuga Airport  Mount Hagen
+4  4                              Nadzab Airport       Nadzab
+5  5 Port Moresby Jacksons International Airport Port Moresby
+6  6                 Wewak International Airport        Wewak
+           Country IATA ICAO  Latitude Longitude Altitude
+1 Papua New Guinea  GKA AYGA -6.081690   145.392     5282
+2 Papua New Guinea  MAG AYMD -5.207080   145.789       20
+3 Papua New Guinea  HGU AYMH -5.826790   144.296     5388
+4 Papua New Guinea  LAE AYNZ -6.569803   146.726      239
+5 Papua New Guinea  POM AYPY -9.443380   147.220      146
+6 Papua New Guinea  WWK AYWK -3.583830   143.669       19
+  Timezone DST                   Tz    Type      Source
+1       10   U Pacific/Port_Moresby airport OurAirports
+2       10   U Pacific/Port_Moresby airport OurAirports
+3       10   U Pacific/Port_Moresby airport OurAirports
+4       10   U Pacific/Port_Moresby airport OurAirports
+5       10   U Pacific/Port_Moresby airport OurAirports
+6       10   U Pacific/Port_Moresby airport OurAirports
+> ggplot(ap) + geom_point(aes(Longitude, Latitude))
+> ggmap(m) + geom_point(aes(Longitude, Latitude), ap)
+Warning: Removed 5761 rows containing missing values (geom_point).
+> head(ap)
+  ID                                        Name         City
+1  1                              Goroka Airport       Goroka
+2  2                              Madang Airport       Madang
+3  3                Mount Hagen Kagamuga Airport  Mount Hagen
+4  4                              Nadzab Airport       Nadzab
+5  5 Port Moresby Jacksons International Airport Port Moresby
+6  6                 Wewak International Airport        Wewak
+           Country IATA ICAO  Latitude Longitude Altitude
+1 Papua New Guinea  GKA AYGA -6.081690   145.392     5282
+2 Papua New Guinea  MAG AYMD -5.207080   145.789       20
+3 Papua New Guinea  HGU AYMH -5.826790   144.296     5388
+4 Papua New Guinea  LAE AYNZ -6.569803   146.726      239
+5 Papua New Guinea  POM AYPY -9.443380   147.220      146
+6 Papua New Guinea  WWK AYWK -3.583830   143.669       19
+  Timezone DST                   Tz    Type      Source
+1       10   U Pacific/Port_Moresby airport OurAirports
+2       10   U Pacific/Port_Moresby airport OurAirports
+3       10   U Pacific/Port_Moresby airport OurAirports
+4       10   U Pacific/Port_Moresby airport OurAirports
+5       10   U Pacific/Port_Moresby airport OurAirports
+6       10   U Pacific/Port_Moresby airport OurAirports
+> us = ap[ap$Country == "United States", ]
+> head(us)
+       ID                       Name          City       Country
+3201 3411 Barter Island LRRS Airport Barter Island United States
+3202 3413 Cape Lisburne LRRS Airport Cape Lisburne United States
+3203 3414     Point Lay LRRS Airport     Point Lay United States
+3204 3415 Hilo International Airport          Hilo United States
+3205 3416  Orlando Executive Airport       Orlando United States
+3206 3417            Bettles Airport       Bettles United States
+     IATA ICAO Latitude Longitude Altitude Timezone DST
+3201  BTI PABA  70.1340 -143.5820        2       -9   A
+3202  LUR PALU  68.8751 -166.1100       16       -9   A
+3203  PIZ PPIZ  69.7329 -163.0050       22       -9   A
+3204  ITO PHTO  19.7214 -155.0480       38      -10   N
+3205  ORL KORL  28.5455  -81.3329      113       -5   A
+3206  BTT PABT  66.9139 -151.5290      647       -9   A
+                    Tz    Type      Source
+3201 America/Anchorage airport OurAirports
+3202 America/Anchorage airport OurAirports
+3203 America/Anchorage airport OurAirports
+3204  Pacific/Honolulu airport OurAirports
+3205  America/New_York airport OurAirports
+3206 America/Anchorage airport OurAirports
+> ggmap(m) + geom_point(aes(Longitude, Latitude), us)
+Warning: Removed 201 rows containing missing values (geom_point).
+> ggmap(m) +
+.   geom_point(aes(Longitude, Latitude), us, alpha = 0.25,
+.              size = 0.5)
+Warning: Removed 201 rows containing missing values (geom_point).
+> # Look at air data.
+> # Count flights for each airport?
+> str(air)
+'data.frame':	570118 obs. of  41 variables:
+ $ YEAR                 : int  2018 2018 2018 2018 2018 2018 2018 2018 2018 2018 ...
+ $ MONTH                : int  1 1 1 1 1 1 1 1 1 1 ...
+ $ DAY_OF_MONTH         : int  27 27 27 27 27 27 27 27 27 27 ...
+ $ DAY_OF_WEEK          : int  6 6 6 6 6 6 6 6 6 6 ...
+ $ OP_UNIQUE_CARRIER    : Factor w/ 18 levels "9E","AA","AS",..: 14 14 14 14 14 14 14 14 14 14 ...
+ $ OP_CARRIER_AIRLINE_ID: int  19977 19977 19977 19977 19977 19977 19977 19977 19977 19977 ...
+ $ TAIL_NUM             : Factor w/ 5261 levels "","215NV","216NV",..: 913 1846 275 417 1257 3589 2324 2324 1396 3020 ...
+ $ OP_CARRIER_FL_NUM    : int  369 368 367 366 365 364 363 362 361 360 ...
+ $ ORIGIN_AIRPORT_ID    : int  11697 14747 11278 12892 12451 12266 11618 12173 12889 12264 ...
+ $ ORIGIN_CITY_MARKET_ID: int  32467 30559 30852 32575 31136 31453 31703 32134 32211 30852 ...
+ $ ORIGIN               : Factor w/ 334 levels "ABE","ABI","ABQ",..: 113 287 85 176 165 151 105 140 174 149 ...
+ $ ORIGIN_CITY_NAME     : Factor w/ 328 levels "Aberdeen, SD",..: 106 285 316 180 148 138 214 137 170 316 ...
+ $ ORIGIN_STATE_NM      : Factor w/ 52 levels "Alabama","Alaska",..: 8 49 48 5 8 43 29 10 27 48 ...
+ $ DEST_AIRPORT_ID      : int  12266 14771 12266 13930 11618 14107 12173 11618 14771 15304 ...
+ $ DEST_CITY_MARKET_ID  : int  31453 32457 31453 30977 31703 30466 32134 31703 32457 33195 ...
+ $ DEST                 : Factor w/ 334 levels "ABE","ABI","ABQ",..: 151 289 151 231 105 244 140 105 289 316 ...
+ $ DEST_CITY_NAME       : Factor w/ 328 levels "Aberdeen, SD",..: 138 270 138 62 214 239 137 214 270 304 ...
+ $ DEST_STATE_NM        : Factor w/ 52 levels "Alabama","Alaska",..: 43 5 43 12 29 3 10 29 5 8 ...
+ $ CRS_DEP_TIME         : int  615 618 830 650 1824 1420 815 1615 1520 1753 ...
+ $ DEP_TIME             : int  602 614 828 641 1810 1413 842 1623 1515 1746 ...
+ $ DEP_DELAY            : num  -13 -4 -2 -9 -14 -7 27 8 -5 -7 ...
+ $ TAXI_OUT             : num  19 16 17 17 11 19 21 21 11 16 ...
+ $ WHEELS_OFF           : int  621 630 845 658 1821 1432 903 1644 1526 1802 ...
+ $ WHEELS_ON            : int  749 808 1055 1230 2013 1554 1454 618 1634 1955 ...
+ $ TAXI_IN              : num  7 5 13 12 8 5 3 12 7 6 ...
+ $ CRS_ARR_TIME         : int  808 831 1107 1250 2045 1618 1438 653 1703 2019 ...
+ $ ARR_TIME             : int  756 813 1108 1242 2021 1559 1457 630 1641 2001 ...
+ $ ARR_DELAY            : num  -12 -18 1 -8 -24 -19 19 -23 -22 -18 ...
+ $ CANCELLED            : num  0 0 0 0 0 0 0 0 0 0 ...
+ $ DIVERTED             : num  0 0 0 0 0 0 0 0 0 0 ...
+ $ CRS_ELAPSED_TIME     : num  173 133 217 240 141 178 683 578 103 146 ...
+ $ ACTUAL_ELAPSED_TIME  : num  174 119 220 241 131 166 675 547 86 135 ...
+ $ AIR_TIME             : num  148 98 190 212 112 142 651 514 68 113 ...
+ $ DISTANCE             : num  966 679 1208 1744 820 ...
+ $ CARRIER_DELAY        : num  NA NA NA NA NA NA 0 NA NA NA ...
+ $ WEATHER_DELAY        : num  NA NA NA NA NA NA 0 NA NA NA ...
+ $ NAS_DELAY            : num  NA NA NA NA NA NA 0 NA NA NA ...
+ $ SECURITY_DELAY       : num  NA NA NA NA NA NA 0 NA NA NA ...
+ $ LATE_AIRCRAFT_DELAY  : num  NA NA NA NA NA NA 19 NA NA NA ...
+ $ X                    : logi  NA NA NA NA NA NA ...
+ $ ontime               : logi  TRUE TRUE FALSE TRUE TRUE TRUE ...
+> # Airlines are a closed system -- the planes generally
+> # don't escape.
+> #
+> # Do any planes "disappear" or "appear" in this data set?
+> #
+> # Do any planes move around without schedule flights?
+> #
+> # So we can just count departures or arrivals, not both
+> table(air$ORIGIN)
+
+  ABE   ABI   ABQ   ABR   ABY   ACT   ACV   ACY   ADK   ADQ   AEX 
+  316   169  1800    62    83   111    97   310     9    52   267 
+  AGS   ALB   ALO   AMA   ANC   APN   ASE   ATL   ATW   AUS   AVL 
+  284  1030    58   417  1207    52   985 30617   318  4704   483 
+  AVP   AZA   AZO   BDL   BET   BFF   BFL   BGM   BGR   BHM   BIL 
+  253   438   225  2322    73     3   171    58   251  1401   351 
+  BIS   BJI   BLI   BLV   BMI   BNA   BOI   BOS   BPT   BQK   BQN 
+  268    62   221    72   250  5701  1549 11151    63    84   109 
+  BRD   BRO   BRW   BTM   BTR   BTV   BUF   BUR   BWI   BZN   CAE 
+   53   173    62    58   591   735  2041  2256  8525   536   413 
+  CAK   CDC   CDV   CGI   CHA   CHO   CHS   CID   CIU   CKB   CLE 
+  657    53    60    53   628   432  1651   725    58    68  3846 
+  CLL   CLT   CMH   CMI   CMX   COD   COS   COU   CPR   CRP   CRW 
+  169 18362  3400   194    61    61   872   183    82   442   387 
+  CSG   CVG   CWA   DAB   DAL   DAY   DBQ   DCA   DEN   DFW   DHN 
+   82  3615   198   267  6011  1091    89 10742 18231 22349   117 
+  DLH   DRO   DSM   DTW   DVL   EAU   ECP   EGE   EKO   ELM   ELP 
+  206   278  1243 12402    52    58   292   434    53    29  1303 
+  ERI   ESC   EUG   EVV   EWN   EWR   EYW   FAI   FAR   FAT   FAY 
+   89    54   332   388   161 11641   474   272   475   818   298 
+  FCA   FLG   FLL   FNT   FSD   FSM   FWA   GCC   GCK   GEG   GFK 
+  155    96  8512   353   525   172   596    80    62   950   164 
+  GGG   GJT   GNV   GPT   GRB   GRI   GRK   GRR   GSO   GSP   GTF 
+   58   289   369   326   338    78   246  1348   951   945   113 
+  GTR   GUC   GUM   HDN   HGR   HIB   HLN   HNL   HOB   HOU   HPN 
+   82    47    31   228     9    54   120  3937    58  4759   764 
+  HRL   HSV   HTS   HVN   HYS   IAD   IAG   IAH   ICT   IDA   IFP 
+  287   641    25    90    54  5094    68 14058   834   199    31 
+  ILM   IMT   IND   INL   ISN   ISP   ITH   ITO   JAC   JAN   JAX 
+  472    58  3841    53   106   579    88   508   394   601  2236 
+  JFK   JLN   JMS   JNU   KOA   KTN   LAN   LAR   LAS   LAW   LAX 
+10050    62    83   327  1197   182   251    54 13291    93 17785 
+  LBB   LBE   LCH   LCK   LEX   LFT   LGA   LGB   LIH   LIT   LNK 
+  526    93   147    36   727   369 13587  1528  1133   986   169 
+  LRD   LSE   LWS   LYH   MAF   MBS   MCI   MCO   MDT   MDW   MEI 
+  204   156    51    47   740   196  4346 11632   509  6625    93 
+  MEM   MFE   MFR   MGM   MHK   MHT   MIA   MKE   MKG   MLB   MLI 
+ 1797   348   354   313   143   784  7878  2809    58   203   387 
+  MLU   MMH   MOB   MOT   MQT   MRY   MSN   MSO   MSP   MSY   MTJ 
+  233    31   560   188    89   280   843   145 11885  4650   232 
+  MYR   OAJ   OAK   OGD   OGG   OGS   OKC   OMA   OME   ONT   ORD 
+  536   240  4194    19  2072    17  1751  1866    60  1798 25680 
+  ORF   ORH   OTH   OTZ   OWB   PAH   PBG   PBI   PDX   PGD   PHF 
+ 1536    59    18    61    11    57    64  2522  4937   413   236 
+  PHL   PHX   PIA   PIB   PIE   PIH   PIT   PLN   PNS   PPG   PSC 
+ 8725 14435   436    62   563    88  3780    76   766    10   319 
+  PSE   PSG   PSM   PSP   PUB   PVD   PVU   PWM   RAP   RDD   RDM 
+   70    62    17  1010    54  1458    37   797   243    90   275 
+  RDU   RFD   RHI   RIC   RKS   RNO   ROA   ROC   ROW   RST   RSW 
+ 4465    49    62  1811    58  1430   174  1090   109   248  3737 
+  SAF   SAN   SAT   SAV   SBA   SBN   SBP   SCC   SCE   SCK   SDF 
+  124  7136  3093   900   557   458   388    62    87    44  1560 
+  SEA   SFB   SFO   SGF   SGU   SHV   SIT   SJC   SJT   SJU   SLC 
+10726   727 14135   692   274   559    89  4277   128  1948  9282 
+  SMF   SMX   SNA   SPI   SPS   SRQ   STC   STL   STS   STT   STX 
+ 3638    14  3341   148    90   473    18  5174   129   133   117 
+  SUN   SUX   SWF   SWO   SYR   TLH   TOL   TPA   TRI   TTN   TUL 
+  128    94   145    57  1094   456   178  6544   189   170  1361 
+  TUS   TVC   TWF   TXK   TYR   TYS   UIN   USA   VLD   VPS   WRG 
+ 1536   268   110    80   111  1208    80    62    87   439    62 
+  XNA   YAK   YNG   YUM 
+ 1047    60     2   121 
+> # Airlines are a closed system -- the planes generally
+> # don't escape.
+> #
+> # Do any planes "disappear" or "appear" in this data set?
+> #
+> # Do any planes move around without schedule flights?
+> #
+> # So we can just count departures or arrivals, not both
+> departures = as.data.frame(table(air$ORIGIN))
+> head(departures)
+  Var1 Freq
+1  ABE  316
+2  ABI  169
+3  ABQ 1800
+4  ABR   62
+5  ABY   83
+6  ACT  111
+> names(departures) = c("airport", "count")
+> head(departures)
+  airport count
+1     ABE   316
+2     ABI   169
+3     ABQ  1800
+4     ABR    62
+5     ABY    83
+6     ACT   111
+> head(departures[order(departures$count), ])
+    airport count
+333     YNG     2
+28      BFF     3
+9       ADK     9
+137     HGR     9
+252     PPG    10
+236     OWB    11
+> head(ap)
+  ID                                        Name         City
+1  1                              Goroka Airport       Goroka
+2  2                              Madang Airport       Madang
+3  3                Mount Hagen Kagamuga Airport  Mount Hagen
+4  4                              Nadzab Airport       Nadzab
+5  5 Port Moresby Jacksons International Airport Port Moresby
+6  6                 Wewak International Airport        Wewak
+           Country IATA ICAO  Latitude Longitude Altitude
+1 Papua New Guinea  GKA AYGA -6.081690   145.392     5282
+2 Papua New Guinea  MAG AYMD -5.207080   145.789       20
+3 Papua New Guinea  HGU AYMH -5.826790   144.296     5388
+4 Papua New Guinea  LAE AYNZ -6.569803   146.726      239
+5 Papua New Guinea  POM AYPY -9.443380   147.220      146
+6 Papua New Guinea  WWK AYWK -3.583830   143.669       19
+  Timezone DST                   Tz    Type      Source
+1       10   U Pacific/Port_Moresby airport OurAirports
+2       10   U Pacific/Port_Moresby airport OurAirports
+3       10   U Pacific/Port_Moresby airport OurAirports
+4       10   U Pacific/Port_Moresby airport OurAirports
+5       10   U Pacific/Port_Moresby airport OurAirports
+6       10   U Pacific/Port_Moresby airport OurAirports
+> dep_ap = merge(departures, ap, by.x = "airport",
+.                by.y = "IATA")
+> head(dep_ap)
+  airport count   ID                                      Name
+1     ABE   316 4355       Lehigh Valley International Airport
+2     ABI   169 3718                  Abilene Regional Airport
+3     ABQ  1800 4019 Albuquerque International Sunport Airport
+4     ABR    62 5714                 Aberdeen Regional Airport
+5     ABY    83 5715        Southwest Georgia Regional Airport
+6     ACT   111 3700                     Waco Regional Airport
+         City       Country ICAO Latitude Longitude Altitude
+1   Allentown United States KABE  40.6521  -75.4408      393
+2     Abilene United States KABI  32.4113  -99.6819     1791
+3 Albuquerque United States KABQ  35.0402 -106.6090     5355
+4    Aberdeen United States KABR  45.4491  -98.4218     1302
+5      Albany United States KABY  31.5355  -84.1945      197
+6        Waco United States KACT  31.6113  -97.2305      516
+  Timezone DST               Tz    Type      Source
+1       -5   A America/New_York airport OurAirports
+2       -6   A  America/Chicago airport OurAirports
+3       -7   A   America/Denver airport OurAirports
+4       -6   A  America/Chicago airport OurAirports
+5       -5   A America/New_York airport OurAirports
+6       -6   A  America/Chicago airport OurAirports
+> nrow(dep_ap)
+[1] 331
+> nrow(departures)
+[1] 334
+> # What are the 3 airports that disappeared?
+> departures$airport
+  [1] ABE ABI ABQ ABR ABY ACT ACV ACY ADK ADQ AEX AGS ALB ALO AMA
+ [16] ANC APN ASE ATL ATW AUS AVL AVP AZA AZO BDL BET BFF BFL BGM
+ [31] BGR BHM BIL BIS BJI BLI BLV BMI BNA BOI BOS BPT BQK BQN BRD
+ [46] BRO BRW BTM BTR BTV BUF BUR BWI BZN CAE CAK CDC CDV CGI CHA
+ [61] CHO CHS CID CIU CKB CLE CLL CLT CMH CMI CMX COD COS COU CPR
+ [76] CRP CRW CSG CVG CWA DAB DAL DAY DBQ DCA DEN DFW DHN DLH DRO
+ [91] DSM DTW DVL EAU ECP EGE EKO ELM ELP ERI ESC EUG EVV EWN EWR
+[106] EYW FAI FAR FAT FAY FCA FLG FLL FNT FSD FSM FWA GCC GCK GEG
+[121] GFK GGG GJT GNV GPT GRB GRI GRK GRR GSO GSP GTF GTR GUC GUM
+[136] HDN HGR HIB HLN HNL HOB HOU HPN HRL HSV HTS HVN HYS IAD IAG
+[151] IAH ICT IDA IFP ILM IMT IND INL ISN ISP ITH ITO JAC JAN JAX
+[166] JFK JLN JMS JNU KOA KTN LAN LAR LAS LAW LAX LBB LBE LCH LCK
+[181] LEX LFT LGA LGB LIH LIT LNK LRD LSE LWS LYH MAF MBS MCI MCO
+[196] MDT MDW MEI MEM MFE MFR MGM MHK MHT MIA MKE MKG MLB MLI MLU
+[211] MMH MOB MOT MQT MRY MSN MSO MSP MSY MTJ MYR OAJ OAK OGD OGG
+[226] OGS OKC OMA OME ONT ORD ORF ORH OTH OTZ OWB PAH PBG PBI PDX
+[241] PGD PHF PHL PHX PIA PIB PIE PIH PIT PLN PNS PPG PSC PSE PSG
+[256] PSM PSP PUB PVD PVU PWM RAP RDD RDM RDU RFD RHI RIC RKS RNO
+[271] ROA ROC ROW RST RSW SAF SAN SAT SAV SBA SBN SBP SCC SCE SCK
+[286] SDF SEA SFB SFO SGF SGU SHV SIT SJC SJT SJU SLC SMF SMX SNA
+[301] SPI SPS SRQ STC STL STS STT STX SUN SUX SWF SWO SYR TLH TOL
+[316] TPA TRI TTN TUL TUS TVC TWF TXK TYR TYS UIN USA VLD VPS WRG
+[331] XNA YAK YNG YUM
+334 Levels: ABE ABI ABQ ABR ABY ACT ACV ACY ADK ADQ AEX ... YUM
+> dep_ap$airport
+  [1] ABE ABI ABQ ABR ABY ACT ACV ACY ADK ADQ AEX AGS ALB ALO AMA
+ [16] ANC APN ASE ATL ATW AUS AVL AVP AZA AZO BDL BET BFF BFL BGM
+ [31] BGR BHM BIL BIS BJI BLI BLV BMI BNA BOI BOS BPT BQK BQN BRD
+ [46] BRO BRW BTM BTR BTV BUF BUR BWI BZN CAE CAK CDC CDV CGI CHA
+ [61] CHO CHS CID CIU CKB CLE CLL CLT CMH CMI CMX COD COS COU CPR
+ [76] CRP CRW CSG CVG CWA DAB DAL DAY DBQ DCA DEN DFW DHN DLH DRO
+ [91] DSM DTW DVL EAU ECP EGE EKO ELM ELP ERI ESC EUG EVV EWN EWR
+[106] EYW FAI FAR FAT FAY FCA FLG FLL FNT FSD FSM FWA GCC GCK GEG
+[121] GFK GGG GJT GNV GPT GRB GRI GRK GRR GSO GSP GTF GTR GUC GUM
+[136] HDN HGR HIB HLN HNL HOB HOU HPN HRL HSV HTS HVN HYS IAD IAG
+[151] IAH ICT IDA ILM IMT IND INL ISN ISP ITH ITO JAC JAN JAX JFK
+[166] JLN JMS JNU KOA KTN LAN LAR LAS LAW LAX LBB LBE LCH LCK LEX
+[181] LFT LGA LGB LIH LIT LNK LRD LSE LWS LYH MAF MBS MCI MCO MDT
+[196] MDW MEI MEM MFE MFR MGM MHK MHT MIA MKE MKG MLB MLI MLU MMH
+[211] MOB MOT MQT MRY MSN MSO MSP MSY MTJ MYR OAJ OAK OGD OGG OGS
+[226] OKC OMA OME ONT ORD ORF ORH OTH OTZ OWB PAH PBG PBI PDX PGD
+[241] PHF PHL PHX PIA PIB PIE PIH PIT PLN PNS PPG PSC PSE PSG PSM
+[256] PSP PUB PVD PVU PWM RAP RDD RDM RDU RFD RHI RIC RKS RNO ROA
+[271] ROC ROW RST RSW SAF SAN SAT SAV SBA SBN SBP SCC SCE SCK SDF
+[286] SEA SFB SFO SGF SGU SHV SIT SJC SJT SJU SLC SMF SMX SNA SPI
+[301] SPS SRQ STC STL STS STT STX SUN SUX SWF SYR TLH TOL TPA TRI
+[316] TTN TUL TUS TVC TWF TXK TYR TYS UIN VLD VPS WRG XNA YAK YNG
+[331] YUM
+334 Levels: ABE ABI ABQ ABR ABY ACT ACV ACY ADK ADQ AEX ... YUM
+> # What are the 3 airports that disappeared?
+> setdiff(departures$airport, dep_ap$airport)
+[1] "IFP" "SWO" "USA"
+> match("USA", ap$IATA)
+[1] NA
+> departures[departures$airport == "USA", ]
+    airport count
+327     USA    62
+> dep_ap = merge(departures, ap, by.x = "airport",
+.                by.y = "IATA", all.x = TRUE)
+> nrow(dep_ap)
+[1] 334
+> nrow(departures)
+[1] 334
+> dep_ap[dep_ap$airport  == "USA", ]
+    airport count ID Name City Country ICAO Latitude Longitude
+327     USA    62 NA <NA> <NA>    <NA> <NA>       NA        NA
+    Altitude Timezone  DST   Tz Type Source
+327       NA     <NA> <NA> <NA> <NA>   <NA>
+> ggmap(m)
+> ggmap(m) + geom_point(aes(Longitude, Latitude), dep_ap)
+Warning: Removed 31 rows containing missing values (geom_point).
+> ggmap(m) +
+.   geom_point(aes(Longitude, Latitude, size = count), dep_ap)
+Warning: Removed 31 rows containing missing values (geom_point).
+> ggmap(m) +
+.   geom_point(aes(Longitude, Latitude, size = count), dep_ap,
+.              alpha = 0.25)
+Warning: Removed 31 rows containing missing values (geom_point).
+> ggmap(m) +
+.   geom_point(aes(Longitude, Latitude, size = count,
+.                  color = count), dep_ap,
+.              alpha = 0.25)
+Warning: Removed 31 rows containing missing values (geom_point).
+> m = get_googlemap()
+Source : https://maps.googleapis.com/maps/api/staticmap?center=29.763284,-95.363271&zoom=10&size=640x640&scale=2&maptype=terrain
+> ggmap(m)
+> loc = c(-121.740092, 38.544885)
+> m = get_googlemap(loc)
+Source : https://maps.googleapis.com/maps/api/staticmap?center=38.544885,-121.740092&zoom=10&size=640x640&scale=2&maptype=terrain
+Error in get_googlemap(loc) : Forbidden (HTTP 403).
+> loc = c(-121.740092, 38.544885)
+> m = get_googlemap(loc)
+Source : https://maps.googleapis.com/maps/api/staticmap?center=38.544885,-121.740092&zoom=10&size=640x640&scale=2&maptype=terrain
+> ggmap(m)
+> get_googlemap("Davis, CA")
+Source : https://maps.googleapis.com/maps/api/staticmap?center=Davis,%20CA&zoom=10&size=640x640&scale=2&maptype=terrain
+Error in geocode(center, source = "google") : 
+  Google now requires a (free) API key, see ?register_google

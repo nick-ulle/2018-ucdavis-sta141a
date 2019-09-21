@@ -1,0 +1,439 @@
+
+R version 3.5.1 (2018-07-02) -- "Feather Spray"
+Copyright (C) 2018 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+R version 3.5.1 (2018-07-02) -- Feather Spray
+Type 'citation()', 'contributors()', or 'license()' for more information
+
+Libraries:
+* /home/nick/.config/R/library
+* /usr/lib/R/library
+
+> cl = readRDS("data/craigslist/old/cl_apartments.rds")
+> head(cl)
+                                                                                                                                                                                title
+1 $895 / 1br - 500ft2 - 1 BD + 1 BD WATER PAID$ UTILITY$ NEW FLOORS & WINDOWS *GREEN COURTYARD (W. ROSAMOND BLVD. / B ST.)\n  \n    \n    hide this posting\n  \n  \n    \n    unhide
+2 $895 / 1br - 500ft2 - 1 BD + 1 BD WATER PAID$ UTILITY$ NEW FLOORS & WINDOWS *GREEN COURTYARD (W. ROSAMOND BLVD. / B ST.)\n  \n    \n    hide this posting\n  \n  \n    \n    unhide
+3 $895 / 1br - 500ft2 - 1 BD + 1 BD WATER PAID$ UTILITY$ NEW FLOORS & WINDOWS *GREEN COURTYARD (W. ROSAMOND BLVD. / B ST.)\n  \n    \n    hide this posting\n  \n  \n    \n    unhide
+4 $895 / 1br - 500ft2 - 1 BD + 1 BD WATER PAID$ UTILITY$ NEW FLOORS & WINDOWS *GREEN COURTYARD (W. ROSAMOND BLVD. / B ST.)\n  \n    \n    hide this posting\n  \n  \n    \n    unhide
+5 $895 / 1br - 500ft2 - 1 BD + 1 BD WATER PAID$ UTILITY$ NEW FLOORS & WINDOWS *GREEN COURTYARD (W. ROSAMOND BLVD. / B ST.)\n  \n    \n    hide this posting\n  \n  \n    \n    unhide
+6                           $1288 / 1br - 644ft2 - 1 BD, Central Air Conditioning and Heat, Patio/Balcony (Granada Villas)\n  \n    \n    hide this posting\n  \n  \n    \n    unhide
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              text
+1   QR Code Link to This Post\n            \n        \n(818) 749-913O or  show contact info\n or  show contact info\n or (310) 307-9O9O\nQuail Gardens\n2184 POPLAR ST. \nROSAMOND, CA 93560\n- $995 per Month\n- Deposit: $1,500\n- Utility Paid: Water Included/ Paid by Owner\n- 2 Bedroom, 1 Bathroom\n- Available: 10/15/2018 and/or Now!\n- Lease: 2-Year Minimum\n- Size: Medium\n- Laundry: Common Laundry Room On-site\n- Parking: On-site Parking\n- Floor Type: NEW* Italian Porcelain Tile\n- New Windows & Paint\n- On-Site Manager\nDESCRIPTION: \nBeautiful Apartment Complex! Incredible Unit has a nice outdoor Green Courtyard w/ NEW Floors & Wall A/C*, New Dual-Pane Windows, an Updated Multi-Family Lot, Paid Gardener and a relaxing quiet Courtyard w/ our well Maintained facility and a fantastic Elder Community.**\nSHOWING INFORMATION:\nShown by APPOINTMENT Only; Monday - Friday 9:00AM - 6:00PM, Saturday's & Sunday's 10:00AM - 4:00PM. -----------> PLEASE CALL  show contact info\n OR  show contact info\n - Edward to Schedule\nSe Habla Español*\nDIRECTIONS:\nRight Off 14 Fwy, exit Rosamond Blvd. (Right Turn), turn Right on B ST.\nIn between B ST. & C ST. on Poplar Street.\nNearby (NEWLY BUILT) Schools, Library's, Parks, Fire Dept. Police Dept.  Also Near, Restaurants, Markets, Coffee shops, Fast Foods, Albertsons, Gas Stations & other Food Restaurants + Easy Freeway Access.\nSuperbly Prime Location!!! Run, Don't Walk! Will Go Fast.. within close walking distance to any place you desire. Plus, local transit Bus (affordable fraction-cost) that can also take you all around the entire city.\nLIMITED Vacancy's Available, so call to schedule an appointment NOW! Make Sure, you Get this Beautiful unit, before someone else does..\nMust show proof of monthly income, at least $1,800 per month. We do a 3 part tenant screening that checks credit, eviction history and criminal history. The application fee is $40 per adult (non-refundable) **No Pets Allowed..\n**** WE ACCEPT SECTION 8, SOCIAL SECURITY and most other GOVERNMENT BENEFITS.****\nPlease Don't Hesitate to come by ANYTIME for a TOUR..\nOur Desire Is to Make your Move-In Transition as Easy, Pleasant & Peaceful as Possible, Let us Know How We Can HELP. =)\nThis Rent, Deposit, Concession and Terms listed in this ad, are only valid for the actual date that this ad was initially post.
+2 QR Code Link to This Post\n            \n        \n\n(818) 749-913O or  show contact info\n or  show contact info\n or (310) 307-9O9O\nQuail Gardens\n2184 POPLAR ST. \nROSAMOND, CA 93560\n- $895 per Month\n- Deposit: $1,500\n- Utility Paid: Water Included/ Paid by Owner\n- 1 Bedroom, 1 Bathroom\n- Available: 10/15/2018 and/or Now!\n- Lease: 2-Year Minimum\n- Size: Medium\n- Laundry: Common Laundry Room On-site\n- Parking: On-site Parking\n- Floor Type: NEW* Italian Porcelain Tile\n- New Windows & Paint\n- On-Site Manager\nDESCRIPTION: \nBeautiful Apartment Complex! Incredible Unit has a nice outdoor Green Courtyard w/ NEW Floors & Wall A/C*, New Dual-Pane Windows, an Updated Multi-Family Lot, Paid Gardener and a relaxing quiet Courtyard w/ our well Maintained facility and a fantastic Elder Community.**\nSHOWING INFORMATION:\nShown by APPOINTMENT Only; Monday - Friday 9:00AM - 6:00PM, Saturday's & Sunday's 10:00AM - 4:00PM. -----------> PLEASE CALL  show contact info\n OR  show contact info\n - Edward to Schedule\nSe Habla Español*\nDIRECTIONS:\nRight Off 14 Fwy, exit Rosamond Blvd. (Right Turn), turn Right on B ST.\nIn between B ST. & C ST. on Poplar Street.\nNearby (NEWLY BUILT) Schools, Library's, Parks, Fire Dept. Police Dept.  Also Near, Restaurants, Markets, Coffee shops, Fast Foods, Albertsons, Gas Stations & other Food Restaurants + Easy Freeway Access.\nSuperbly Prime Location!!! Run, Don't Walk! Will Go Fast.. within close walking distance to any place you desire. Plus, local transit Bus (affordable fraction-cost) that can also take you all around the entire city.\nLIMITED Vacancy's Available, so call to schedule an appointment NOW! Make Sure, you Get this Beautiful unit, before someone else does..\nMust show proof of monthly income, at least $1,800 per month. We do a 3 part tenant screening that checks credit, eviction history and criminal history. The application fee is $40 per adult (non-refundable) **No Pets Allowed..\n**** WE ACCEPT SECTION 8, SOCIAL SECURITY and most other GOVERNMENT BENEFITS.****\nPlease Don't Hesitate to come by ANYTIME for a TOUR..\nOur Desire Is to Make your Move-In Transition as Easy, Pleasant & Peaceful as Possible, Let us Know How We Can HELP. =)\nThis Rent, Deposit, Concession and Terms listed in this ad, are only valid for the actual date that this ad was initially post.
+3 QR Code Link to This Post\n            \n        \n\n(818) 749-913O or  show contact info\n or  show contact info\n or (310) 307-9O9O\nQuail Gardens\n2184 POPLAR ST. \nROSAMOND, CA 93560\n- $895 per Month\n- Deposit: $1,500\n- Utility Paid: Water Included/ Paid by Owner\n- 1 Bedroom, 1 Bathroom\n- Available: 10/15/2018 and/or Now!\n- Lease: 2-Year Minimum\n- Size: Medium\n- Laundry: Common Laundry Room On-site\n- Parking: On-site Parking\n- Floor Type: NEW* Italian Porcelain Tile\n- New Windows & Paint\n- On-Site Manager\nDESCRIPTION: \nBeautiful Apartment Complex! Incredible Unit has a nice outdoor Green Courtyard w/ NEW Floors & Wall A/C*, New Dual-Pane Windows, an Updated Multi-Family Lot, Paid Gardener and a relaxing quiet Courtyard w/ our well Maintained facility and a fantastic Elder Community.**\nSHOWING INFORMATION:\nShown by APPOINTMENT Only; Monday - Friday 9:00AM - 6:00PM, Saturday's & Sunday's 10:00AM - 4:00PM. -----------> PLEASE CALL  show contact info\n OR  show contact info\n - Edward to Schedule\nSe Habla Español*\nDIRECTIONS:\nRight Off 14 Fwy, exit Rosamond Blvd. (Right Turn), turn Right on B ST.\nIn between B ST. & C ST. on Poplar Street.\nNearby (NEWLY BUILT) Schools, Library's, Parks, Fire Dept. Police Dept.  Also Near, Restaurants, Markets, Coffee shops, Fast Foods, Albertsons, Gas Stations & other Food Restaurants + Easy Freeway Access.\nSuperbly Prime Location!!! Run, Don't Walk! Will Go Fast.. within close walking distance to any place you desire. Plus, local transit Bus (affordable fraction-cost) that can also take you all around the entire city.\nLIMITED Vacancy's Available, so call to schedule an appointment NOW! Make Sure, you Get this Beautiful unit, before someone else does..\nMust show proof of monthly income, at least $1,800 per month. We do a 3 part tenant screening that checks credit, eviction history and criminal history. The application fee is $40 per adult (non-refundable) **No Pets Allowed..\n**** WE ACCEPT SECTION 8, SOCIAL SECURITY and most other GOVERNMENT BENEFITS.****\nPlease Don't Hesitate to come by ANYTIME for a TOUR..\nOur Desire Is to Make your Move-In Transition as Easy, Pleasant & Peaceful as Possible, Let us Know How We Can HELP. =)\nThis Rent, Deposit, Concession and Terms listed in this ad, are only valid for the actual date that this ad was initially post.
+4 QR Code Link to This Post\n            \n        \n\n(818) 749-913O or  show contact info\n or  show contact info\n or (310) 307-9O9O\nQuail Gardens\n2184 POPLAR ST. \nROSAMOND, CA 93560\n- $895 per Month\n- Deposit: $1,500\n- Utility Paid: Water Included/ Paid by Owner\n- 1 Bedroom, 1 Bathroom\n- Available: 10/15/2018 and/or Now!\n- Lease: 2-Year Minimum\n- Size: Medium\n- Laundry: Common Laundry Room On-site\n- Parking: On-site Parking\n- Floor Type: NEW* Italian Porcelain Tile\n- New Windows & Paint\n- On-Site Manager\nDESCRIPTION: \nBeautiful Apartment Complex! Incredible Unit has a nice outdoor Green Courtyard w/ NEW Floors & Wall A/C*, New Dual-Pane Windows, an Updated Multi-Family Lot, Paid Gardener and a relaxing quiet Courtyard w/ our well Maintained facility and a fantastic Elder Community.**\nSHOWING INFORMATION:\nShown by APPOINTMENT Only; Monday - Friday 9:00AM - 6:00PM, Saturday's & Sunday's 10:00AM - 4:00PM. -----------> PLEASE CALL  show contact info\n OR  show contact info\n - Edward to Schedule\nSe Habla Español*\nDIRECTIONS:\nRight Off 14 Fwy, exit Rosamond Blvd. (Right Turn), turn Right on B ST.\nIn between B ST. & C ST. on Poplar Street.\nNearby (NEWLY BUILT) Schools, Library's, Parks, Fire Dept. Police Dept.  Also Near, Restaurants, Markets, Coffee shops, Fast Foods, Albertsons, Gas Stations & other Food Restaurants + Easy Freeway Access.\nSuperbly Prime Location!!! Run, Don't Walk! Will Go Fast.. within close walking distance to any place you desire. Plus, local transit Bus (affordable fraction-cost) that can also take you all around the entire city.\nLIMITED Vacancy's Available, so call to schedule an appointment NOW! Make Sure, you Get this Beautiful unit, before someone else does..\nMust show proof of monthly income, at least $1,800 per month. We do a 3 part tenant screening that checks credit, eviction history and criminal history. The application fee is $40 per adult (non-refundable) **No Pets Allowed..\n**** WE ACCEPT SECTION 8, SOCIAL SECURITY and most other GOVERNMENT BENEFITS.****\nPlease Don't Hesitate to come by ANYTIME for a TOUR..\nOur Desire Is to Make your Move-In Transition as Easy, Pleasant & Peaceful as Possible, Let us Know How We Can HELP. =)\nThis Rent, Deposit, Concession and Terms listed in this ad, are only valid for the actual date that this ad was initially post.
+5 QR Code Link to This Post\n            \n        \n\n(818) 749-913O or  show contact info\n or  show contact info\n or (310) 307-9O9O\nQuail Gardens\n2184 POPLAR ST. \nROSAMOND, CA 93560\n- $895 per Month\n- Deposit: $1,500\n- Utility Paid: Water Included/ Paid by Owner\n- 1 Bedroom, 1 Bathroom\n- Available: 10/15/2018 and/or Now!\n- Lease: 2-Year Minimum\n- Size: Medium\n- Laundry: Common Laundry Room On-site\n- Parking: On-site Parking\n- Floor Type: NEW* Italian Porcelain Tile\n- New Windows & Paint\n- On-Site Manager\nDESCRIPTION: \nBeautiful Apartment Complex! Incredible Unit has a nice outdoor Green Courtyard w/ NEW Floors & Wall A/C*, New Dual-Pane Windows, an Updated Multi-Family Lot, Paid Gardener and a relaxing quiet Courtyard w/ our well Maintained facility and a fantastic Elder Community.**\nSHOWING INFORMATION:\nShown by APPOINTMENT Only; Monday - Friday 9:00AM - 6:00PM, Saturday's & Sunday's 10:00AM - 4:00PM. -----------> PLEASE CALL  show contact info\n OR  show contact info\n - Edward to Schedule\nSe Habla Español*\nDIRECTIONS:\nRight Off 14 Fwy, exit Rosamond Blvd. (Right Turn), turn Right on B ST.\nIn between B ST. & C ST. on Poplar Street.\nNearby (NEWLY BUILT) Schools, Library's, Parks, Fire Dept. Police Dept.  Also Near, Restaurants, Markets, Coffee shops, Fast Foods, Albertsons, Gas Stations & other Food Restaurants + Easy Freeway Access.\nSuperbly Prime Location!!! Run, Don't Walk! Will Go Fast.. within close walking distance to any place you desire. Plus, local transit Bus (affordable fraction-cost) that can also take you all around the entire city.\nLIMITED Vacancy's Available, so call to schedule an appointment NOW! Make Sure, you Get this Beautiful unit, before someone else does..\nMust show proof of monthly income, at least $1,800 per month. We do a 3 part tenant screening that checks credit, eviction history and criminal history. The application fee is $40 per adult (non-refundable) **No Pets Allowed..\n**** WE ACCEPT SECTION 8, SOCIAL SECURITY and most other GOVERNMENT BENEFITS.****\nPlease Don't Hesitate to come by ANYTIME for a TOUR..\nOur Desire Is to Make your Move-In Transition as Easy, Pleasant & Peaceful as Possible, Let us Know How We Can HELP. =)\nThis Rent, Deposit, Concession and Terms listed in this ad, are only valid for the actual date that this ad was initially post.
+6                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        QR Code Link to This Post\n            \n        \nBedrooms: 1\nBathrooms: 1\nSquare Feet: 644\nThis unique home features an incredible use of space, from the spacious living room to the sprawling bedrooms. This home has so much to give. In-home features include spacious bedrooms with an abundance of closet space. Kitchens are well equipped with refrigerators, microwaves, electric stoves, garbage disposals and dishwashers.\nGranada Villas offers a variety of amenities that meet a wide range of tastes and needs. The apartment amenities include a controlled entry system, two BBQ areas, a full-sized basketball court and fun zone, brand-new state of the art Fitness Center, and two sparkling pools and spas. Convenient laundry facilities are located within the community for ease of use.\nWe are located near major freeways, parks, shopping centers, and restaurants. I would also like to encourage you to visit our website at www.granadavillas.mgproperties.com\nOur availability is limited, so please call us today to schedule your personal tour and receive our most accurate pricing.\nPrices Range - $1,288 - $1,386\n** Prices are subject to change daily**
+  latitude longitude                 city_text         date_posted
+1 34.86079 -118.1701 W. ROSAMOND BLVD. / B ST. 2018-10-08 22:29:36
+2 34.86102 -118.1699 W. ROSAMOND BLVD. / B ST. 2018-10-15 11:44:23
+3 34.86102 -118.1699 W. ROSAMOND BLVD. / B ST. 2018-10-15 11:53:06
+4 34.86102 -118.1699 W. ROSAMOND BLVD. / B ST. 2018-10-15 13:30:43
+5 34.86068 -118.1700 W. ROSAMOND BLVD. / B ST. 2018-10-15 13:36:07
+6 34.66815 -118.1433            Granada Villas 2018-10-15 10:42:52
+         date_updated price deleted sqft bedrooms bathrooms pets laundry
+1 2018-10-15 13:07:37   895   FALSE  500        1         1 none  shared
+2                <NA>   895   FALSE  500        1         1 none  shared
+3                <NA>   895   FALSE  500        1         1 none  shared
+4                <NA>   895   FALSE  500        1         1 none  shared
+5                <NA>   895   FALSE  500        1         1 none  shared
+6                <NA>  1288   FALSE  644        1         1 both  shared
+     parking craigslist     place      city state      county
+1 off-street losangeles  Rosamond      <NA>    CA        Kern
+2 off-street losangeles  Rosamond      <NA>    CA        Kern
+3 off-street losangeles  Rosamond      <NA>    CA        Kern
+4 off-street losangeles  Rosamond      <NA>    CA        Kern
+5 off-street losangeles  Rosamond      <NA>    CA        Kern
+6    covered losangeles Lancaster Lancaster    CA Los Angeles
+> # Multivariate EDA --------------------
+> dogs = readRDS("data/dogs/dogs_full.rds")
+> head(dogs)
+                   breed    group datadog popularity_all popularity lifetime_cost
+1          Border Collie  herding    3.64             45         39         20143
+2         Border Terrier  terrier    3.61             80         61         22638
+3               Brittany sporting    3.54             30         30         22589
+4          Cairn Terrier  terrier    3.53             59         48         21992
+5 Welsh Springer Spaniel sporting    3.34            130         81         20224
+6 English Cocker Spaniel sporting    3.33             63         51         18993
+  intelligence_rank longevity ailments price food_cost grooming   kids
+1                 1     12.52        2   623       324   weekly    low
+2                30     14.00        0   833       324   weekly   high
+3                19     12.92        0   618       466   weekly medium
+4                35     13.84        2   435       324   weekly   high
+5                31     12.49        1   750       324   weekly   high
+6                18     11.66        0   800       324   weekly   high
+  megarank_kids megarank   size weight height
+1             1       29 medium     NA     20
+2             2        1  small   13.5     NA
+3             3       11 medium   35.0     19
+4             4        2  small   14.0     10
+5             5        4 medium     NA     18
+6             6        5 medium   30.0     16
+> # Numerical vs Categorical
+> #
+> # How does height vary for different groups of dogs?
+> library(ggplot2)
+Need help getting started? Try the cookbook for R:
+http://www.cookbook-r.com/Graphs/
+> ggplot(dogs, aes(group, height)) + geom_boxplot()
+Warning: Removed 13 rows containing non-finite values (stat_boxplot).
+> ggplot(dogs, aes(group, height)) + geom_boxplot() + geom_violin()
+Warning: Removed 13 rows containing non-finite values (stat_boxplot).
+Warning: Removed 13 rows containing non-finite values (stat_ydensity).
+> ggplot(dogs, aes(group, height)) + geom_density()
+Error in eval(substitute(list(...)), `_data`, parent.frame()) : 
+  object 'y' not found
+> ggplot(dogs, aes(group, height)) + geom_density(stat = "identity")
+> ggplot(dogs, aes(group, height)) + geom_density()
+Error in eval(substitute(list(...)), `_data`, parent.frame()) : 
+  object 'y' not found
+> ggplot(dogs, aes(height)) + geom_density()
+Warning: Removed 13 rows containing non-finite values (stat_density).
+> ggplot(dogs, aes(color = group, height)) + geom_density()
+Warning: Removed 13 rows containing non-finite values (stat_density).
+> library(ggridges)
+
+Attaching package: 'ggridges'
+
+The following object is masked from 'package:ggplot2':
+
+    scale_discrete_manual
+
+> ggplot(dogs) + geom_density_ridges()
+Error in data.frame(x = data$x, group = data$group) : 
+  arguments imply differing number of rows: 0, 172
+> ?geom_density_ridges
+> ggplot(dogs, aes(x = height)) + geom_density_ridges()
+Picking joint bandwidth of 1.96
+Warning: Removed 13 rows containing non-finite values (stat_density_ridges).
+Warning in max(data$y) :
+  no non-missing arguments to max; returning -Inf
+Warning in min(data$y) : no non-missing arguments to min; returning Inf
+Error in eval(substitute(list(...)), `_data`, parent.frame()) : 
+  object 'y' not found
+> ggplot(dogs, aes(x = height, y = group)) + geom_density_ridges()
+Picking joint bandwidth of 1.56
+Warning: Removed 13 rows containing non-finite values (stat_density_ridges).
+> ggplot(dogs, aes(height)) + geom_density()
+Warning: Removed 13 rows containing non-finite values (stat_density).
+> ggplot(dogs, aes(height)) + geom_density() + facet_wrap(~ group)
+Warning: Removed 13 rows containing non-finite values (stat_density).
+> head(dogs)
+# A tibble: 6 x 18
+  breed group datadog popularity_all popularity lifetime_cost
+  <chr> <fct>   <dbl>          <int>      <int>         <dbl>
+1 Bord… herd…    3.64             45         39         20143
+2 Bord… terr…    3.61             80         61         22638
+3 Brit… spor…    3.54             30         30         22589
+4 Cair… terr…    3.53             59         48         21992
+5 Wels… spor…    3.34            130         81         20224
+6 Engl… spor…    3.33             63         51         18993
+# ... with 12 more variables: intelligence_rank <int>,
+#   longevity <dbl>, ailments <int>, price <dbl>, food_cost <dbl>,
+#   grooming <fct>, kids <fct>, megarank_kids <int>,
+#   megarank <int>, size <fct>, weight <dbl>, height <dbl>
+> ggplot(dogs, aes(height, color = size)) + geom_density() +
+.   facet_wrap(~ group)
+Warning: Removed 13 rows containing non-finite values (stat_density).
+Warning: Groups with fewer than two data points have been dropped.
+> ggplot(dogs, aes(height, size)) + geom_density_ridges() +
+.   facet_wrap(~ group)
+Picking joint bandwidth of 0.701
+Picking joint bandwidth of 3.98
+Picking joint bandwidth of 0.995
+Picking joint bandwidth of 0.64
+Picking joint bandwidth of 0.991
+Picking joint bandwidth of 0.594
+Picking joint bandwidth of 1.02
+Warning: Removed 13 rows containing non-finite values
+(stat_density_ridges).
+> ggplot(dogs, aes(height, size)) + geom_density_ridges() +
+.   facet_wrap(~ group, scales = "free")
+Picking joint bandwidth of 0.701
+Picking joint bandwidth of 3.98
+Picking joint bandwidth of 0.995
+Picking joint bandwidth of 0.64
+Picking joint bandwidth of 0.991
+Picking joint bandwidth of 0.594
+Picking joint bandwidth of 1.02
+Warning: Removed 13 rows containing non-finite values
+(stat_density_ridges).
+> ggplot(dogs, aes(height, color = size)) + geom_density() +
+.   facet_wrap(~ group)
+Warning: Removed 13 rows containing non-finite values (stat_density).
+Warning: Groups with fewer than two data points have been dropped.
+> ggplot(dogs, aes(height, color = size)) + geom_density() +
+.   facet_wrap(~ group, scales = "free")
+Warning: Removed 13 rows containing non-finite values (stat_density).
+Warning: Groups with fewer than two data points have been dropped.
+> ggplot(dogs, aes(height)) + geom_density() +
+.   facet_wrap(~ size)
+Warning: Removed 13 rows containing non-finite values (stat_density).
+> ggplot(dogs, aes(height)) + geom_density() +
+.   facet_grid(grooming ~ size)
+Warning in seq.default(along = x) :
+  partial argument match of 'along' to 'along.with'
+Warning in seq.default(along = x) :
+  partial argument match of 'along' to 'along.with'
+Warning: Removed 13 rows containing non-finite values (stat_density).
+Warning: Groups with fewer than two data points have been dropped.
+> ggplot(dogs, aes(height)) + geom_density() +
+.   facet_grid(. ~ size)
+Warning: Removed 13 rows containing non-finite values (stat_density).
+> ggplot(dogs, aes(height)) + geom_density() +
+.   facet_grid(size ~ .)
+Warning: Removed 13 rows containing non-finite values (stat_density).
+> ggplot(dogs, aes(color = group, height)) + geom_density()
+Warning: Removed 13 rows containing non-finite values (stat_density).
+> ggplot(dogs, aes(size, fill = grooming)) + geom_bar()
+> ggplot(dogs, aes(size)) + geom_bar()
+> ggplot(dogs, aes(size)) + geom_bar() + facet_wrap(~ grooming)
+> ggplot(dogs, aes(height, weight)) + geom_point()
+Warning: Removed 98 rows containing missing values (geom_point).
+> head(dogs)
+# A tibble: 6 x 18
+  breed group datadog popularity_all popularity lifetime_cost
+  <chr> <fct>   <dbl>          <int>      <int>         <dbl>
+1 Bord… herd…    3.64             45         39         20143
+2 Bord… terr…    3.61             80         61         22638
+3 Brit… spor…    3.54             30         30         22589
+4 Cair… terr…    3.53             59         48         21992
+5 Wels… spor…    3.34            130         81         20224
+6 Engl… spor…    3.33             63         51         18993
+# ... with 12 more variables: intelligence_rank <int>,
+#   longevity <dbl>, ailments <int>, price <dbl>, food_cost <dbl>,
+#   grooming <fct>, kids <fct>, megarank_kids <int>,
+#   megarank <int>, size <fct>, weight <dbl>, height <dbl>
+> ggplot(dogs, aes(height, weight, color = lifetime_cost)) +
+.   geom_point()
+Warning: Removed 98 rows containing missing values (geom_point).
+Warning in seq.default(.limits[1], .limits[2], length = guide$nbin) :
+  partial argument match of 'length' to 'length.out'
+> ggplot(dogs, aes(height, weight, color = lifetime_cost,
+.   size = lifetime_cost)) +
+.   geom_point()
+Warning: Removed 129 rows containing missing values (geom_point).
+Warning in seq.default(.limits[1], .limits[2], length = guide$nbin) :
+  partial argument match of 'length' to 'length.out'
+> ggplot(dogs, aes(height, weight, color = lifetime_cost,
+.   size = lifetime_cost)) +
+.   geom_point(alpha = 0.5)
+Warning: Removed 129 rows containing missing values (geom_point).
+Warning in seq.default(.limits[1], .limits[2], length = guide$nbin) :
+  partial argument match of 'length' to 'length.out'
+> ggplot(dogs, aes(height, lifetime_cost, color = weight,
+.                  size = weight)) +
+.   geom_point(alpha = 0.5)
+Warning: Removed 129 rows containing missing values (geom_point).
+Warning in seq.default(.limits[1], .limits[2], length = guide$nbin) :
+  partial argument match of 'length' to 'length.out'
+> ggplot(dogs, aes(lifetime_cost)) + geom_histogram()
+`stat_bin()` using `bins = 30`. Pick better value with
+`binwidth`.
+Warning: Removed 81 rows containing non-finite values (stat_bin).
+> cut_number(dogs$lifetime_cost, 5)
+  [1] (1.91e+04,2.06e+04] (2.2e+04,2.67e+04]  (2.2e+04,2.67e+04] 
+  [4] (2.06e+04,2.2e+04]  (1.91e+04,2.06e+04] (1.73e+04,1.91e+04]
+  [7] (2.2e+04,2.67e+04]  (2.06e+04,2.2e+04]  (1.91e+04,2.06e+04]
+ [10] (2.06e+04,2.2e+04]  (2.06e+04,2.2e+04]  (2.06e+04,2.2e+04] 
+ [13] (1.73e+04,1.91e+04] (1.91e+04,2.06e+04] (1.91e+04,2.06e+04]
+ [16] (2.2e+04,2.67e+04]  (1.73e+04,1.91e+04] (2.06e+04,2.2e+04] 
+ [19] (2.06e+04,2.2e+04]  (1.91e+04,2.06e+04] (2.2e+04,2.67e+04] 
+ [22] (2.06e+04,2.2e+04]  (1.91e+04,2.06e+04] (2.2e+04,2.67e+04] 
+ [25] (2.2e+04,2.67e+04]  (2.2e+04,2.67e+04]  (2.06e+04,2.2e+04] 
+ [28] (1.73e+04,1.91e+04] [1.27e+04,1.73e+04] (2.06e+04,2.2e+04] 
+ [31] (2.06e+04,2.2e+04]  (2.06e+04,2.2e+04]  (1.91e+04,2.06e+04]
+ [34] (2.06e+04,2.2e+04]  (1.91e+04,2.06e+04] (2.06e+04,2.2e+04] 
+ [37] (2.2e+04,2.67e+04]  (1.91e+04,2.06e+04] [1.27e+04,1.73e+04]
+ [40] (1.91e+04,2.06e+04] (1.91e+04,2.06e+04] (1.91e+04,2.06e+04]
+ [43] (1.73e+04,1.91e+04] (1.91e+04,2.06e+04] (2.2e+04,2.67e+04] 
+ [46] [1.27e+04,1.73e+04] (1.73e+04,1.91e+04] (1.73e+04,1.91e+04]
+ [49] (1.73e+04,1.91e+04] (1.73e+04,1.91e+04] (1.73e+04,1.91e+04]
+ [52] (1.91e+04,2.06e+04] (1.73e+04,1.91e+04] (2.2e+04,2.67e+04] 
+ [55] [1.27e+04,1.73e+04] (2.06e+04,2.2e+04]  (1.73e+04,1.91e+04]
+ [58] (2.2e+04,2.67e+04]  (1.73e+04,1.91e+04] (2.06e+04,2.2e+04] 
+ [61] (2.2e+04,2.67e+04]  (2.2e+04,2.67e+04]  [1.27e+04,1.73e+04]
+ [64] (1.73e+04,1.91e+04] (1.73e+04,1.91e+04] [1.27e+04,1.73e+04]
+ [67] (2.2e+04,2.67e+04]  (1.91e+04,2.06e+04] (1.73e+04,1.91e+04]
+ [70] (1.91e+04,2.06e+04] (2.2e+04,2.67e+04]  (2.06e+04,2.2e+04] 
+ [73] [1.27e+04,1.73e+04] [1.27e+04,1.73e+04] [1.27e+04,1.73e+04]
+ [76] [1.27e+04,1.73e+04] (1.73e+04,1.91e+04] [1.27e+04,1.73e+04]
+ [79] (2.06e+04,2.2e+04]  [1.27e+04,1.73e+04] [1.27e+04,1.73e+04]
+ [82] (1.73e+04,1.91e+04] [1.27e+04,1.73e+04] [1.27e+04,1.73e+04]
+ [85] [1.27e+04,1.73e+04] (1.91e+04,2.06e+04] [1.27e+04,1.73e+04]
+ [88] <NA>                <NA>                <NA>               
+ [91] <NA>                <NA>                <NA>               
+ [94] <NA>                <NA>                <NA>               
+ [97] <NA>                <NA>                <NA>               
+[100] <NA>                <NA>                <NA>               
+[103] <NA>                <NA>                <NA>               
+[106] <NA>                <NA>                <NA>               
+[109] <NA>                <NA>                <NA>               
+[112] <NA>                <NA>                <NA>               
+[115] <NA>                <NA>                <NA>               
+[118] <NA>                <NA>                <NA>               
+[121] <NA>                <NA>                <NA>               
+[124] <NA>                <NA>                <NA>               
+[127] <NA>                <NA>                <NA>               
+[130] <NA>                <NA>                <NA>               
+[133] [1.27e+04,1.73e+04] <NA>                <NA>               
+[136] <NA>                <NA>                <NA>               
+[139] <NA>                <NA>                <NA>               
+[142] <NA>                [1.27e+04,1.73e+04] <NA>               
+[145] <NA>                <NA>                <NA>               
+[148] <NA>                <NA>                <NA>               
+[151] <NA>                <NA>                <NA>               
+[154] <NA>                <NA>                <NA>               
+[157] <NA>                <NA>                <NA>               
+[160] <NA>                <NA>                <NA>               
+[163] <NA>                (2.2e+04,2.67e+04]  (2.2e+04,2.67e+04] 
+[166] <NA>                <NA>                <NA>               
+[169] <NA>                <NA>                <NA>               
+[172] <NA>               
+5 Levels: [1.27e+04,1.73e+04] ... (2.2e+04,2.67e+04]
+> cost_d = cut_number(dogs$lifetime_cost, 5)
+> cost_d
+  [1] (1.91e+04,2.06e+04] (2.2e+04,2.67e+04]  (2.2e+04,2.67e+04] 
+  [4] (2.06e+04,2.2e+04]  (1.91e+04,2.06e+04] (1.73e+04,1.91e+04]
+  [7] (2.2e+04,2.67e+04]  (2.06e+04,2.2e+04]  (1.91e+04,2.06e+04]
+ [10] (2.06e+04,2.2e+04]  (2.06e+04,2.2e+04]  (2.06e+04,2.2e+04] 
+ [13] (1.73e+04,1.91e+04] (1.91e+04,2.06e+04] (1.91e+04,2.06e+04]
+ [16] (2.2e+04,2.67e+04]  (1.73e+04,1.91e+04] (2.06e+04,2.2e+04] 
+ [19] (2.06e+04,2.2e+04]  (1.91e+04,2.06e+04] (2.2e+04,2.67e+04] 
+ [22] (2.06e+04,2.2e+04]  (1.91e+04,2.06e+04] (2.2e+04,2.67e+04] 
+ [25] (2.2e+04,2.67e+04]  (2.2e+04,2.67e+04]  (2.06e+04,2.2e+04] 
+ [28] (1.73e+04,1.91e+04] [1.27e+04,1.73e+04] (2.06e+04,2.2e+04] 
+ [31] (2.06e+04,2.2e+04]  (2.06e+04,2.2e+04]  (1.91e+04,2.06e+04]
+ [34] (2.06e+04,2.2e+04]  (1.91e+04,2.06e+04] (2.06e+04,2.2e+04] 
+ [37] (2.2e+04,2.67e+04]  (1.91e+04,2.06e+04] [1.27e+04,1.73e+04]
+ [40] (1.91e+04,2.06e+04] (1.91e+04,2.06e+04] (1.91e+04,2.06e+04]
+ [43] (1.73e+04,1.91e+04] (1.91e+04,2.06e+04] (2.2e+04,2.67e+04] 
+ [46] [1.27e+04,1.73e+04] (1.73e+04,1.91e+04] (1.73e+04,1.91e+04]
+ [49] (1.73e+04,1.91e+04] (1.73e+04,1.91e+04] (1.73e+04,1.91e+04]
+ [52] (1.91e+04,2.06e+04] (1.73e+04,1.91e+04] (2.2e+04,2.67e+04] 
+ [55] [1.27e+04,1.73e+04] (2.06e+04,2.2e+04]  (1.73e+04,1.91e+04]
+ [58] (2.2e+04,2.67e+04]  (1.73e+04,1.91e+04] (2.06e+04,2.2e+04] 
+ [61] (2.2e+04,2.67e+04]  (2.2e+04,2.67e+04]  [1.27e+04,1.73e+04]
+ [64] (1.73e+04,1.91e+04] (1.73e+04,1.91e+04] [1.27e+04,1.73e+04]
+ [67] (2.2e+04,2.67e+04]  (1.91e+04,2.06e+04] (1.73e+04,1.91e+04]
+ [70] (1.91e+04,2.06e+04] (2.2e+04,2.67e+04]  (2.06e+04,2.2e+04] 
+ [73] [1.27e+04,1.73e+04] [1.27e+04,1.73e+04] [1.27e+04,1.73e+04]
+ [76] [1.27e+04,1.73e+04] (1.73e+04,1.91e+04] [1.27e+04,1.73e+04]
+ [79] (2.06e+04,2.2e+04]  [1.27e+04,1.73e+04] [1.27e+04,1.73e+04]
+ [82] (1.73e+04,1.91e+04] [1.27e+04,1.73e+04] [1.27e+04,1.73e+04]
+ [85] [1.27e+04,1.73e+04] (1.91e+04,2.06e+04] [1.27e+04,1.73e+04]
+ [88] <NA>                <NA>                <NA>               
+ [91] <NA>                <NA>                <NA>               
+ [94] <NA>                <NA>                <NA>               
+ [97] <NA>                <NA>                <NA>               
+[100] <NA>                <NA>                <NA>               
+[103] <NA>                <NA>                <NA>               
+[106] <NA>                <NA>                <NA>               
+[109] <NA>                <NA>                <NA>               
+[112] <NA>                <NA>                <NA>               
+[115] <NA>                <NA>                <NA>               
+[118] <NA>                <NA>                <NA>               
+[121] <NA>                <NA>                <NA>               
+[124] <NA>                <NA>                <NA>               
+[127] <NA>                <NA>                <NA>               
+[130] <NA>                <NA>                <NA>               
+[133] [1.27e+04,1.73e+04] <NA>                <NA>               
+[136] <NA>                <NA>                <NA>               
+[139] <NA>                <NA>                <NA>               
+[142] <NA>                [1.27e+04,1.73e+04] <NA>               
+[145] <NA>                <NA>                <NA>               
+[148] <NA>                <NA>                <NA>               
+[151] <NA>                <NA>                <NA>               
+[154] <NA>                <NA>                <NA>               
+[157] <NA>                <NA>                <NA>               
+[160] <NA>                <NA>                <NA>               
+[163] <NA>                (2.2e+04,2.67e+04]  (2.2e+04,2.67e+04] 
+[166] <NA>                <NA>                <NA>               
+[169] <NA>                <NA>                <NA>               
+[172] <NA>               
+5 Levels: [1.27e+04,1.73e+04] ... (2.2e+04,2.67e+04]
+> class(cost_d)
+[1] "factor"
+> table(cost_d)
+cost_d
+[1.27e+04,1.73e+04] (1.73e+04,1.91e+04] (1.91e+04,2.06e+04] 
+                 19                  18                  18 
+ (2.06e+04,2.2e+04]  (2.2e+04,2.67e+04] 
+                 18                  18 
+> summary(dogs$lifetime_cost)
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+  12653   17816   20087   19820   21798   26686      81 
+> cost_d2 = cut_width(dogs$lifetime_cost, 5000)
+> table(cost_d2)
+cost_d2
+[1.25e+04,1.75e+04] (1.75e+04,2.25e+04] (2.25e+04,2.75e+04] 
+                 20                  55                  16 
+> cost_d2 = cut_width(dogs$lifetime_cost, 100000)
+> table(cost_d2)
+cost_d2
+[-5e+04,5e+04] 
+            91 
+> ?cut_interval
+> ggplot(dogs, aes(height, weight, color = cost_d)) +
+.   geom_point(alpha = 0.5)
+Warning: Removed 98 rows containing missing values (geom_point).
+> ggplot(dogs, aes(height, weight, color = cost_d,
+.                  shape = cost_d)) +
+.   geom_point(alpha = 0.5)
+Warning: Removed 129 rows containing missing values (geom_point).
+> x = c(1, 3, 4, 2)
+> sort(x)
+[1] 1 2 3 4
+> head(dogs)
+# A tibble: 6 x 18
+  breed group datadog popularity_all popularity lifetime_cost intelligence_ra…
+  <chr> <fct>   <dbl>          <int>      <int>         <dbl>            <int>
+1 Bord… herd…    3.64             45         39         20143                1
+2 Bord… terr…    3.61             80         61         22638               30
+3 Brit… spor…    3.54             30         30         22589               19
+4 Cair… terr…    3.53             59         48         21992               35
+5 Wels… spor…    3.34            130         81         20224               31
+6 Engl… spor…    3.33             63         51         18993               18
+# ... with 11 more variables: longevity <dbl>, ailments <int>, price <dbl>,
+#   food_cost <dbl>, grooming <fct>, kids <fct>, megarank_kids <int>,
+#   megarank <int>, size <fct>, weight <dbl>, height <dbl>
+> order(x)
+[1] 1 4 2 3
+> ord = order(x)
+> x[ord]
+[1] 1 2 3 4
+> ord = order(dogs$popularity)
+> dogs[ord, ]
+# A tibble: 172 x 18
+   breed group datadog popularity_all popularity lifetime_cost
+   <chr> <fct>   <dbl>          <int>      <int>         <dbl>
+ 1 Labr… spor…    2.97              1          1         21299
+ 2 Germ… herd…    2.06              2          2         17416
+ 3 Beag… hound    2.79              3          3         19468
+ 4 Gold… spor…    2.8               4          4         21447
+ 5 York… toy      2.85              5          5         20701
+ 6 Bull… non-…    0.99              6          6         13479
+ 7 Boxer work…    1.83              7          7         15746
+ 8 Pood… non-…    3.04              8          8         21237
+ 9 Dach… hound    3.19              9          9         20113
+10 Rott… work…    2.24             10         10         18886
+# ... with 162 more rows, and 12 more variables: intelligence_rank <int>,
+#   longevity <dbl>, ailments <int>, price <dbl>, food_cost <dbl>,
+#   grooming <fct>, kids <fct>, megarank_kids <int>, megarank <int>,
+#   size <fct>, weight <dbl>, height <dbl>

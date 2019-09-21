@@ -1,0 +1,843 @@
+
+R version 3.5.1 (2018-07-02) -- "Feather Spray"
+Copyright (C) 2018 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+R version 3.5.1 (2018-07-02) -- Feather Spray
+Type 'citation()', 'contributors()', or 'license()' for more information
+
+Libraries:
+* /home/nick/.config/R/library
+* /usr/lib/R/library
+
+> air = read.csv("data/airline/2018.01_air_delays.csv")
+> air$ontime = (air$ARR_DELAY <= 0)
+> # First try, a table:
+> table(air$ontime, air$OP_UNIQUE_CARRIER)
+       
+           9E    AA    AS    B6    DL    EV    F9    G4    HA    MQ    NK
+  FALSE  4858 22758  3806 10374 17202  6402  3596  2461  2353  8770  3808
+  TRUE  12029 49256 11318 12956 52398 12710  5911  4269  4252 12811  9991
+       
+           OH    OO    UA    VX    WN    YV    YX
+  FALSE  9367 22167 11332  1809 35173  5212  7988
+  TRUE  11234 38174 33073  3906 71850 10120 15804
+> # Second try, a bar plot:
+> ggplot(air, aes(ontime, fill = OP_UNIQUE_CARRIER)) +
+.   geom_bar(position = "dodge")
+Error in ggplot(air, aes(ontime, fill = OP_UNIQUE_CARRIER)) : 
+  could not find function "ggplot"
+> # Second try, a bar plot:
+> library(ggplot2)
+> ggplot(air, aes(ontime, fill = OP_UNIQUE_CARRIER)) +
+.   geom_bar(position = "dodge")
+> # Third try, another bar plot:
+> ggplot(air, aes(OP_UNIQUE_CARRIER, fill = ontime)) +
+.   geom_bar(position = "dodge")
+> # Ratios
+> sum(air$ontime)
+[1] NA
+> # Ratios
+> sum(air$ontime, na.rm = TRUE)
+[1] 372062
+> aggregate(ontime ~ OP_UNIQUE_CARRIER, sum)
+Error in terms.formula(formula, data = data) : 
+  'data' argument is of the wrong type
+> aggregate(ontime ~ OP_UNIQUE_CARRIER, air, sum)
+   OP_UNIQUE_CARRIER ontime
+1                 9E  12029
+2                 AA  49256
+3                 AS  11318
+4                 B6  12956
+5                 DL  52398
+6                 EV  12710
+7                 F9   5911
+8                 G4   4269
+9                 HA   4252
+10                MQ  12811
+11                NK   9991
+12                OH  11234
+13                OO  38174
+14                UA  33073
+15                VX   3906
+16                WN  71850
+17                YV  10120
+18                YX  15804
+> # Need total number of flights per carrier
+> table(air$OP_UNIQUE_CARRIER)
+
+    9E     AA     AS     B6     DL     EV     F9     G4     HA     MQ     NK 
+ 18234  73598  15312  24871  71254  20166   9707   6814   6627  22502  14180 
+    OH     OO     UA     VX     WN     YV     YX 
+ 22210  62194  45384   5824 109676  16353  25212 
+> # Need total number of flights per carrier
+> total = as.data.frame(table(air$OP_UNIQUE_CARRIER))
+> head(total)
+  Var1  Freq
+1   9E 18234
+2   AA 73598
+3   AS 15312
+4   B6 24871
+5   DL 71254
+6   EV 20166
+> # Total number on-time per carrier
+> ontime = aggregate(ontime ~ OP_UNIQUE_CARRIER, air, sum)
+> / 
+Error: unexpected '/' in "/"
+> 
+> # Can we just change ggplot?
+> ggplot(air, aes(OP_UNIQUE_CARRIER, fill = ontime)) +
+.   geom_bar(position = "dodge")
+> / 
+Error: unexpected '/' in "/"
+> 
+> # Can we just change ggplot?
+> ggplot(air, aes(OP_UNIQUE_CARRIER, fill = ontime)) +
+.   geom_bar(position = "fill")
+> ?stat_count
+> ggplot(air, aes(OP_UNIQUE_CARRIER, y = stat(prop), fill = ontime)) +
+.   geom_bar(position = "dodge")
+> ggplot(air, aes(OP_UNIQUE_CARRIER, y = stat(prop), fill = ontime,
+.                 group = OP_UNIQUE_CARRIER)) +
+.   geom_bar(position = "dodge")
+> ggplot(air, aes(OP_UNIQUE_CARRIER, y = stat(prop), fill = ontime,
+.                 group = OP_UNIQUE_CARRIER)) +
+.   geom_bar(position = "dodge")
+> ggplot(air, aes(OP_UNIQUE_CARRIER, y = stat(prop), fill = ontime,
+.                 group = 1)) +
+.   geom_bar(position = "dodge")
+> ggplot(air, aes(OP_UNIQUE_CARRIER, y = stat(prop), group = OP_UNIQUE_CARRIER)) +
+.   geom_bar(position = "dodge")
+> ggplot(air, aes(OP_UNIQUE_CARRIER, y = stat(prop), group = 1)) +
+.   geom_bar(position = "dodge")
+> ggplot(air, aes(OP_UNIQUE_CARRIER, y = stat(prop), fill = ontime,
+.                 group = 1)) +
+.   geom_bar(position = "dodge")
+> / 
+Error: unexpected '/' in "/"
+> 
+> # Can we just change ggplot?
+> ggplot(air, aes(OP_UNIQUE_CARRIER, fill = ontime)) +
+.   geom_bar(position = "fill")
+> head(ontime)
+  OP_UNIQUE_CARRIER ontime
+1                9E  12029
+2                AA  49256
+3                AS  11318
+4                B6  12956
+5                DL  52398
+6                EV  12710
+> # Need total number of flights per carrier
+> # This is including the NAs
+> total = as.data.frame(table(air$OP_UNIQUE_CARRIER))
+> head(total)
+  Var1  Freq
+1   9E 18234
+2   AA 73598
+3   AS 15312
+4   B6 24871
+5   DL 71254
+6   EV 20166
+> names(total) = c("OP_UNIQUE_CARRIER", "flights")
+> head(total)
+  OP_UNIQUE_CARRIER flights
+1                9E   18234
+2                AA   73598
+3                AS   15312
+4                B6   24871
+5                DL   71254
+6                EV   20166
+> head(ontime)
+  OP_UNIQUE_CARRIER ontime
+1                9E  12029
+2                AA  49256
+3                AS  11318
+4                B6  12956
+5                DL  52398
+6                EV  12710
+> ontime$ontime / total$flights 
+ [1] 0.6597017 0.6692573 0.7391588 0.5209280 0.7353692 0.6302688 0.6089420
+ [8] 0.6265043 0.6416176 0.5693272 0.7045839 0.5058082 0.6137891 0.7287370
+[15] 0.6706731 0.6551114 0.6188467 0.6268444
+> head(ontime)
+  OP_UNIQUE_CARRIER ontime
+1                9E  12029
+2                AA  49256
+3                AS  11318
+4                B6  12956
+5                DL  52398
+6                EV  12710
+> head(total)
+  OP_UNIQUE_CARRIER flights
+1                9E   18234
+2                AA   73598
+3                AS   15312
+4                B6   24871
+5                DL   71254
+6                EV   20166
+> names(total) = c("carrier", "flights")
+> head(total)
+  carrier flights
+1      9E   18234
+2      AA   73598
+3      AS   15312
+4      B6   24871
+5      DL   71254
+6      EV   20166
+> m = merge(ontime, total, by.x = "OP_UNIQUE_CARRIER", by.y = "carrier")
+> head(m)
+  OP_UNIQUE_CARRIER ontime flights
+1                9E  12029   18234
+2                AA  49256   73598
+3                AS  11318   15312
+4                B6  12956   24871
+5                DL  52398   71254
+6                EV  12710   20166
+> # 
+> m$prop = m$ontime / m$flights
+> head(m)
+  OP_UNIQUE_CARRIER ontime flights      prop
+1                9E  12029   18234 0.6597017
+2                AA  49256   73598 0.6692573
+3                AS  11318   15312 0.7391588
+4                B6  12956   24871 0.5209280
+5                DL  52398   71254 0.7353692
+6                EV  12710   20166 0.6302688
+> ggplot(m, aes(OP_UNIQUE_CARRIER, prop)) + geom_bar(stat = "identity")
+> # How to use group and fill together?
+> ggplot(air, aes(OP_UNIQUE_CARRIER, y = stat(prop), fill = ontime,
+.                 group = 1)) +
+.   geom_bar(position = "dodge")
+> ggplot(m, aes(OP_UNIQUE_CARRIER, prop)) + geom_bar(stat = "identity")
+> # How to use group and fill together?
+> ggplot(air, aes(OP_UNIQUE_CARRIER, y = stat(prop), fill = ontime,
+.                 group = 1)) +
+.   geom_bar(position = "dodge")
+> # Can we just change ggplot?
+> ggplot(air, aes(OP_UNIQUE_CARRIER, fill = ontime)) +
+.   geom_bar(position = "fill")
+> ggplot(m, aes(OP_UNIQUE_CARRIER, prop)) + geom_bar(stat = "identity")
+> head(m)
+  OP_UNIQUE_CARRIER ontime flights      prop
+1                9E  12029   18234 0.6597017
+2                AA  49256   73598 0.6692573
+3                AS  11318   15312 0.7391588
+4                B6  12956   24871 0.5209280
+5                DL  52398   71254 0.7353692
+6                EV  12710   20166 0.6302688
+> order(m$prop)
+ [1] 12  4 10  7 13 17  8 18  6  9 16  1  2 15 11 14  5  3
+> m[order(m$prop), ]
+   OP_UNIQUE_CARRIER ontime flights      prop
+12                OH  11234   22210 0.5058082
+4                 B6  12956   24871 0.5209280
+10                MQ  12811   22502 0.5693272
+7                 F9   5911    9707 0.6089420
+13                OO  38174   62194 0.6137891
+17                YV  10120   16353 0.6188467
+8                 G4   4269    6814 0.6265043
+18                YX  15804   25212 0.6268444
+6                 EV  12710   20166 0.6302688
+9                 HA   4252    6627 0.6416176
+16                WN  71850  109676 0.6551114
+1                 9E  12029   18234 0.6597017
+2                 AA  49256   73598 0.6692573
+15                VX   3906    5824 0.6706731
+11                NK   9991   14180 0.7045839
+14                UA  33073   45384 0.7287370
+5                 DL  52398   71254 0.7353692
+3                 AS  11318   15312 0.7391588
+> m = m[order(m$prop), ]
+> class(m$OP_UNIQUE_CARRIER)
+[1] "factor"
+> ggplot(m, aes(OP_UNIQUE_CARRIER, prop)) + geom_bar(stat = "identity")
+> levels(m$OP_UNIQUE_CARRIER)
+ [1] "9E" "AA" "AS" "B6" "DL" "EV" "F9" "G4" "HA" "MQ" "NK" "OH" "OO" "UA"
+[15] "VX" "WN" "YV" "YX"
+> # But another way:
+> m$OP_UNIQUE_CARRIER = as.character(m$OP_UNIQUE_CARRIER)
+> ggplot(m, aes(OP_UNIQUE_CARRIER, prop)) + geom_bar(stat = "identity")
+> factor(m$OP_UNIQUE_CARRIER)
+ [1] OH B6 MQ F9 OO YV G4 YX EV HA WN 9E AA VX NK UA DL AS
+Levels: 9E AA AS B6 DL EV F9 G4 HA MQ NK OH OO UA VX WN YV YX
+> m$OP_UNIQUE_CARRIER
+ [1] "OH" "B6" "MQ" "F9" "OO" "YV" "G4" "YX" "EV" "HA" "WN" "9E" "AA" "VX"
+[15] "NK" "UA" "DL" "AS"
+> unique(m$OP_UNIQUE_CARRIER)
+ [1] "OH" "B6" "MQ" "F9" "OO" "YV" "G4" "YX" "EV" "HA" "WN" "9E" "AA" "VX"
+[15] "NK" "UA" "DL" "AS"
+> length(unique(m$OP_UNIQUE_CARRIER)) == length(m$OP_UNIQUE_CARRIER)
+[1] TRUE
+> # We could use factor() to reorder the categories
+> m$OP_UNIQUE_CARRIER =
+.   factor(m$OP_UNIQUE_CARRIER, levels = m$OP_UNIQUE_CARRIER)
+> levels(m$OP_UNIQUE_CARRIER)
+ [1] "OH" "B6" "MQ" "F9" "OO" "YV" "G4" "YX" "EV" "HA" "WN" "9E" "AA" "VX"
+[15] "NK" "UA" "DL" "AS"
+> ggplot(m, aes(OP_UNIQUE_CARRIER, prop)) + geom_bar(stat = "identity")
+> ?reorder
+> m = merge(ontime, total, by.x = "OP_UNIQUE_CARRIER", by.y = "carrier")
+> # Another:
+> m$prop = m$ontime / m$flights
+> m = m[order(m$prop), ]
+> head(m)
+   OP_UNIQUE_CARRIER ontime flights      prop
+12                OH  11234   22210 0.5058082
+4                 B6  12956   24871 0.5209280
+10                MQ  12811   22502 0.5693272
+7                 F9   5911    9707 0.6089420
+13                OO  38174   62194 0.6137891
+17                YV  10120   16353 0.6188467
+> levels(m$OP_UNIQUE_CARRIER)
+ [1] "9E" "AA" "AS" "B6" "DL" "EV" "F9" "G4" "HA" "MQ" "NK" "OH" "OO" "UA"
+[15] "VX" "WN" "YV" "YX"
+> # Another way to do this:
+> reorder(m$OP_UNIQUE_CARRIER, m$prop)
+ [1] OH B6 MQ F9 OO YV G4 YX EV HA WN 9E AA VX NK UA DL AS
+attr(,"scores")
+       9E        AA        AS        B6        DL        EV        F9 
+0.6597017 0.6692573 0.7391588 0.5209280 0.7353692 0.6302688 0.6089420 
+       G4        HA        MQ        NK        OH        OO        UA 
+0.6265043 0.6416176 0.5693272 0.7045839 0.5058082 0.6137891 0.7287370 
+       VX        WN        YV        YX 
+0.6706731 0.6551114 0.6188467 0.6268444 
+Levels: OH B6 MQ F9 OO YV G4 YX EV HA WN 9E AA VX NK UA DL AS
+> # Another way to do this:
+> order_carrier = reorder(m$OP_UNIQUE_CARRIER, m$prop)
+> class(order_carrier)
+[1] "factor"
+> levels(order_carrier)
+ [1] "OH" "B6" "MQ" "F9" "OO" "YV" "G4" "YX" "EV" "HA" "WN" "9E" "AA" "VX"
+[15] "NK" "UA" "DL" "AS"
+> order_carrier
+ [1] OH B6 MQ F9 OO YV G4 YX EV HA WN 9E AA VX NK UA DL AS
+attr(,"scores")
+       9E        AA        AS        B6        DL        EV        F9 
+0.6597017 0.6692573 0.7391588 0.5209280 0.7353692 0.6302688 0.6089420 
+       G4        HA        MQ        NK        OH        OO        UA 
+0.6265043 0.6416176 0.5693272 0.7045839 0.5058082 0.6137891 0.7287370 
+       VX        WN        YV        YX 
+0.6706731 0.6551114 0.6188467 0.6268444 
+Levels: OH B6 MQ F9 OO YV G4 YX EV HA WN 9E AA VX NK UA DL AS
+> ggplot(m, aes(OP_UNIQUE_CARRIER, prop)) + geom_bar(stat = "identity")
+> m$OP_UNIQUE_CARRIER = order_carrier
+> ggplot(m, aes(OP_UNIQUE_CARRIER, prop)) + geom_bar(stat = "identity")
+> # Can we just change ggplot?
+> ggplot(air, aes(OP_UNIQUE_CARRIER, fill = ontime)) +
+.   geom_bar(position = "fill")
+> levels(m$OP_UNIQUE_CARRIER)
+ [1] "OH" "B6" "MQ" "F9" "OO" "YV" "G4" "YX" "EV" "HA" "WN" "9E" "AA" "VX"
+[15] "NK" "UA" "DL" "AS"
+> length(air$OP_UNIQUE_CARRIER)
+[1] 570118
+> air$OP_UNIQUE_CARRIER =
+.   factor(air$OP_UNIQUE_CARRIER, levels = levels(m$OP_UNIQUE_CARRIER))
+> # Can we just change ggplot?
+> ggplot(air, aes(OP_UNIQUE_CARRIER, fill = ontime)) +
+.   geom_bar(position = "fill")
+> # Fix the DAY_OF_WEEK column (again!).
+> days = read.csv("data/airline/L_WEEKDAYS.csv_")
+> head(air)
+  YEAR MONTH DAY_OF_MONTH DAY_OF_WEEK OP_UNIQUE_CARRIER OP_CARRIER_AIRLINE_ID TAIL_NUM
+1 2018     1           27           6                UA                 19977   N26232
+2 2018     1           27           6                UA                 19977   N477UA
+3 2018     1           27           6                UA                 19977   N13720
+4 2018     1           27           6                UA                 19977   N16217
+5 2018     1           27           6                UA                 19977   N33714
+6 2018     1           27           6                UA                 19977   N809UA
+  OP_CARRIER_FL_NUM ORIGIN_AIRPORT_ID ORIGIN_CITY_MARKET_ID ORIGIN    ORIGIN_CITY_NAME
+1               369             11697                 32467    FLL Fort Lauderdale, FL
+2               368             14747                 30559    SEA         Seattle, WA
+3               367             11278                 30852    DCA      Washington, DC
+4               366             12892                 32575    LAX     Los Angeles, CA
+5               365             12451                 31136    JAX    Jacksonville, FL
+6               364             12266                 31453    IAH         Houston, TX
+  ORIGIN_STATE_NM DEST_AIRPORT_ID DEST_CITY_MARKET_ID DEST    DEST_CITY_NAME
+1         Florida           12266               31453  IAH       Houston, TX
+2      Washington           14771               32457  SFO San Francisco, CA
+3        Virginia           12266               31453  IAH       Houston, TX
+4      California           13930               30977  ORD       Chicago, IL
+5         Florida           11618               31703  EWR        Newark, NJ
+6           Texas           14107               30466  PHX       Phoenix, AZ
+  DEST_STATE_NM CRS_DEP_TIME DEP_TIME DEP_DELAY TAXI_OUT WHEELS_OFF WHEELS_ON TAXI_IN
+1         Texas          615      602       -13       19        621       749       7
+2    California          618      614        -4       16        630       808       5
+3         Texas          830      828        -2       17        845      1055      13
+4      Illinois          650      641        -9       17        658      1230      12
+5    New Jersey         1824     1810       -14       11       1821      2013       8
+6       Arizona         1420     1413        -7       19       1432      1554       5
+  CRS_ARR_TIME ARR_TIME ARR_DELAY CANCELLED DIVERTED CRS_ELAPSED_TIME
+1          808      756       -12         0        0              173
+2          831      813       -18         0        0              133
+3         1107     1108         1         0        0              217
+4         1250     1242        -8         0        0              240
+5         2045     2021       -24         0        0              141
+6         1618     1559       -19         0        0              178
+  ACTUAL_ELAPSED_TIME AIR_TIME DISTANCE CARRIER_DELAY WEATHER_DELAY NAS_DELAY
+1                 174      148      966            NA            NA        NA
+2                 119       98      679            NA            NA        NA
+3                 220      190     1208            NA            NA        NA
+4                 241      212     1744            NA            NA        NA
+5                 131      112      820            NA            NA        NA
+6                 166      142     1009            NA            NA        NA
+  SECURITY_DELAY LATE_AIRCRAFT_DELAY  X ontime
+1             NA                  NA NA   TRUE
+2             NA                  NA NA   TRUE
+3             NA                  NA NA  FALSE
+4             NA                  NA NA   TRUE
+5             NA                  NA NA   TRUE
+6             NA                  NA NA   TRUE
+> # Fix the DAY_OF_WEEK column (again!).
+> days = read.csv("data/airline/L_WEEKDAYS.csv_")
+> head(days)
+  Code Description
+1    1      Monday
+2    2     Tuesday
+3    3   Wednesday
+4    4    Thursday
+5    5      Friday
+6    6    Saturday
+> air$DAY_OF_WEEK
+   [1] 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6
+  [41] 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6
+  [81] 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6
+ [121] 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6
+ [161] 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5
+ [201] 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5
+ [241] 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5
+ [281] 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5
+ [321] 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5
+ [361] 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5
+ [401] 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5
+ [441] 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5
+ [481] 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5
+ [521] 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5
+ [561] 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5
+ [601] 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5
+ [641] 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5
+ [681] 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5
+ [721] 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5
+ [761] 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5
+ [801] 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5
+ [841] 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5
+ [881] 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5
+ [921] 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5
+ [961] 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5
+ [ reached getOption("max.print") -- omitted 569118 entries ]
+> match(air$DAY_OF_WEEK, days$Code)
+   [1] 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6
+  [41] 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6
+  [81] 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6
+ [121] 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6
+ [161] 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5
+ [201] 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5
+ [241] 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5
+ [281] 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5
+ [321] 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5
+ [361] 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5
+ [401] 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5
+ [441] 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5
+ [481] 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5
+ [521] 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5
+ [561] 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5
+ [601] 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5
+ [641] 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5
+ [681] 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5
+ [721] 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5
+ [761] 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5
+ [801] 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5
+ [841] 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5
+ [881] 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5
+ [921] 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5
+ [961] 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5
+ [ reached getOption("max.print") -- omitted 569118 entries ]
+> row_num = match(air$DAY_OF_WEEK, days$Code)
+> days$Description[row_num]
+   [1] Saturday Saturday Saturday Saturday Saturday Saturday Saturday Saturday Saturday
+  [10] Saturday Saturday Saturday Saturday Saturday Saturday Saturday Saturday Saturday
+  [19] Saturday Saturday Saturday Saturday Saturday Saturday Saturday Saturday Saturday
+  [28] Saturday Saturday Saturday Saturday Saturday Saturday Saturday Saturday Saturday
+  [37] Saturday Saturday Saturday Saturday Saturday Saturday Saturday Saturday Saturday
+  [46] Saturday Saturday Saturday Saturday Saturday Saturday Saturday Saturday Saturday
+  [55] Saturday Saturday Saturday Saturday Saturday Saturday Saturday Saturday Saturday
+  [64] Saturday Saturday Saturday Saturday Saturday Saturday Saturday Saturday Saturday
+  [73] Saturday Saturday Saturday Saturday Saturday Saturday Saturday Saturday Saturday
+  [82] Saturday Saturday Saturday Saturday Saturday Saturday Saturday Saturday Saturday
+  [91] Saturday Saturday Saturday Saturday Saturday Saturday Saturday Saturday Saturday
+ [100] Saturday Saturday Saturday Saturday Saturday Saturday Saturday Saturday Saturday
+ [109] Saturday Saturday Saturday Saturday Saturday Saturday Saturday Saturday Saturday
+ [118] Saturday Saturday Saturday Saturday Saturday Saturday Saturday Saturday Saturday
+ [127] Saturday Saturday Saturday Saturday Saturday Saturday Saturday Saturday Saturday
+ [136] Saturday Saturday Saturday Saturday Saturday Saturday Saturday Saturday Saturday
+ [145] Saturday Saturday Saturday Saturday Saturday Saturday Saturday Saturday Saturday
+ [154] Saturday Saturday Saturday Saturday Saturday Saturday Saturday Saturday Saturday
+ [163] Saturday Saturday Saturday Saturday Saturday Saturday Saturday Saturday Saturday
+ [172] Saturday Saturday Saturday Saturday Saturday Saturday Saturday Friday   Friday  
+ [181] Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday  
+ [190] Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday  
+ [199] Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday  
+ [208] Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday  
+ [217] Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday  
+ [226] Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday  
+ [235] Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday  
+ [244] Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday  
+ [253] Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday  
+ [262] Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday  
+ [271] Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday  
+ [280] Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday  
+ [289] Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday  
+ [298] Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday  
+ [307] Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday  
+ [316] Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday  
+ [325] Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday  
+ [334] Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday  
+ [343] Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday  
+ [352] Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday  
+ [361] Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday  
+ [370] Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday  
+ [379] Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday  
+ [388] Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday  
+ [397] Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday  
+ [406] Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday  
+ [415] Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday  
+ [424] Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday  
+ [433] Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday  
+ [442] Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday  
+ [451] Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday  
+ [460] Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday  
+ [469] Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday  
+ [478] Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday  
+ [487] Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday  
+ [496] Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday  
+ [505] Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday  
+ [514] Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday  
+ [523] Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday  
+ [532] Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday  
+ [541] Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday  
+ [550] Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday  
+ [559] Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday  
+ [568] Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday  
+ [577] Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday  
+ [586] Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday  
+ [595] Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday  
+ [604] Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday  
+ [613] Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday  
+ [622] Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday  
+ [631] Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday  
+ [640] Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday  
+ [649] Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday  
+ [658] Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday  
+ [667] Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday  
+ [676] Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday  
+ [685] Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday  
+ [694] Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday  
+ [703] Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday  
+ [712] Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday  
+ [721] Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday  
+ [730] Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday  
+ [739] Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday  
+ [748] Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday  
+ [757] Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday  
+ [766] Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday  
+ [775] Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday  
+ [784] Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday  
+ [793] Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday  
+ [802] Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday  
+ [811] Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday  
+ [820] Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday  
+ [829] Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday  
+ [838] Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday  
+ [847] Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday  
+ [856] Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday  
+ [865] Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday  
+ [874] Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday  
+ [883] Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday  
+ [892] Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday  
+ [901] Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday  
+ [910] Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday  
+ [919] Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday  
+ [928] Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday  
+ [937] Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday  
+ [946] Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday  
+ [955] Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday  
+ [964] Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday  
+ [973] Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday  
+ [982] Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday  
+ [991] Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday   Friday  
+[1000] Friday  
+ [ reached getOption("max.print") -- omitted 569118 entries ]
+Levels: Friday Monday Saturday Sunday Thursday Tuesday Unknown Wednesday
+> row_num = match(air$DAY_OF_WEEK, days$Code)
+> air$DAY_OF_WEEK = days$Description[row_num]
+> head(air)
+  YEAR MONTH DAY_OF_MONTH DAY_OF_WEEK OP_UNIQUE_CARRIER OP_CARRIER_AIRLINE_ID TAIL_NUM
+1 2018     1           27    Saturday                UA                 19977   N26232
+2 2018     1           27    Saturday                UA                 19977   N477UA
+3 2018     1           27    Saturday                UA                 19977   N13720
+4 2018     1           27    Saturday                UA                 19977   N16217
+5 2018     1           27    Saturday                UA                 19977   N33714
+6 2018     1           27    Saturday                UA                 19977   N809UA
+  OP_CARRIER_FL_NUM ORIGIN_AIRPORT_ID ORIGIN_CITY_MARKET_ID ORIGIN    ORIGIN_CITY_NAME
+1               369             11697                 32467    FLL Fort Lauderdale, FL
+2               368             14747                 30559    SEA         Seattle, WA
+3               367             11278                 30852    DCA      Washington, DC
+4               366             12892                 32575    LAX     Los Angeles, CA
+5               365             12451                 31136    JAX    Jacksonville, FL
+6               364             12266                 31453    IAH         Houston, TX
+  ORIGIN_STATE_NM DEST_AIRPORT_ID DEST_CITY_MARKET_ID DEST    DEST_CITY_NAME
+1         Florida           12266               31453  IAH       Houston, TX
+2      Washington           14771               32457  SFO San Francisco, CA
+3        Virginia           12266               31453  IAH       Houston, TX
+4      California           13930               30977  ORD       Chicago, IL
+5         Florida           11618               31703  EWR        Newark, NJ
+6           Texas           14107               30466  PHX       Phoenix, AZ
+  DEST_STATE_NM CRS_DEP_TIME DEP_TIME DEP_DELAY TAXI_OUT WHEELS_OFF WHEELS_ON TAXI_IN
+1         Texas          615      602       -13       19        621       749       7
+2    California          618      614        -4       16        630       808       5
+3         Texas          830      828        -2       17        845      1055      13
+4      Illinois          650      641        -9       17        658      1230      12
+5    New Jersey         1824     1810       -14       11       1821      2013       8
+6       Arizona         1420     1413        -7       19       1432      1554       5
+  CRS_ARR_TIME ARR_TIME ARR_DELAY CANCELLED DIVERTED CRS_ELAPSED_TIME
+1          808      756       -12         0        0              173
+2          831      813       -18         0        0              133
+3         1107     1108         1         0        0              217
+4         1250     1242        -8         0        0              240
+5         2045     2021       -24         0        0              141
+6         1618     1559       -19         0        0              178
+  ACTUAL_ELAPSED_TIME AIR_TIME DISTANCE CARRIER_DELAY WEATHER_DELAY NAS_DELAY
+1                 174      148      966            NA            NA        NA
+2                 119       98      679            NA            NA        NA
+3                 220      190     1208            NA            NA        NA
+4                 241      212     1744            NA            NA        NA
+5                 131      112      820            NA            NA        NA
+6                 166      142     1009            NA            NA        NA
+  SECURITY_DELAY LATE_AIRCRAFT_DELAY  X ontime
+1             NA                  NA NA   TRUE
+2             NA                  NA NA   TRUE
+3             NA                  NA NA  FALSE
+4             NA                  NA NA   TRUE
+5             NA                  NA NA   TRUE
+6             NA                  NA NA   TRUE
+> ggplot(air, aes(DAY_OF_WEEK, ARR_DELAY)) + geom_boxplot()
+Warning: Removed 18620 rows containing non-finite values (stat_boxplot).
+> ggplot(air, aes(DAY_OF_WEEK, ARR_DELAY)) + geom_boxplot() +
+.   ylim(-100, 100)
+Warning: Removed 35229 rows containing non-finite values (stat_boxplot).
+> # Estimate that whisker ends around 40 minutes.
+> table(air$ARR_DELAY > 40)
+
+ FALSE   TRUE 
+504021  47477 
+> # Estimate that whisker ends around 40 minutes.
+> table(air$ARR_DELAY > 40, air$DAY_OF_WEEK)
+       
+        Friday Monday Saturday Sunday Thursday Tuesday Unknown
+  FALSE  67782  82250    56240  65222    67237   81901       0
+  TRUE    7364  10252     3389   5304     5013    8371       0
+       
+        Wednesday
+  FALSE     83389
+  TRUE       7784
+> # Estimate that whisker ends around 40 minutes.
+> tbl = table(air$ARR_DELAY > 40, air$DAY_OF_WEEK)
+> prop.table(tbl)
+       
+             Friday      Monday    Saturday      Sunday    Thursday
+  FALSE 0.122905251 0.149139253 0.101976798 0.118263348 0.121917033
+  TRUE  0.013352723 0.018589369 0.006145081 0.009617442 0.009089788
+       
+            Tuesday     Unknown   Wednesday
+  FALSE 0.148506432 0.000000000 0.151204537
+  TRUE  0.015178659 0.000000000 0.014114285
+> prop.table(tbl, 2)
+       
+            Friday     Monday   Saturday     Sunday   Thursday
+  FALSE 0.90200410 0.88916996 0.94316524 0.92479369 0.93061592
+  TRUE  0.09799590 0.11083004 0.05683476 0.07520631 0.06938408
+       
+           Tuesday Unknown  Wednesday
+  FALSE 0.90726914         0.91462385
+  TRUE  0.09273086         0.08537615
+> head(air$DAY_OF_WEEK)
+[1] Saturday Saturday Saturday Saturday Saturday Saturday
+8 Levels: Friday Monday Saturday Sunday Thursday Tuesday ... Wednesday
+> air = read.csv("data/airline/2018.01_air_delays.csv")
+> head(air$DAY_OF_WEEK)
+[1] 6 6 6 6 6 6
+> tail(air$DAY_OF_WEEK)
+[1] 4 4 4 4 4 4
+> days
+  Code Description
+1    1      Monday
+2    2     Tuesday
+3    3   Wednesday
+4    4    Thursday
+5    5      Friday
+6    6    Saturday
+7    7      Sunday
+8    9     Unknown
+> row_num
+   [1] 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6
+  [33] 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6
+  [65] 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6
+  [97] 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6
+ [129] 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6
+ [161] 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 5 5 5 5 5 5 5 5 5 5 5 5 5 5
+ [193] 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5
+ [225] 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5
+ [257] 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5
+ [289] 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5
+ [321] 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5
+ [353] 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5
+ [385] 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5
+ [417] 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5
+ [449] 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5
+ [481] 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5
+ [513] 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5
+ [545] 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5
+ [577] 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5
+ [609] 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5
+ [641] 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5
+ [673] 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5
+ [705] 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5
+ [737] 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5
+ [769] 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5
+ [801] 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5
+ [833] 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5
+ [865] 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5
+ [897] 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5
+ [929] 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5
+ [961] 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5
+ [993] 5 5 5 5 5 5 5 5
+ [ reached getOption("max.print") -- omitted 569118 entries ]
+> head(air)
+  YEAR MONTH DAY_OF_MONTH DAY_OF_WEEK OP_UNIQUE_CARRIER
+1 2018     1           27           6                UA
+2 2018     1           27           6                UA
+3 2018     1           27           6                UA
+4 2018     1           27           6                UA
+5 2018     1           27           6                UA
+6 2018     1           27           6                UA
+  OP_CARRIER_AIRLINE_ID TAIL_NUM OP_CARRIER_FL_NUM ORIGIN_AIRPORT_ID
+1                 19977   N26232               369             11697
+2                 19977   N477UA               368             14747
+3                 19977   N13720               367             11278
+4                 19977   N16217               366             12892
+5                 19977   N33714               365             12451
+6                 19977   N809UA               364             12266
+  ORIGIN_CITY_MARKET_ID ORIGIN    ORIGIN_CITY_NAME ORIGIN_STATE_NM
+1                 32467    FLL Fort Lauderdale, FL         Florida
+2                 30559    SEA         Seattle, WA      Washington
+3                 30852    DCA      Washington, DC        Virginia
+4                 32575    LAX     Los Angeles, CA      California
+5                 31136    JAX    Jacksonville, FL         Florida
+6                 31453    IAH         Houston, TX           Texas
+  DEST_AIRPORT_ID DEST_CITY_MARKET_ID DEST    DEST_CITY_NAME
+1           12266               31453  IAH       Houston, TX
+2           14771               32457  SFO San Francisco, CA
+3           12266               31453  IAH       Houston, TX
+4           13930               30977  ORD       Chicago, IL
+5           11618               31703  EWR        Newark, NJ
+6           14107               30466  PHX       Phoenix, AZ
+  DEST_STATE_NM CRS_DEP_TIME DEP_TIME DEP_DELAY TAXI_OUT WHEELS_OFF
+1         Texas          615      602       -13       19        621
+2    California          618      614        -4       16        630
+3         Texas          830      828        -2       17        845
+4      Illinois          650      641        -9       17        658
+5    New Jersey         1824     1810       -14       11       1821
+6       Arizona         1420     1413        -7       19       1432
+  WHEELS_ON TAXI_IN CRS_ARR_TIME ARR_TIME ARR_DELAY CANCELLED
+1       749       7          808      756       -12         0
+2       808       5          831      813       -18         0
+3      1055      13         1107     1108         1         0
+4      1230      12         1250     1242        -8         0
+5      2013       8         2045     2021       -24         0
+6      1554       5         1618     1559       -19         0
+  DIVERTED CRS_ELAPSED_TIME ACTUAL_ELAPSED_TIME AIR_TIME DISTANCE
+1        0              173                 174      148      966
+2        0              133                 119       98      679
+3        0              217                 220      190     1208
+4        0              240                 241      212     1744
+5        0              141                 131      112      820
+6        0              178                 166      142     1009
+  CARRIER_DELAY WEATHER_DELAY NAS_DELAY SECURITY_DELAY
+1            NA            NA        NA             NA
+2            NA            NA        NA             NA
+3            NA            NA        NA             NA
+4            NA            NA        NA             NA
+5            NA            NA        NA             NA
+6            NA            NA        NA             NA
+  LATE_AIRCRAFT_DELAY  X
+1                  NA NA
+2                  NA NA
+3                  NA NA
+4                  NA NA
+5                  NA NA
+6                  NA NA
+> ap = read.csv("data/airline/airports.dat")
+> head(ap)
+  X1                              Goroka.Airport       Goroka Papua.New.Guinea GKA AYGA
+1  2                              Madang Airport       Madang Papua New Guinea MAG AYMD
+2  3                Mount Hagen Kagamuga Airport  Mount Hagen Papua New Guinea HGU AYMH
+3  4                              Nadzab Airport       Nadzab Papua New Guinea LAE AYNZ
+4  5 Port Moresby Jacksons International Airport Port Moresby Papua New Guinea POM AYPY
+5  6                 Wewak International Airport        Wewak Papua New Guinea WWK AYWK
+6  7                          Narsarsuaq Airport Narssarssuaq        Greenland UAK BGBW
+  X.6.081689834590001 X145.391998291 X5282 X10 U Pacific.Port_Moresby airport OurAirports
+1           -5.207080        145.789    20  10 U Pacific/Port_Moresby airport OurAirports
+2           -5.826790        144.296  5388  10 U Pacific/Port_Moresby airport OurAirports
+3           -6.569803        146.726   239  10 U Pacific/Port_Moresby airport OurAirports
+4           -9.443380        147.220   146  10 U Pacific/Port_Moresby airport OurAirports
+5           -3.583830        143.669    19  10 U Pacific/Port_Moresby airport OurAirports
+6           61.160500        -45.426   112  -3 E      America/Godthab airport OurAirports
+> ap = read.csv("data/airline/airports.dat", header = FALSE)
+> head(ap)
+  V1                                          V2           V3               V4  V5   V6        V7
+1  1                              Goroka Airport       Goroka Papua New Guinea GKA AYGA -6.081690
+2  2                              Madang Airport       Madang Papua New Guinea MAG AYMD -5.207080
+3  3                Mount Hagen Kagamuga Airport  Mount Hagen Papua New Guinea HGU AYMH -5.826790
+4  4                              Nadzab Airport       Nadzab Papua New Guinea LAE AYNZ -6.569803
+5  5 Port Moresby Jacksons International Airport Port Moresby Papua New Guinea POM AYPY -9.443380
+6  6                 Wewak International Airport        Wewak Papua New Guinea WWK AYWK -3.583830
+       V8   V9 V10 V11                  V12     V13         V14
+1 145.392 5282  10   U Pacific/Port_Moresby airport OurAirports
+2 145.789   20  10   U Pacific/Port_Moresby airport OurAirports
+3 144.296 5388  10   U Pacific/Port_Moresby airport OurAirports
+4 146.726  239  10   U Pacific/Port_Moresby airport OurAirports
+5 147.220  146  10   U Pacific/Port_Moresby airport OurAirports
+6 143.669   19  10   U Pacific/Port_Moresby airport OurAirports
+> # From the website:
+> names = c("ID", "Name", "City", "Country", "IATA", "ICAO",
+.   "Latitude", "Longitude", "Altitude", "Timezone", "DST",
+.   "Tz", "Type", "Source")
+> names(ap) = names
+> head(ap)
+  ID                                        Name         City          Country IATA ICAO  Latitude
+1  1                              Goroka Airport       Goroka Papua New Guinea  GKA AYGA -6.081690
+2  2                              Madang Airport       Madang Papua New Guinea  MAG AYMD -5.207080
+3  3                Mount Hagen Kagamuga Airport  Mount Hagen Papua New Guinea  HGU AYMH -5.826790
+4  4                              Nadzab Airport       Nadzab Papua New Guinea  LAE AYNZ -6.569803
+5  5 Port Moresby Jacksons International Airport Port Moresby Papua New Guinea  POM AYPY -9.443380
+6  6                 Wewak International Airport        Wewak Papua New Guinea  WWK AYWK -3.583830
+  Longitude Altitude Timezone DST                   Tz    Type      Source
+1   145.392     5282       10   U Pacific/Port_Moresby airport OurAirports
+2   145.789       20       10   U Pacific/Port_Moresby airport OurAirports
+3   144.296     5388       10   U Pacific/Port_Moresby airport OurAirports
+4   146.726      239       10   U Pacific/Port_Moresby airport OurAirports
+5   147.220      146       10   U Pacific/Port_Moresby airport OurAirports
+6   143.669       19       10   U Pacific/Port_Moresby airport OurAirports

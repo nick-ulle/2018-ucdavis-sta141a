@@ -1,0 +1,462 @@
+
+R version 3.5.1 (2018-07-02) -- "Feather Spray"
+Copyright (C) 2018 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+R version 3.5.1 (2018-07-02) -- Feather Spray
+Type 'citation()', 'contributors()', or 'license()' for more information
+
+Libraries:
+* /home/nick/.config/R/library
+* /usr/lib/R/library
+
+> ?read.csv
+> air = read.csv("data/airline/2018.01_air_delays.csv", header = TRUE)
+> head(air)
+  YEAR MONTH DAY_OF_MONTH DAY_OF_WEEK OP_UNIQUE_CARRIER OP_CARRIER_AIRLINE_ID
+1 2018     1           27           6                UA                 19977
+2 2018     1           27           6                UA                 19977
+3 2018     1           27           6                UA                 19977
+4 2018     1           27           6                UA                 19977
+5 2018     1           27           6                UA                 19977
+6 2018     1           27           6                UA                 19977
+  TAIL_NUM OP_CARRIER_FL_NUM ORIGIN_AIRPORT_ID ORIGIN_CITY_MARKET_ID ORIGIN
+1   N26232               369             11697                 32467    FLL
+2   N477UA               368             14747                 30559    SEA
+3   N13720               367             11278                 30852    DCA
+4   N16217               366             12892                 32575    LAX
+5   N33714               365             12451                 31136    JAX
+6   N809UA               364             12266                 31453    IAH
+     ORIGIN_CITY_NAME ORIGIN_STATE_NM DEST_AIRPORT_ID DEST_CITY_MARKET_ID DEST
+1 Fort Lauderdale, FL         Florida           12266               31453  IAH
+2         Seattle, WA      Washington           14771               32457  SFO
+3      Washington, DC        Virginia           12266               31453  IAH
+4     Los Angeles, CA      California           13930               30977  ORD
+5    Jacksonville, FL         Florida           11618               31703  EWR
+6         Houston, TX           Texas           14107               30466  PHX
+     DEST_CITY_NAME DEST_STATE_NM CRS_DEP_TIME DEP_TIME DEP_DELAY TAXI_OUT
+1       Houston, TX         Texas          615      602       -13       19
+2 San Francisco, CA    California          618      614        -4       16
+3       Houston, TX         Texas          830      828        -2       17
+4       Chicago, IL      Illinois          650      641        -9       17
+5        Newark, NJ    New Jersey         1824     1810       -14       11
+6       Phoenix, AZ       Arizona         1420     1413        -7       19
+  WHEELS_OFF WHEELS_ON TAXI_IN CRS_ARR_TIME ARR_TIME ARR_DELAY CANCELLED
+1        621       749       7          808      756       -12         0
+2        630       808       5          831      813       -18         0
+3        845      1055      13         1107     1108         1         0
+4        658      1230      12         1250     1242        -8         0
+5       1821      2013       8         2045     2021       -24         0
+6       1432      1554       5         1618     1559       -19         0
+  DIVERTED CRS_ELAPSED_TIME ACTUAL_ELAPSED_TIME AIR_TIME DISTANCE CARRIER_DELAY
+1        0              173                 174      148      966            NA
+2        0              133                 119       98      679            NA
+3        0              217                 220      190     1208            NA
+4        0              240                 241      212     1744            NA
+5        0              141                 131      112      820            NA
+6        0              178                 166      142     1009            NA
+  WEATHER_DELAY NAS_DELAY SECURITY_DELAY LATE_AIRCRAFT_DELAY  X
+1            NA        NA             NA                  NA NA
+2            NA        NA             NA                  NA NA
+3            NA        NA             NA                  NA NA
+4            NA        NA             NA                  NA NA
+5            NA        NA             NA                  NA NA
+6            NA        NA             NA                  NA NA
+> names(air)
+ [1] "YEAR"                  "MONTH"                 "DAY_OF_MONTH"         
+ [4] "DAY_OF_WEEK"           "OP_UNIQUE_CARRIER"     "OP_CARRIER_AIRLINE_ID"
+ [7] "TAIL_NUM"              "OP_CARRIER_FL_NUM"     "ORIGIN_AIRPORT_ID"    
+[10] "ORIGIN_CITY_MARKET_ID" "ORIGIN"                "ORIGIN_CITY_NAME"     
+[13] "ORIGIN_STATE_NM"       "DEST_AIRPORT_ID"       "DEST_CITY_MARKET_ID"  
+[16] "DEST"                  "DEST_CITY_NAME"        "DEST_STATE_NM"        
+[19] "CRS_DEP_TIME"          "DEP_TIME"              "DEP_DELAY"            
+[22] "TAXI_OUT"              "WHEELS_OFF"            "WHEELS_ON"            
+[25] "TAXI_IN"               "CRS_ARR_TIME"          "ARR_TIME"             
+[28] "ARR_DELAY"             "CANCELLED"             "DIVERTED"             
+[31] "CRS_ELAPSED_TIME"      "ACTUAL_ELAPSED_TIME"   "AIR_TIME"             
+[34] "DISTANCE"              "CARRIER_DELAY"         "WEATHER_DELAY"        
+[37] "NAS_DELAY"             "SECURITY_DELAY"        "LATE_AIRCRAFT_DELAY"  
+[40] "X"                    
+> dim(air)
+[1] 570118     40
+> summary(air)
+      YEAR          MONTH    DAY_OF_MONTH    DAY_OF_WEEK    OP_UNIQUE_CARRIER
+ Min.   :2018   Min.   :1   Min.   : 1.00   Min.   :1.000   WN     :109676   
+ 1st Qu.:2018   1st Qu.:1   1st Qu.: 8.00   1st Qu.:2.000   AA     : 73598   
+ Median :2018   Median :1   Median :16.00   Median :4.000   DL     : 71254   
+ Mean   :2018   Mean   :1   Mean   :15.93   Mean   :3.736   OO     : 62194   
+ 3rd Qu.:2018   3rd Qu.:1   3rd Qu.:24.00   3rd Qu.:5.000   UA     : 45384   
+ Max.   :2018   Max.   :1   Max.   :31.00   Max.   :7.000   YX     : 25212   
+                                                            (Other):182800   
+ OP_CARRIER_AIRLINE_ID    TAIL_NUM      OP_CARRIER_FL_NUM ORIGIN_AIRPORT_ID
+ Min.   :19393                :  1969   Min.   :   1      Min.   :10135    
+ 1st Qu.:19790         N475HA :   331   1st Qu.: 924      1st Qu.:11292    
+ Median :19977         N479HA :   319   Median :2027      Median :12889    
+ Mean   :19996         N487HA :   319   Mean   :2573      Mean   :12654    
+ 3rd Qu.:20368         N483HA :   318   3rd Qu.:4041      3rd Qu.:13931    
+ Max.   :21171         N478HA :   315   Max.   :7439      Max.   :16218    
+                       (Other):566547                                      
+ ORIGIN_CITY_MARKET_ID     ORIGIN                    ORIGIN_CITY_NAME 
+ Min.   :30070         ATL    : 30617   Chicago, IL          : 32305  
+ 1st Qu.:30713         ORD    : 25680   Atlanta, GA          : 30617  
+ Median :31453         DFW    : 22349   New York, NY         : 23637  
+ Mean   :31742         CLT    : 18362   Dallas/Fort Worth, TX: 22349  
+ 3rd Qu.:32467         DEN    : 18231   Houston, TX          : 18817  
+ Max.   :36133         LAX    : 17785   Charlotte, NC        : 18362  
+                       (Other):437094   (Other)              :424031  
+   ORIGIN_STATE_NM   DEST_AIRPORT_ID DEST_CITY_MARKET_ID      DEST       
+ California: 63717   Min.   :10135   Min.   :30070       ATL    : 30619  
+ Texas     : 60559   1st Qu.:11292   1st Qu.:30713       ORD    : 25672  
+ Florida   : 48503   Median :12889   Median :31453       DFW    : 22357  
+ Illinois  : 33921   Mean   :12654   Mean   :31742       CLT    : 18362  
+ Georgia   : 32137   3rd Qu.:13931   3rd Qu.:32467       DEN    : 18228  
+ New York  : 30704   Max.   :16218   Max.   :36133       LAX    : 17793  
+ (Other)   :300577                                       (Other):437087  
+               DEST_CITY_NAME      DEST_STATE_NM     CRS_DEP_TIME 
+ Chicago, IL          : 32295   California: 63735   Min.   :   1  
+ Atlanta, GA          : 30619   Texas     : 60567   1st Qu.: 915  
+ New York, NY         : 23652   Florida   : 48450   Median :1320  
+ Dallas/Fort Worth, TX: 22357   Illinois  : 33915   Mean   :1327  
+ Houston, TX          : 18804   Georgia   : 32136   3rd Qu.:1730  
+ Charlotte, NC        : 18362   New York  : 30726   Max.   :2359  
+ (Other)              :424029   (Other)   :300589                 
+    DEP_TIME       DEP_DELAY           TAXI_OUT       WHEELS_OFF   
+ Min.   :   1    Min.   : -50.000   Min.   :  1.0   Min.   :   1   
+ 1st Qu.: 922    1st Qu.:  -6.000   1st Qu.: 11.0   1st Qu.: 939   
+ Median :1329    Median :  -2.000   Median : 15.0   Median :1343   
+ Mean   :1334    Mean   :   9.488   Mean   : 17.8   Mean   :1360   
+ 3rd Qu.:1738    3rd Qu.:   6.000   3rd Qu.: 21.0   3rd Qu.:1754   
+ Max.   :2400    Max.   :2007.000   Max.   :177.0   Max.   :2400   
+ NA's   :16823   NA's   :17323      NA's   :17063   NA's   :17063  
+   WHEELS_ON        TAXI_IN         CRS_ARR_TIME     ARR_TIME    
+ Min.   :   1    Min.   :  1.000   Min.   :   1   Min.   :   1   
+ 1st Qu.:1059    1st Qu.:  4.000   1st Qu.:1110   1st Qu.:1104   
+ Median :1514    Median :  6.000   Median :1522   Median :1518   
+ Mean   :1479    Mean   :  7.499   Mean   :1496   Mean   :1484   
+ 3rd Qu.:1912    3rd Qu.:  9.000   3rd Qu.:1919   3rd Qu.:1917   
+ Max.   :2400    Max.   :258.000   Max.   :2359   Max.   :2400   
+ NA's   :17535   NA's   :17535                    NA's   :17535  
+   ARR_DELAY          CANCELLED          DIVERTED        CRS_ELAPSED_TIME
+ Min.   : -94.000   Min.   :0.00000   Min.   :0.000000   Min.   : 22.0   
+ 1st Qu.: -17.000   1st Qu.:0.00000   1st Qu.:0.000000   1st Qu.: 90.0   
+ Median :  -8.000   Median :0.00000   Median :0.000000   Median :125.0   
+ Mean   :   2.833   Mean   :0.03011   Mean   :0.002191   Mean   :143.2   
+ 3rd Qu.:   6.000   3rd Qu.:0.00000   3rd Qu.:0.000000   3rd Qu.:174.0   
+ Max.   :2023.000   Max.   :1.00000   Max.   :1.000000   Max.   :704.0   
+ NA's   :18620                                                           
+ ACTUAL_ELAPSED_TIME    AIR_TIME        DISTANCE      CARRIER_DELAY   
+ Min.   : 16.0       Min.   :  8.0   Min.   :  31.0   Min.   :   0.0  
+ 1st Qu.: 84.0       1st Qu.: 60.0   1st Qu.: 357.0   1st Qu.:   0.0  
+ Median :119.0       Median : 93.0   Median : 632.0   Median :   0.0  
+ Mean   :136.9       Mean   :111.6   Mean   : 793.9   Mean   :  21.5  
+ 3rd Qu.:168.0       3rd Qu.:142.0   3rd Qu.:1028.0   3rd Qu.:  19.0  
+ Max.   :728.0       Max.   :683.0   Max.   :4983.0   Max.   :2007.0  
+ NA's   :18418       NA's   :18418                    NA's   :472358  
+ WEATHER_DELAY      NAS_DELAY      SECURITY_DELAY   LATE_AIRCRAFT_DELAY
+ Min.   :   0.0   Min.   :   0.0   Min.   :  0.0    Min.   :   0.0     
+ 1st Qu.:   0.0   1st Qu.:   0.0   1st Qu.:  0.0    1st Qu.:   0.0     
+ Median :   0.0   Median :   2.0   Median :  0.0    Median :   1.0     
+ Mean   :   4.8   Mean   :  14.3   Mean   :  0.1    Mean   :  25.6     
+ 3rd Qu.:   0.0   3rd Qu.:  19.0   3rd Qu.:  0.0    3rd Qu.:  31.0     
+ Max.   :1682.0   Max.   :1346.0   Max.   :593.0    Max.   :1648.0     
+ NA's   :472358   NA's   :472358   NA's   :472358   NA's   :472358     
+    X          
+ Mode:logical  
+ NA's:570118   
+               
+               
+               
+               
+               
+> day_of_week = factor(air$DAY_OF_WEEK)
+> summary(day_of_week)
+    1     2     3     4     5     6     7 
+94918 93005 94452 77505 77929 60416 71893 
+> head(day_of_week)
+[1] 6 6 6 6 6 6
+Levels: 1 2 3 4 5 6 7
+> days = read.csv("data/airline/L_WEEKDAYS.csv_")
+> days
+  Code Description
+1    1      Monday
+2    2     Tuesday
+3    3   Wednesday
+4    4    Thursday
+5    5      Friday
+6    6    Saturday
+7    7      Sunday
+8    9     Unknown
+> levels(day_of_week)
+[1] "1" "2" "3" "4" "5" "6" "7"
+> days$Description
+[1] Monday    Tuesday   Wednesday Thursday  Friday    Saturday  Sunday   
+[8] Unknown  
+Levels: Friday Monday Saturday Sunday Thursday Tuesday Unknown Wednesday
+> levels(day_of_week) = days$Description
+> levels(day_of_week)
+[1] "Monday"    "Tuesday"   "Wednesday" "Thursday"  "Friday"    "Saturday" 
+[7] "Sunday"    "Unknown"  
+> days$Description
+[1] Monday    Tuesday   Wednesday Thursday  Friday    Saturday  Sunday   
+[8] Unknown  
+Levels: Friday Monday Saturday Sunday Thursday Tuesday Unknown Wednesday
+> typeof(days$Description)
+[1] "integer"
+> day_of_week = factor(air$DAY_OF_WEEK)
+> head(day_of_week)
+[1] 6 6 6 6 6 6
+Levels: 1 2 3 4 5 6 7
+> # One more way to rename levels:
+> days
+  Code Description
+1    1      Monday
+2    2     Tuesday
+3    3   Wednesday
+4    4    Thursday
+5    5      Friday
+6    6    Saturday
+7    7      Sunday
+8    9     Unknown
+> m = match(day_of_week, days$Code)
+> head(m)
+[1] 6 6 6 6 6 6
+> new_day_of_week = days$Description[m]
+> head(new_day_of_week)
+[1] Saturday Saturday Saturday Saturday Saturday Saturday
+Levels: Friday Monday Saturday Sunday Thursday Tuesday Unknown Wednesday
+> table(day_of_week)
+day_of_week
+    1     2     3     4     5     6     7 
+94918 93005 94452 77505 77929 60416 71893 
+> table(new_day_of_week)
+new_day_of_week
+   Friday    Monday  Saturday    Sunday  Thursday   Tuesday   Unknown Wednesday 
+    77929     94918     60416     71893     77505     93005         0     94452 
+> levels(new_day_of_week)
+[1] "Friday"    "Monday"    "Saturday"  "Sunday"    "Thursday"  "Tuesday"  
+[7] "Unknown"   "Wednesday"
+> day_of_week = factor(air$DAY_OF_WEEK)
+> head(day_of_week)
+[1] 6 6 6 6 6 6
+Levels: 1 2 3 4 5 6 7
+> length(new_day_of_week)
+[1] 570118
+> length(days$Description)
+[1] 8
+> names(air)
+ [1] "YEAR"                  "MONTH"                 "DAY_OF_MONTH"         
+ [4] "DAY_OF_WEEK"           "OP_UNIQUE_CARRIER"     "OP_CARRIER_AIRLINE_ID"
+ [7] "TAIL_NUM"              "OP_CARRIER_FL_NUM"     "ORIGIN_AIRPORT_ID"    
+[10] "ORIGIN_CITY_MARKET_ID" "ORIGIN"                "ORIGIN_CITY_NAME"     
+[13] "ORIGIN_STATE_NM"       "DEST_AIRPORT_ID"       "DEST_CITY_MARKET_ID"  
+[16] "DEST"                  "DEST_CITY_NAME"        "DEST_STATE_NM"        
+[19] "CRS_DEP_TIME"          "DEP_TIME"              "DEP_DELAY"            
+[22] "TAXI_OUT"              "WHEELS_OFF"            "WHEELS_ON"            
+[25] "TAXI_IN"               "CRS_ARR_TIME"          "ARR_TIME"             
+[28] "ARR_DELAY"             "CANCELLED"             "DIVERTED"             
+[31] "CRS_ELAPSED_TIME"      "ACTUAL_ELAPSED_TIME"   "AIR_TIME"             
+[34] "DISTANCE"              "CARRIER_DELAY"         "WEATHER_DELAY"        
+[37] "NAS_DELAY"             "SECURITY_DELAY"        "LATE_AIRCRAFT_DELAY"  
+[40] "X"                    
+> summary(air)
+      YEAR          MONTH    DAY_OF_MONTH    DAY_OF_WEEK    OP_UNIQUE_CARRIER
+ Min.   :2018   Min.   :1   Min.   : 1.00   Min.   :1.000   WN     :109676   
+ 1st Qu.:2018   1st Qu.:1   1st Qu.: 8.00   1st Qu.:2.000   AA     : 73598   
+ Median :2018   Median :1   Median :16.00   Median :4.000   DL     : 71254   
+ Mean   :2018   Mean   :1   Mean   :15.93   Mean   :3.736   OO     : 62194   
+ 3rd Qu.:2018   3rd Qu.:1   3rd Qu.:24.00   3rd Qu.:5.000   UA     : 45384   
+ Max.   :2018   Max.   :1   Max.   :31.00   Max.   :7.000   YX     : 25212   
+                                                            (Other):182800   
+ OP_CARRIER_AIRLINE_ID    TAIL_NUM      OP_CARRIER_FL_NUM ORIGIN_AIRPORT_ID
+ Min.   :19393                :  1969   Min.   :   1      Min.   :10135    
+ 1st Qu.:19790         N475HA :   331   1st Qu.: 924      1st Qu.:11292    
+ Median :19977         N479HA :   319   Median :2027      Median :12889    
+ Mean   :19996         N487HA :   319   Mean   :2573      Mean   :12654    
+ 3rd Qu.:20368         N483HA :   318   3rd Qu.:4041      3rd Qu.:13931    
+ Max.   :21171         N478HA :   315   Max.   :7439      Max.   :16218    
+                       (Other):566547                                      
+ ORIGIN_CITY_MARKET_ID     ORIGIN                    ORIGIN_CITY_NAME 
+ Min.   :30070         ATL    : 30617   Chicago, IL          : 32305  
+ 1st Qu.:30713         ORD    : 25680   Atlanta, GA          : 30617  
+ Median :31453         DFW    : 22349   New York, NY         : 23637  
+ Mean   :31742         CLT    : 18362   Dallas/Fort Worth, TX: 22349  
+ 3rd Qu.:32467         DEN    : 18231   Houston, TX          : 18817  
+ Max.   :36133         LAX    : 17785   Charlotte, NC        : 18362  
+                       (Other):437094   (Other)              :424031  
+   ORIGIN_STATE_NM   DEST_AIRPORT_ID DEST_CITY_MARKET_ID      DEST       
+ California: 63717   Min.   :10135   Min.   :30070       ATL    : 30619  
+ Texas     : 60559   1st Qu.:11292   1st Qu.:30713       ORD    : 25672  
+ Florida   : 48503   Median :12889   Median :31453       DFW    : 22357  
+ Illinois  : 33921   Mean   :12654   Mean   :31742       CLT    : 18362  
+ Georgia   : 32137   3rd Qu.:13931   3rd Qu.:32467       DEN    : 18228  
+ New York  : 30704   Max.   :16218   Max.   :36133       LAX    : 17793  
+ (Other)   :300577                                       (Other):437087  
+               DEST_CITY_NAME      DEST_STATE_NM     CRS_DEP_TIME 
+ Chicago, IL          : 32295   California: 63735   Min.   :   1  
+ Atlanta, GA          : 30619   Texas     : 60567   1st Qu.: 915  
+ New York, NY         : 23652   Florida   : 48450   Median :1320  
+ Dallas/Fort Worth, TX: 22357   Illinois  : 33915   Mean   :1327  
+ Houston, TX          : 18804   Georgia   : 32136   3rd Qu.:1730  
+ Charlotte, NC        : 18362   New York  : 30726   Max.   :2359  
+ (Other)              :424029   (Other)   :300589                 
+    DEP_TIME       DEP_DELAY           TAXI_OUT       WHEELS_OFF   
+ Min.   :   1    Min.   : -50.000   Min.   :  1.0   Min.   :   1   
+ 1st Qu.: 922    1st Qu.:  -6.000   1st Qu.: 11.0   1st Qu.: 939   
+ Median :1329    Median :  -2.000   Median : 15.0   Median :1343   
+ Mean   :1334    Mean   :   9.488   Mean   : 17.8   Mean   :1360   
+ 3rd Qu.:1738    3rd Qu.:   6.000   3rd Qu.: 21.0   3rd Qu.:1754   
+ Max.   :2400    Max.   :2007.000   Max.   :177.0   Max.   :2400   
+ NA's   :16823   NA's   :17323      NA's   :17063   NA's   :17063  
+   WHEELS_ON        TAXI_IN         CRS_ARR_TIME     ARR_TIME    
+ Min.   :   1    Min.   :  1.000   Min.   :   1   Min.   :   1   
+ 1st Qu.:1059    1st Qu.:  4.000   1st Qu.:1110   1st Qu.:1104   
+ Median :1514    Median :  6.000   Median :1522   Median :1518   
+ Mean   :1479    Mean   :  7.499   Mean   :1496   Mean   :1484   
+ 3rd Qu.:1912    3rd Qu.:  9.000   3rd Qu.:1919   3rd Qu.:1917   
+ Max.   :2400    Max.   :258.000   Max.   :2359   Max.   :2400   
+ NA's   :17535   NA's   :17535                    NA's   :17535  
+   ARR_DELAY          CANCELLED          DIVERTED        CRS_ELAPSED_TIME
+ Min.   : -94.000   Min.   :0.00000   Min.   :0.000000   Min.   : 22.0   
+ 1st Qu.: -17.000   1st Qu.:0.00000   1st Qu.:0.000000   1st Qu.: 90.0   
+ Median :  -8.000   Median :0.00000   Median :0.000000   Median :125.0   
+ Mean   :   2.833   Mean   :0.03011   Mean   :0.002191   Mean   :143.2   
+ 3rd Qu.:   6.000   3rd Qu.:0.00000   3rd Qu.:0.000000   3rd Qu.:174.0   
+ Max.   :2023.000   Max.   :1.00000   Max.   :1.000000   Max.   :704.0   
+ NA's   :18620                                                           
+ ACTUAL_ELAPSED_TIME    AIR_TIME        DISTANCE      CARRIER_DELAY   
+ Min.   : 16.0       Min.   :  8.0   Min.   :  31.0   Min.   :   0.0  
+ 1st Qu.: 84.0       1st Qu.: 60.0   1st Qu.: 357.0   1st Qu.:   0.0  
+ Median :119.0       Median : 93.0   Median : 632.0   Median :   0.0  
+ Mean   :136.9       Mean   :111.6   Mean   : 793.9   Mean   :  21.5  
+ 3rd Qu.:168.0       3rd Qu.:142.0   3rd Qu.:1028.0   3rd Qu.:  19.0  
+ Max.   :728.0       Max.   :683.0   Max.   :4983.0   Max.   :2007.0  
+ NA's   :18418       NA's   :18418                    NA's   :472358  
+ WEATHER_DELAY      NAS_DELAY      SECURITY_DELAY   LATE_AIRCRAFT_DELAY
+ Min.   :   0.0   Min.   :   0.0   Min.   :  0.0    Min.   :   0.0     
+ 1st Qu.:   0.0   1st Qu.:   0.0   1st Qu.:  0.0    1st Qu.:   0.0     
+ Median :   0.0   Median :   2.0   Median :  0.0    Median :   1.0     
+ Mean   :   4.8   Mean   :  14.3   Mean   :  0.1    Mean   :  25.6     
+ 3rd Qu.:   0.0   3rd Qu.:  19.0   3rd Qu.:  0.0    3rd Qu.:  31.0     
+ Max.   :1682.0   Max.   :1346.0   Max.   :593.0    Max.   :1648.0     
+ NA's   :472358   NA's   :472358   NA's   :472358   NA's   :472358     
+    X          
+ Mode:logical  
+ NA's:570118   
+               
+               
+               
+               
+               
+> table(air$DAY_OF_WEEK)
+
+    1     2     3     4     5     6     7 
+94918 93005 94452 77505 77929 60416 71893 
+> # Another way to rename levels:
+> levels(day_of_week) = days$Description
+> air$DAY_OF_WEEK = day_of_week
+> table(air$DAY_OF_WEEK)
+
+   Monday   Tuesday Wednesday  Thursday    Friday  Saturday    Sunday   Unknown 
+    94918     93005     94452     77505     77929     60416     71893         0 
+> names(air)
+ [1] "YEAR"                  "MONTH"                 "DAY_OF_MONTH"         
+ [4] "DAY_OF_WEEK"           "OP_UNIQUE_CARRIER"     "OP_CARRIER_AIRLINE_ID"
+ [7] "TAIL_NUM"              "OP_CARRIER_FL_NUM"     "ORIGIN_AIRPORT_ID"    
+[10] "ORIGIN_CITY_MARKET_ID" "ORIGIN"                "ORIGIN_CITY_NAME"     
+[13] "ORIGIN_STATE_NM"       "DEST_AIRPORT_ID"       "DEST_CITY_MARKET_ID"  
+[16] "DEST"                  "DEST_CITY_NAME"        "DEST_STATE_NM"        
+[19] "CRS_DEP_TIME"          "DEP_TIME"              "DEP_DELAY"            
+[22] "TAXI_OUT"              "WHEELS_OFF"            "WHEELS_ON"            
+[25] "TAXI_IN"               "CRS_ARR_TIME"          "ARR_TIME"             
+[28] "ARR_DELAY"             "CANCELLED"             "DIVERTED"             
+[31] "CRS_ELAPSED_TIME"      "ACTUAL_ELAPSED_TIME"   "AIR_TIME"             
+[34] "DISTANCE"              "CARRIER_DELAY"         "WEATHER_DELAY"        
+[37] "NAS_DELAY"             "SECURITY_DELAY"        "LATE_AIRCRAFT_DELAY"  
+[40] "X"                    
+> # -> Make our question more specific within the context of the data set
+> #
+> # Let's look at arrival delay () and day of week (categorical)
+> head(air$ARR_DELAY)
+[1] -12 -18   1  -8 -24 -19
+> summary(air$ARR_DELAY)
+    Min.  1st Qu.   Median     Mean  3rd Qu.     Max.     NA's 
+ -94.000  -17.000   -8.000    2.833    6.000 2023.000    18620 
+> library(ggplot2)
+> ggplot(air, aes(ARR_DELAY, DAY_OF_WEEK)) + geom_boxplot()
+Warning: Removed 18620 rows containing missing values (stat_boxplot).
+> ggplot(air, aes(DAY_OF_WEEK, ARR_DELAY)) + geom_boxplot()
+Warning: Removed 18620 rows containing non-finite values (stat_boxplot).
+> gg = ggplot(air, aes(DAY_OF_WEEK, ARR_DELAY)) +
+.   geom_boxplot()
+> gg + ylim(-50, 50)
+Warning: Removed 58203 rows containing non-finite values
+(stat_boxplot).
+> gg + ylim(-50, 50) + geom_hline(yintercept = 0)
+Warning: Removed 58203 rows containing non-finite values
+(stat_boxplot).
+> gg = ggplot(air, aes(DAY_OF_WEEK, ARR_DELAY)) +
+.   geom_boxplot()
+> #     We can define on-time in different ways, depending on our
+> #     perspective:
+> #       - customer perspective: anything <= 0 delay is on-time
+> #       - airport perspective: only 0 delay
+> #       - ...
+> #
+> # Let's take the customer perspective
+> #
+> # Let's use ARR_DELAY
+> #
+> ontime = air$ARR_DELAY <= 0
+> head(ontime)
+[1]  TRUE  TRUE FALSE  TRUE  TRUE  TRUE
+> table(ontime)
+ontime
+ FALSE   TRUE 
+179436 372062 
+> air$ontime = ontime
+> names(air)
+ [1] "YEAR"                  "MONTH"                 "DAY_OF_MONTH"         
+ [4] "DAY_OF_WEEK"           "OP_UNIQUE_CARRIER"     "OP_CARRIER_AIRLINE_ID"
+ [7] "TAIL_NUM"              "OP_CARRIER_FL_NUM"     "ORIGIN_AIRPORT_ID"    
+[10] "ORIGIN_CITY_MARKET_ID" "ORIGIN"                "ORIGIN_CITY_NAME"     
+[13] "ORIGIN_STATE_NM"       "DEST_AIRPORT_ID"       "DEST_CITY_MARKET_ID"  
+[16] "DEST"                  "DEST_CITY_NAME"        "DEST_STATE_NM"        
+[19] "CRS_DEP_TIME"          "DEP_TIME"              "DEP_DELAY"            
+[22] "TAXI_OUT"              "WHEELS_OFF"            "WHEELS_ON"            
+[25] "TAXI_IN"               "CRS_ARR_TIME"          "ARR_TIME"             
+[28] "ARR_DELAY"             "CANCELLED"             "DIVERTED"             
+[31] "CRS_ELAPSED_TIME"      "ACTUAL_ELAPSED_TIME"   "AIR_TIME"             
+[34] "DISTANCE"              "CARRIER_DELAY"         "WEATHER_DELAY"        
+[37] "NAS_DELAY"             "SECURITY_DELAY"        "LATE_AIRCRAFT_DELAY"  
+[40] "X"                     "ontime"               
+> head(air$OP_UNIQUE_CARRIER)
+[1] UA UA UA UA UA UA
+Levels: 9E AA AS B6 DL EV F9 G4 HA MQ NK OH OO UA VX WN YV YX
+> table(air$ontime, air$OP_UNIQUE_CARRIER)
+       
+           9E    AA    AS    B6    DL    EV    F9    G4    HA    MQ    NK
+  FALSE  4858 22758  3806 10374 17202  6402  3596  2461  2353  8770  3808
+  TRUE  12029 49256 11318 12956 52398 12710  5911  4269  4252 12811  9991
+       
+           OH    OO    UA    VX    WN    YV    YX
+  FALSE  9367 22167 11332  1809 35173  5212  7988
+  TRUE  11234 38174 33073  3906 71850 10120 15804
+> ggplot(air, aes(ontime, color = OP_UNIQUE_CARRIER)) + geom_bar()
+> ggplot(air, aes(ontime, fill = OP_UNIQUE_CARRIER)) +
+.   geom_bar(position = "dodge")
+> ggplot(air, aes(OP_UNIQUE_CARRIER, fill = ontime)) +
+.   geom_bar(position = "dodge")
